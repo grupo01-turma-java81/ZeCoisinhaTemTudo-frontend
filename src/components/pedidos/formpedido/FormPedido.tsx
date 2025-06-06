@@ -98,7 +98,7 @@ function FormPedido() {
 
     if (id !== undefined) {
       try {
-        await atualizar(`/postagens`, pedido, setPedido, {
+        await atualizar(`/pedidos`, pedido, setPedido, {
           headers: {
             Authorization: token,
           },
@@ -109,7 +109,7 @@ function FormPedido() {
         if (error.toString().includes("403")) {
           handleLogout();
         } else {
-          alert("Erro ao atualizar a Pedido");
+          alert("Erro ao atualizar o Pedido");
         }
       }
     } else {
@@ -139,28 +139,28 @@ function FormPedido() {
   return (
     <div className="container flex flex-col mx-auto items-center">
       <h1 className="text-4xl text-center my-8">
-        {id !== undefined ? "Editar Postagem" : "Cadastrar Postagem"}
+        {id !== undefined ? "Editar Pedido" : "Cadastrar Pedido"}
       </h1>
 
       <form className="flex flex-col w-1/2 gap-4" onSubmit={gerarNovoPedido}>
         <div className="flex flex-col gap-2">
-          <label htmlFor="titulo">Título da Postagem</label>
+          <label htmlFor="dataPedido">Data do Pedido</label>
           <input
             type="text"
-            placeholder="Titulo"
-            name="titulo"
+            placeholder="dd/mm/yyyy"
+            name="dataPedido"
             required
             className="border-2 border-slate-700 rounded p-2"
-            value={pedido.id}
+            value={pedido.dataPedido}
             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="titulo">Texto da Postagem</label>
+          <label htmlFor="statusEntrega">Status da Entrega</label>
           <input
             type="text"
-            placeholder="Texto"
-            name="texto"
+            placeholder="Ex: Em andamento"
+            name="statusEntrega"
             required
             className="border-2 border-slate-700 rounded p-2"
             value={pedido.statusEntrega}
@@ -168,15 +168,48 @@ function FormPedido() {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <p>Tema da Postagem</p>
+          <label htmlFor="valorTotal">Preço do pedido</label>
+          <input
+            type="text"
+            placeholder="Ex: 200"
+            name="valorTotal"
+            required
+            className="border-2 border-slate-700 rounded p-2"
+            value={pedido.valorTotal}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <p>Cliente satisfeito?</p>
           <select
-            name="tema"
-            id="tema"
+            name="Positivo"
+            id="Positivo"
+            className="border p-2 border-slate-800 rounded"
+            onChange={(e) =>
+              setPedido({
+                ...pedido,
+                positivo: e.target.value === "true",
+              })
+            }
+            required
+          >
+            <option value="" disabled>
+              Selecione a opção:
+            </option>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+          </select>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p>Cliente que solicitou o pedido</p>
+          <select
+            name="Cliente"
+            id="Cliente"
             className="border p-2 border-slate-800 rounded"
             onChange={(e) => buscarClientePorCpf(e.currentTarget.value)}
           >
             <option value="" selected disabled>
-              Selecione um Tema
+              Selecione o Cliente
             </option>
 
             {clientes.map((cliente) => (
