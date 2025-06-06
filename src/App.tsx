@@ -11,6 +11,7 @@ import FormPedido from "./components/pedidos/formpedido/FormPedido";
 import DeletarPedido from "./components/pedidos/deletarpedido/DeletarPedido";
 import Login from "./pages/login/Login";
 import Cadastro from "./pages/cadastro/Cadastro";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Login />} />
               <Route path="/cadastro" element={<Cadastro />} />
-              <Route path="/home" element={<ListaPedidos />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
