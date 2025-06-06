@@ -1,12 +1,23 @@
-import React from "react";
-import Clientes from "./pages/clientes/Clientes";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer } from "react-toastify";
+import ListaPedidos from "./components/pedidos/listapedidos/ListaPedidos";
 
 function App() {
   return (
-    <div>
-      <Clientes />
-    </div>
+    <>
+      <ToastContainer />
+      <BrowserRouter>
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/pedidos" element={<ListaPedidos />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 
-export default App;
+export default App;;
