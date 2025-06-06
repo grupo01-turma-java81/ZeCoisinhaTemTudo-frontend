@@ -34,10 +34,10 @@ function App() {
               <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
               <Route path="/deletarpedido/:id" element={<DeletarPedido />} />
               <Route path="/clientes" element={<ListaClientes />} />
-            <Route path="/cadastrarcliente" element={<FormClientes />} />
-            <Route path="/editarcliente/:cpf" element={<FormClientes />} />
-            <Route path="/deletarcliente/:cpf" element={<DeletarClientes/>} />
-          </Routes>
+              <Route path="/cadastrarcliente" element={<FormClientes />} />
+              <Route path="/editarcliente/:cpf" element={<FormClientes />} />
+              <Route path="/deletarcliente/:cpf" element={<DeletarClientes />} />
+            </Routes>
           </div>
           <Footer />
         </BrowserRouter>
