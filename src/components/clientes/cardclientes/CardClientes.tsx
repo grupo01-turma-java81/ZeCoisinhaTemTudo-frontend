@@ -18,21 +18,15 @@ function CardClientes({ cliente }: CardClientesProps) {
                 <div><b>Endereço:</b> {cliente.endereco}</div>
             </div>
             <div className="flex">
-                <Link
-                    to={`/editarcliente/${cliente.cpf}`}
-                    className='w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 flex items-center justify-center py-2 cursor-pointer'
-                >
+                <Link to={`/editarcliente/${cliente.cpf}`} className='w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 flex items-center justify-center py-2 cursor-pointer'>
                     <button className="w-full">Editar</button>
                 </Link>
-                <Link
-                    to={`/deletarcliente/${cliente.cpf}`}
-                    className='text-slate-100 bg-red-400 hover:bg-red-700 w-full flex items-center justify-center cursor-pointer'
-                >
+                <Link to={`/deletarcliente/${cliente.cpf}`} className='text-slate-100 bg-red-400 hover:bg-red-700 w-full flex items-center justify-center cursor-pointer'>
                     <button className="w-full">Deletar</button>
                 </Link>
             </div>
-        </div>
-    );
+        </div >
+    )
 }
 
 export default CardClientes;
