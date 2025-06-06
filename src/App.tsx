@@ -22,8 +22,9 @@ function App() {
           <div className="mx-auto min-h-[calc(100vh-64px)]">
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
               <Route path="/cadastro" element={<Cadastro />} />
-              <Route path="/" element={<ListaPedidos />} />
+              <Route path="/home" element={<ListaPedidos />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
