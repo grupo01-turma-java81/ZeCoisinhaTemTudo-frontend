@@ -31,7 +31,7 @@ function NavBar() {
           <Link to="" className="text-[#374151] no-underline font-normal">
             Avaliacoes
           </Link>
-          <Link to="" className="text-[#374151] no-underline font-normal">
+          <Link to="/home" className="text-[#374151] no-underline font-normal">
             Home
           </Link>
           <Link to="" className="text-[#232b3b] no-underline font-bold">
