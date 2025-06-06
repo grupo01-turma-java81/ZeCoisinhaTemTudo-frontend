@@ -12,6 +12,9 @@ import DeletarPedido from "./components/pedidos/deletarpedido/DeletarPedido";
 import Login from "./pages/login/Login";
 import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/Home";
+import ListaClientes from "./components/clientes/listaclientes/ListaClientes";
+import FormClientes from "./components/clientes/formclientes/FormClientes";
+import DeletarClientes from "./components/clientes/deletarcliente/DeletarClientes";
 
 function App() {
   return (
@@ -30,7 +33,11 @@ function App() {
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
               <Route path="/deletarpedido/:id" element={<DeletarPedido />} />
-            </Routes>
+              <Route path="/clientes" element={<ListaClientes />} />
+            <Route path="/cadastrarcliente" element={<FormClientes />} />
+            <Route path="/editarcliente/:cpf" element={<FormClientes />} />
+            <Route path="/deletarcliente/:cpf" element={<DeletarClientes/>} />
+          </Routes>
           </div>
           <Footer />
         </BrowserRouter>
@@ -39,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;;
