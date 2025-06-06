@@ -23,16 +23,16 @@ function CardPedido({ pedido }: CardPedidosProps) {
           </h3>
         </div>
         <div className="p-4 ">
-          <h4 className="text-lg font-semibold uppercase">{`Pedido - ${pedido.id} em ${pedido.statusEntrega}`}</h4>
-          <p>{pedido.valorTotal}</p>
+          <h4 className="text-lg font-semibold uppercase">{`Pedido ${pedido.id}: ${pedido.statusEntrega}`}</h4>
+          <p>R$: {Number(pedido.valorTotal).toFixed(2)}</p>
+          <p>Cliente: {pedido.cliente?.nome}</p>
           <p>
             {pedido.positivo
               ? `Cliente em potencial!`
               : `Cliente insatisfeito.`}
           </p>
-          <p>Cliente: {pedido.cliente?.nome}</p>
           <p>
-            Data:{" "}
+            Abertura do pedido:{" "}
             {new Intl.DateTimeFormat(undefined, {
               dateStyle: "full",
               timeStyle: "medium",

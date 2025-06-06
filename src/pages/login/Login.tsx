@@ -16,7 +16,7 @@ function Login() {
     if (usuario.token !== "") {
       navigate("/home");
     }
-  }, [usuario]);
+  }, [usuario.token]);
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setUsuarioLogin({
@@ -57,7 +57,9 @@ function Login() {
               name="usuario"
               type="text"
               value={usuarioLogin.usuario}
-              onChange={atualizarEstado}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
               placeholder="user ou e-mail"
               className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
               required
@@ -70,7 +72,9 @@ function Login() {
               name="senha"
               type="password"
               value={usuarioLogin.senha}
-              onChange={atualizarEstado}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
               placeholder="senha"
               className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
               required
