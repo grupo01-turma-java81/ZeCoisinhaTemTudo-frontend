@@ -19,6 +19,7 @@ function App() {
           <Navbar />
           <div className="mx-auto min-h-[calc(100vh-64px)]">
             <Routes>
+              <Route path="/" element={<ListaPedidos />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
