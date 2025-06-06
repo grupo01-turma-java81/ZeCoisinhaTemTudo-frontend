@@ -28,7 +28,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
               <Route path="/cadastrarpedido" element={<FormPedido />} />
-              <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
+              <Route path="/editarpedido/:id" element={<FormPedido />} />
               <Route path="/deletarpedido/:id" element={<DeletarPedido />} />
             </Routes>
           </div>

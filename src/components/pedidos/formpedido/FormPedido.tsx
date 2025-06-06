@@ -16,14 +16,13 @@ function FormPedido() {
   const [pedido, setPedido] = useState<Pedido>({} as Pedido);
 
   const { id } = useParams<{ id: string }>();
-  const { cpf } = useParams<{ cpf: string }>();
 
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
-  async function buscarPedidoPorId(cpf: string) {
+  async function buscarPedidoPorId(id: string) {
     try {
-      await buscar(`/pedidos/${cpf}`, setPedido, {
+      await buscar(`/pedidos/${id}`, setPedido, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -33,9 +32,9 @@ function FormPedido() {
     }
   }
 
-  async function buscarClientePorCpf(cpf: string) {
+  async function buscarClientePorId(id: string) {
     try {
-      await buscar(`/clientes/${cpf}`, setCliente, {
+      await buscar(`/clientes/${id}`, setCliente, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -67,10 +66,10 @@ function FormPedido() {
   useEffect(() => {
     buscarClientes();
 
-    if (cpf !== undefined) {
-      buscarPedidoPorId(cpf);
+    if (id !== undefined) {
+      buscarPedidoPorId(id);
     }
-  }, [cpf]);
+  }, [id]);
 
   useEffect(() => {
     setPedido({
@@ -206,7 +205,7 @@ function FormPedido() {
             name="Cliente"
             id="Cliente"
             className="border p-2 border-slate-800 rounded"
-            onChange={(e) => buscarClientePorCpf(e.currentTarget.value)}
+            onChange={(e) => buscarClientePorId(e.currentTarget.value)}
           >
             <option value="" selected disabled>
               Selecione o Cliente
