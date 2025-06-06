@@ -1,14 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/home/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer } from "react-toastify";
+import ListaPedidos from "./components/pedidos/listapedidos/ListaPedidos";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+    <>
+      <ToastContainer />
+      <BrowserRouter>
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/pedidos" element={<ListaPedidos />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 
