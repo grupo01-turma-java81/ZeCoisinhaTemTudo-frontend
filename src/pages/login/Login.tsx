@@ -31,12 +31,20 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex">
-      <div className="w-1/2 bg-[#1C2C4C] text-white flex flex-col items-center justify-center p-8">
-        <img src={iconLogo} alt="Logo ZéCoisinha" className="w-40 mb-6" />
-        <h2 className="text-2xl font-semibold mb-2">Bem-vindo ao</h2>
-        <h1 className="text-3xl font-bold">ZéCoisinha</h1>
-        <p className="mt-10 text-sm">
+    <div className="min-h-screen flex font-sans">
+      <div className="w-[38%] bg-[#1C2C4C] text-white flex flex-col items-center justify-center p-8">
+        <img
+          src={iconLogo}
+          alt="Logo ZéCoisinha"
+          className="w-64 mb-10 mt-[-2rem]"
+        />
+        <h2 className="text-xl mb-1  text-white">Bem-vindo ao</h2>
+        <h1 className="text-3xl font-bold mb-10 text-center leading-tight">
+          <span className="block text-[#F5A9B8] text-4xl">ZeCoisinha</span>
+          <span className="block text-[#9ED2DC] text-xl">TemTudo</span>
+        </h1>
+
+        <p className="text-sm text-center mt-auto">
           Não tem uma conta?{" "}
           <Link to="/cadastro" className="font-semibold underline">
             Cadastre-se
@@ -44,48 +52,42 @@ function Login() {
         </p>
       </div>
 
-      <div className="w-1/2 bg-gray-100 flex flex-col justify-center px-20">
-        <h2 className="text-3xl font-bold text-[#1C2C4C] mb-2">LOGIN</h2>
-        <p className="text-sm text-[#1C2C4C] mb-6">
-          Preencha os campos abaixo corretamente
+      <div className="w-[62%] bg-gray-100 flex flex-col justify-center items-center px-32">
+        <h2 className="text-3xl font-bold text-[#1C2C4C] mb-1">
+          Faça seu login!
+        </h2>
+        <p className="text-sm text-[#1C2C4C] mb-8">
+          Preencha os campos abaixo corretamente.
         </p>
 
-        <form onSubmit={login}>
-          <div className="mb-4">
-            <input
-              id="usuario"
-              name="usuario"
-              type="text"
-              value={usuarioLogin.usuario}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                atualizarEstado(e)
-              }
-              placeholder="user ou e-mail"
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
-              required
-            />
-          </div>
+        <form onSubmit={login} className="w-full space-y-4">
+          <input
+            id="usuario"
+            name="usuario"
+            type="text"
+            value={usuarioLogin.usuario}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+            placeholder="E-mail ( ex: login@gmail.com )"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
+            required
+          />
 
-          <div className="mb-6">
-            <input
-              id="senha"
-              name="senha"
-              type="password"
-              value={usuarioLogin.senha}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                atualizarEstado(e)
-              }
-              placeholder="senha"
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
-              required
-            />
-          </div>
+          <input
+            id="senha"
+            name="senha"
+            type="password"
+            value={usuarioLogin.senha}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+            placeholder="Digite sua senha"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
+            required
+          />
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 font-bold rounded hover:opacity-90 transition"
+            className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition"
           >
-            LOGIN
+            Entre!
           </button>
         </form>
       </div>
