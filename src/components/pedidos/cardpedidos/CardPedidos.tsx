@@ -5,7 +5,7 @@ interface CardPedidosProps {
   pedido: Pedido;
 }
 
-function CardPedidos({ pedido }: CardPedidosProps) {
+function CardPedido({ pedido }: CardPedidosProps) {
   return (
     <div
       className="border-slate-900 border 
@@ -37,16 +37,16 @@ function CardPedidos({ pedido }: CardPedidosProps) {
       </div>
       <div className="flex">
         <Link
-          to=""
-          className="w-full text-white bg-indigo-400 
-                    hover:bg-indigo-800 flex items-center justify-center py-2"
+          to={`/editarpedido/${pedido.id}`}
+          className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 
+    flex items-center justify-center py-2"
         >
           <button>Editar</button>
         </Link>
         <Link
-          to=""
+          to={`/deletarpedido/${pedido.id}`}
           className="text-white bg-red-400 
-                    hover:bg-red-700 w-full flex items-center justify-center"
+	hover:bg-red-700 w-full flex items-center justify-center"
         >
           <button>Deletar</button>
         </Link>
@@ -55,4 +55,4 @@ function CardPedidos({ pedido }: CardPedidosProps) {
   );
 }
 
-export default CardPedidos;
+export default CardPedido;

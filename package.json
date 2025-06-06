@@ -17,8 +17,10 @@
     "phosphor-icons": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^7.6.1",
     "react-toastify": "^11.0.5",
+    "reactjs-popup": "^2.0.6",
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
