@@ -32,7 +32,6 @@ function Login() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Lado esquerdo */}
       <div className="w-1/2 bg-[#1C2C4C] text-white flex flex-col items-center justify-center p-8">
         <img src={iconLogo} alt="Logo ZéCoisinha" className="w-40 mb-6" />
         <h2 className="text-2xl font-semibold mb-2">Bem-vindo ao</h2>
@@ -45,7 +44,6 @@ function Login() {
         </p>
       </div>
 
-      {/* Lado direito */}
       <div className="w-1/2 bg-gray-100 flex flex-col justify-center px-20">
         <h2 className="text-3xl font-bold text-[#1C2C4C] mb-2">LOGIN</h2>
         <p className="text-sm text-[#1C2C4C] mb-6">
