@@ -15,7 +15,7 @@ function Cadastro() {
     if (usuario.id !== undefined) {
       navegar("/login");
     }
-  }, [usuario]);
+  }, [usuario, navegar]);
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
@@ -47,34 +47,42 @@ function Cadastro() {
   }
 
   return (
-    <div className="min-h-screen flex">
-      <div className="w-1/2 bg-[#1C2C4C] text-white flex flex-col items-center justify-center p-8">
-        <img src={iconLogo} alt="Logo ZéCoisinha" className="w-40 mb-6" />
-        <h2 className="text-2xl font-semibold mb-2">Bem-vindo ao</h2>
-        <h1 className="text-3xl font-bold">ZéCoisinha</h1>
-        <p className="mt-10 text-sm">
+    <div className="min-h-screen flex font-sans">
+      <div className="w-[38%] bg-[#1C2C4C] text-white flex flex-col items-center justify-center p-8">
+        <img
+          src={iconLogo}
+          alt="Logo ZéCoisinha"
+          className="w-64 mb-10 mt-[-2rem]"
+        />
+        <h2 className="text-xl mb-1 text-white">Bem-vindo ao</h2>
+        <h1 className="text-3xl font-bold mb-10 text-center leading-tight">
+          <span className="block text-[#F5A9B8] text-4xl">ZeCoisinha</span>
+          <span className="block text-[#9ED2DC] text-xl">TemTudo</span>
+        </h1>
+
+        <p className="text-sm text-center mt-auto">
           Já tem uma conta?{" "}
-          <Link to="/login" className="underline font-semibold">
+          <Link to="/login" className="font-semibold underline">
             Faça o login
           </Link>
         </p>
       </div>
 
-      <div className="w-1/2 bg-white flex flex-col justify-center px-20">
-        <h2 className="text-3xl font-bold text-[#1C2C4C] mb-2">Crie sua conta</h2>
-        <p className="text-sm text-[#1C2C4C] mb-6">
-          Preencha os campos abaixo corretamente
+      <div className="w-[62%] bg-gray-100 flex flex-col justify-center items-center px-32">
+        <h2 className="text-3xl font-bold text-[#1C2C4C] mb-1">Crie sua conta!</h2>
+        <p className="text-sm text-[#1C2C4C] mb-8">
+          Preencha os campos abaixo corretamente.
         </p>
 
-        <form onSubmit={cadastrarNovoUsuario} className="flex flex-col gap-4">
+        <form onSubmit={cadastrarNovoUsuario} className="w-full space-y-4">
           <input
             type="text"
             id="nome"
             name="nome"
             value={usuario.nome}
             onChange={atualizarEstado}
-            placeholder="nome completo"
-            className="w-full px-4 py-2 bg-gray-200 text-sm border border-gray-300 rounded focus:outline-none"
+            placeholder="Nome completo"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
             required
           />
 
@@ -84,8 +92,8 @@ function Cadastro() {
             name="usuario"
             value={usuario.usuario}
             onChange={atualizarEstado}
-            placeholder="user ou e-mail"
-            className="w-full px-4 py-2 bg-gray-200 text-sm border border-gray-300 rounded focus:outline-none"
+            placeholder="E-mail (ex: login@gmail.com)"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
             required
           />
 
@@ -95,8 +103,8 @@ function Cadastro() {
             name="senha"
             value={usuario.senha}
             onChange={atualizarEstado}
-            placeholder="senha"
-            className="w-full px-4 py-2 bg-gray-200 text-sm border border-gray-300 rounded focus:outline-none"
+            placeholder="Digite uma senha entre 8 e 16 caracteres"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
             required
           />
 
@@ -106,8 +114,8 @@ function Cadastro() {
             name="confirmarSenha"
             value={confirmarSenha}
             onChange={handleConfirmarSenha}
-            placeholder="confirmar senha"
-            className="w-full px-4 py-2 bg-gray-200 text-sm border border-gray-300 rounded focus:outline-none"
+            placeholder="Confirme sua senha"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
             required
           />
 
@@ -117,15 +125,16 @@ function Cadastro() {
             name="foto"
             value={usuario.foto}
             onChange={atualizarEstado}
-            placeholder="URL da sua foto (opcional)"
-            className="w-full px-4 py-2 bg-gray-200 text-sm border border-gray-300 rounded focus:outline-none"
+            placeholder="Link da sua foto (opcional)"
+            className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-200 text-sm focus:outline-none"
           />
 
           <button
             type="submit"
-            className="bg-black text-white py-2 font-bold rounded hover:opacity-90 transition"
+            disabled={estaCarregando}
+            className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            ENTER
+            {estaCarregando ? "Cadastrando..." : "Cadastrar!"}
           </button>
         </form>
       </div>
