@@ -30,7 +30,8 @@ function App() {
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/editarpedido/:id" element={<FormPedido />} />
               <Route path="/deletarpedido/:id" element={<DeletarPedido />} />
-            </Routes>
+              <Route path="/" element={<Home />} />
+          </Routes>
           </div>
           <Footer />
         </BrowserRouter>
