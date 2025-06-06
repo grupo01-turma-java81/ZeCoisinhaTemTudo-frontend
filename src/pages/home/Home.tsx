@@ -1,33 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { buscar } from "../../services/Service";
+
+interface Pedido {
+  id: string;
+  cliente: string;
+  status: string;
+  valor: string;
+  data: string;
+  avaliacao: boolean | string | number;
+}
 
 const Home: React.FC = () => {
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    buscar(
+      "/pedidos",
+      (data: Pedido[]) => {
+        setPedidos(data);
+        setLoading(false);
+      },
+      {}
+    );
+  }, []);
+
+  const pedidosComAvaliacao = pedidos.filter(
+    (pedido) =>
+      pedido.avaliacao === true ||
+      pedido.avaliacao === "true" ||
+      pedido.avaliacao === 1 ||
+      pedido.avaliacao === "1"
+  );
+
   return (
-    <div
-      style={{
-        background: "#f5f6fa",
-        minHeight: "100vh",
-        width: "100vw",
-      }}
-    >
-      <main
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "40px 20px",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            color: "#223047",
-            fontWeight: 700,
-            fontSize: "3rem",
-            marginBottom: 40,
-            letterSpacing: 1,
-          }}
-        >
+    <div style={{ background: "#f5f6fa", minHeight: "100vh", width: "100vw" }}>
+      <main style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 20px" }}>
+        <h1 style={{ textAlign: "center", color: "#223047", fontWeight: 700, fontSize: "3rem", marginBottom: 40, letterSpacing: 1 }}>
           BEM VINDO!
         </h1>
+    
         <section>
           <div
             style={{
@@ -135,77 +147,45 @@ const Home: React.FC = () => {
             </div>
           </div>
         </section>
-
+        
         <section>
           <hr style={{ margin: "32px 0 0 0", borderColor: "#bdbdbd" }} />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              margin: "24px 0 0 0",
-              gap: 16,
-            }}
-          >
-            <h2
-              style={{
-                fontWeight: 700,
-                fontSize: 20,
-                margin: 0,
-                padding: 0,
-                letterSpacing: 0.2,
-                color: "#223047",
-              }}
-            >
-              Pedidos Recentes
+          <div style={{ display: "flex", alignItems: "center", margin: "24px 0 0 0", gap: 16 }}>
+            <h2 style={{ fontWeight: 700, fontSize: 20, margin: 0, padding: 0, letterSpacing: 0.2, color: "#223047" }}>
+              Pedidos com Maior Avaliação
             </h2>
           </div>
-          <div
-            style={{
-              background: "#d1d3d6",
-              borderRadius: 8,
-              padding: 24,
-              marginTop: 12,
-              overflowX: "auto",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-            }}
-          >
-            <table style={{ minWidth: 700, width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Pedido
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Cliente
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Status
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Valor
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Data
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ padding: "8px 16px" }}>#1234</td>
-                  <td style={{ padding: "8px 16px" }}>João S.</td>
-                  <td style={{ padding: "8px 16px" }}>A caminho</td>
-                  <td style={{ padding: "8px 16px" }}>R$ 250,00</td>
-                  <td style={{ padding: "8px 16px" }}>05/06/2025</td>
-                </tr>
-                <tr>
-                  <td style={{ padding: "8px 16px" }}>#1235</td>
-                  <td style={{ padding: "8px 16px" }}>Ana R.</td>
-                  <td style={{ padding: "8px 16px" }}>Pendente</td>
-                  <td style={{ padding: "8px 16px" }}>R$ 180,00</td>
-                  <td style={{ padding: "8px 16px" }}>06/06/2025</td>
-                </tr>
-              </tbody>
-            </table>
+          <div style={{ background: "#d1d3d6", borderRadius: 8, padding: 24, marginTop: 12, overflowX: "auto", boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}>
+            {loading ? (
+              <div style={{ padding: 20, textAlign: "center" }}>Carregando...</div>
+            ) : pedidosComAvaliacao.length === 0 ? (
+              <div style={{ padding: 20, textAlign: "center" }}>Nenhum pedido com avaliação encontrada.</div>
+            ) : (
+              <table style={{ minWidth: 700, width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: "left", padding: "8px 16px" }}>Pedido</th>
+                    <th style={{ textAlign: "left", padding: "8px 16px" }}>Cliente</th>
+                    <th style={{ textAlign: "left", padding: "8px 16px" }}>Status</th>
+                    <th style={{ textAlign: "left", padding: "8px 16px" }}>Valor</th>
+                    <th style={{ textAlign: "left", padding: "8px 16px" }}>Data</th>
+                    <th style={{ textAlign: "left", padding: "8px 16px" }}>Avaliação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pedidosComAvaliacao.map((pedido) => (
+                    <tr key={pedido.id}>
+                      <td style={{ padding: "8px 16px" }}>{pedido.id}</td>
+                      <td style={{ padding: "8px 16px" }}>{pedido.cliente}</td>
+                      <td style={{ padding: "8px 16px" }}>{pedido.status}</td>
+                      <td style={{ padding: "8px 16px" }}>{pedido.valor}</td>
+                      <td style={{ padding: "8px 16px" }}>{pedido.data}</td>
+                      <td style={{ padding: "8px 16px" }}>5 ★</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </section>
       </main>
