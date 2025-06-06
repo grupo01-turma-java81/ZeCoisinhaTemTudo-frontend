@@ -3,26 +3,43 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "react-toastify";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 import ListaPedidos from "./components/pedidos/listapedidos/ListaPedidos";
 import ListaClientes from "./components/clientes/listaclientes/ListaClientes";
 import FormClientes from "./components/clientes/formclientes/FormClientes";
 import DeletarClientes from "./components/clientes/deletarcliente/DeletarClientes";
+import { AuthProvider } from "./contexts/AuthContext";
+import FormPedido from "./components/pedidos/formpedido/FormPedido";
+import DeletarPedido from "./components/pedidos/deletarpedido/DeletarPedido";
+import Login from "./pages/login/Login";
+import Cadastro from "./pages/cadastro/Cadastro";
 
 function App() {
   return (
     <>
-      <ToastContainer />
-      <BrowserRouter>
-        <div className="min-h-[80vh]">
-          <Routes>
-            <Route path="/pedidos" element={<ListaPedidos />} />
+      <AuthProvider>
+        <ToastContainer />
+        <BrowserRouter>
+          <Navbar />
+          <div className="mx-auto min-h-[calc(100vh-64px)]">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/cadastro" element={<Cadastro />} />
+              <Route path="/" element={<ListaPedidos />} />
+              <Route path="/pedidos" element={<ListaPedidos />} />
             <Route path="/clientes" element={<ListaClientes />} />
             <Route path="/cadastrarcliente" element={<FormClientes />} />
             <Route path="/editarcliente/:cpf" element={<FormClientes />} />
             <Route path="/deletarcliente/:cpf" element={<DeletarClientes/>} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+              <Route path="/cadastrarpedido" element={<FormPedido />} />
+              <Route path="/cadastrarpedido/:id" element={<FormPedido />} />
+              <Route path="/deletarpedido/:id" element={<DeletarPedido />} />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
