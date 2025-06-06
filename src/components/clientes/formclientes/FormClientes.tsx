@@ -25,6 +25,7 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
     });
 
     useEffect(() => {
+        // Se não estiver logado, redireciona para login
         if (!token) {
             toast.info("Você precisa estar logado!");
             navigate("/login");
@@ -56,8 +57,10 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
             });
             if (onClienteCadastrado) onClienteCadastrado(cliente);
         } catch (error: any) {
-            if (error.toString().includes("403")) {
+            // Se o token expirou ou for inválido, faz logout
+            if (error?.response?.status === 403 || error.toString().includes("403")) {
                 handleLogout();
+                toast.error("Sessão expirada. Faça login novamente.");
             } else {
                 toast.error("Erro ao cadastrar o cliente.");
             }
