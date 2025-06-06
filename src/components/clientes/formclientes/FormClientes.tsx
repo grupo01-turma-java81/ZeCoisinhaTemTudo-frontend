@@ -6,23 +6,18 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 interface FormClientesProps {
-    onClienteCadastrado?: (cliente: Cliente) => void;
+  onClienteCadastrado?: (cliente: Cliente) => void;
 }
 
 const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
-    const navigate = useNavigate();
-    const { usuario, handleLogout } = useContext(AuthContext);
-    const token = usuario?.token || "";
-
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [cliente, setCliente] = useState<Cliente>({
-        cpf: 0,
-        nome: "",
-        telefone: "",
-        endereco: "",
-        dataCadastro: "",
-        pedido: [],
-    });
+  const [cliente, setCliente] = useState<Cliente>({
+    cpf: 0,
+    nome: "",
+    telefone: "",
+    endereco: "",
+    dataCadastro: "",
+    pedido: [],
+  });
 
   const navigate = useNavigate();
   const { cpf } = useParams<{ cpf: string }>();
