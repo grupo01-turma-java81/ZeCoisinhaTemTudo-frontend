@@ -6,6 +6,7 @@ export default interface Pedido {
   dataPedido: string;
   statusEntrega: string;
   valorTotal: number;
+  positivo: boolean;
   cliente: Cliente | null;
   usuario: Usuario | null;
 }

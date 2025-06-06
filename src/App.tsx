@@ -9,6 +9,8 @@ import ListaPedidos from "./components/pedidos/listapedidos/ListaPedidos";
 import { AuthProvider } from "./contexts/AuthContext";
 import FormPedido from "./components/pedidos/formpedido/FormPedido";
 import DeletarPedido from "./components/pedidos/deletarpedido/DeletarPedido";
+import Login from "./pages/login/Login";
+import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/Home";
 
 function App() {
@@ -20,7 +22,10 @@ function App() {
           <Navbar />
           <div className="mx-auto min-h-[calc(100vh-64px)]">
             <Routes>
-              <Route path="/" element={<ListaPedidos />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/cadastro" element={<Cadastro />} />
+              <Route path="/home" element={<ListaPedidos />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/cadastrarpedido/:id" element={<FormPedido />} />

@@ -23,9 +23,14 @@ function CardPedido({ pedido }: CardPedidosProps) {
           </h3>
         </div>
         <div className="p-4 ">
-          <h4 className="text-lg font-semibold uppercase">{pedido.id}</h4>
-          <p>{pedido.statusEntrega}</p>
-          <p>Tema: {pedido.cliente?.nome}</p>
+          <h4 className="text-lg font-semibold uppercase">{`Pedido - ${pedido.id} em ${pedido.statusEntrega}`}</h4>
+          <p>{pedido.valorTotal}</p>
+          <p>
+            {pedido.positivo
+              ? `Cliente em potencial!`
+              : `Cliente insatisfeito.`}
+          </p>
+          <p>Cliente: {pedido.cliente?.nome}</p>
           <p>
             Data:{" "}
             {new Intl.DateTimeFormat(undefined, {
