@@ -46,11 +46,11 @@ function ListaPedidos() {
       alert("Você precisa estar logado");
       navigate("/");
     }
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
     buscarPedidos();
-  }, [pedidos.length]);
+  });
 
   return (
     <>
@@ -66,13 +66,13 @@ function ListaPedidos() {
       )}
       <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
         <div className="flex items-center justify-between gap-x-4 w-full max-w-7xl mx-auto mt-8 mb-6">
-          <div className="bg-white rounded-full px-8 py-2 max-w-4xl w-full">
+          <div className="bg-white rounded-full px-8 py-2 max-w-3xl w-full">
             <span className="text-2xl font-bold text-[#E09B96] font-montserrat">
               Pedidos
             </span>
           </div>
           <button
-            className="flex items-center gap-2 bg-blue-600 text-white font-semibold rounded-full px-8 py-2 text-lg shadow hover:bg-blue-700 transition"
+            className="flex items-center gap-2 bg-blue-600 text-white font-semibold rounded-full px-8 py-2 text-lg shadow hover:bg-blue-700 transition cursor-pointer"
             onClick={abrirModalNovo}
           >
             <span className="text-2xl">+</span> Criar pedido
@@ -87,6 +87,11 @@ function ListaPedidos() {
             />
           ))}
         </div>
+        <ModalPedido
+          open={modalAberto}
+          id={idSelecionado}
+          onClose={() => setModalAberto(false)}
+        />
       </div>
     </>
   );

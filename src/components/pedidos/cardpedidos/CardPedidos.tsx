@@ -35,7 +35,7 @@ function CardPedido({ pedido, onEditar }: CardPedidosProps) {
         <div className="ml-auto flex gap-2">
           <button
             onClick={() => onEditar(pedido.id?.toString() || "")}
-            className="text-blue-600 hover:underline cursor-pointer"
+            className="text-blue-600 hover:underline cursor-pointer mr-2.5"
           >
             Editar
           </button>

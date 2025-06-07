@@ -59,7 +59,7 @@ function FormPedido({ id }: { id?: string }) {
       alert("Você precisa estar logado");
       navigate("/");
     }
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
     buscarClientes();
@@ -67,14 +67,14 @@ function FormPedido({ id }: { id?: string }) {
     if (id !== undefined) {
       buscarPedidoPorId(id);
     }
-  }, [id]);
+  });
 
   useEffect(() => {
     setPedido({
       ...pedido,
       cliente: cliente,
     });
-  }, [cliente]);
+  }, [cliente, pedido]);
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setPedido({
@@ -83,6 +83,10 @@ function FormPedido({ id }: { id?: string }) {
       cliente: cliente,
       usuario: usuario,
     });
+  }
+
+  function retornar() {
+    navigate("/pedidos");
   }
 
   async function gerarNovoPedido(e: ChangeEvent<HTMLFormElement>) {
@@ -122,6 +126,8 @@ function FormPedido({ id }: { id?: string }) {
         }
       }
     }
+
+    retornar();
   }
 
   const carregandoCliente = cliente.nome === "";
@@ -219,8 +225,8 @@ function FormPedido({ id }: { id?: string }) {
         </div>
         <button
           type="submit"
-          className="rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800
-                               text-white font-bold w-1/2 mx-auto py-2 flex justify-center"
+          className="rounded disabled:bg-slate-200 bg-[#1a3052] hover:bg-[#232e3f]
+                               text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
           disabled={carregandoCliente}
         >
           {isLoading ? (
@@ -232,9 +238,7 @@ function FormPedido({ id }: { id?: string }) {
               visible={true}
             />
           ) : (
-            <span className="cursor-pointer">
-              {id !== undefined ? "Atualizar" : "Cadastrar"}
-            </span>
+            <span>PRONTO!</span>
           )}
         </button>
       </form>

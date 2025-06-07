@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { buscar } from "../../services/Service";
 import type Pedido from "../../models/Pedido";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      navigate("/");
+      return;
+    }
     buscar(
       "/pedidos",
       (data: Pedido[]) => {
@@ -23,7 +29,9 @@ function Home() {
     ).catch(() => {
       setLoading(false);
     });
-  }, [token]);
+  }, [token, navigate]);
+
+  if (!token) return null;
 
   return (
     <div
