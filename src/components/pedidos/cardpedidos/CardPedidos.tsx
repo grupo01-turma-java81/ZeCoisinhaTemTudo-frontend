@@ -1,54 +1,62 @@
 import { Link } from "react-router-dom";
 import type Pedido from "../../../models/Pedido";
+import { FaBox, FaMoneyBillWave } from "react-icons/fa";
 
 interface CardPedidosProps {
   pedido: Pedido;
+  onEditar: (id: string) => void;
 }
 
-function CardPedido({ pedido }: CardPedidosProps) {
+function CardPedido({ pedido, onEditar }: CardPedidosProps) {
+  const statusMap: { [key: string]: string } = {
+    Concluído: "bg-green-500 text-white",
+    "Em Andamento": "bg-yellow-400 text-white",
+    Cancelado: "bg-red-500 text-white",
+  };
+
   return (
-    <div
-      className="border-slate-900 border 
-            flex flex-col rounded overflow-hidden justify-between"
-    >
-      <div>
-        <div className="flex w-full bg-indigo-400 py-2 px-4 items-center gap-4">
-          <img
-            src={pedido.usuario?.foto}
-            className="h-12 rounded-full"
-            alt={pedido.usuario?.nome}
-          />
-          <h3 className="text-lg font-bold text-center uppercase">
-            {pedido.usuario?.nome}
-          </h3>
-        </div>
-        <div className="p-4 ">
-          <h4 className="text-lg font-semibold uppercase">{`Pedido ${pedido.id}: ${pedido.statusEntrega}`}</h4>
-          <p>R$: {Number(pedido.valorTotal).toFixed(2)}</p>
-          <p>Cliente: {pedido.cliente?.nome}</p>
-          <p>
-            {pedido.positivo
-              ? `Cliente em potencial!`
-              : `Cliente insatisfeito.`}
-          </p>
-          <p>Abertura do pedido: {pedido.dataPedido}</p>
+    <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-2 mb-4">
+      <div className="flex items-center gap-3">
+        <FaBox className="text-2xl text-gray-700" />
+        <span className="font-bold text-lg">Pedido</span>
+        <span className="text-green-600 font-bold">
+          #{String(pedido.id).padStart(2, "0")}
+        </span>
+        <span
+          className={`ml-2 px-3 py-1 rounded-full text-xs font-semibold capitalize ${
+            statusMap[pedido.statusEntrega] || "bg-gray-300"
+          }`}
+        >
+          {pedido.statusEntrega?.toLowerCase()}
+        </span>
+        <div className="ml-auto flex gap-2">
+          <button
+            onClick={() => onEditar(pedido.id?.toString() || "")}
+            className="text-blue-600 hover:underline cursor-pointer"
+          >
+            Editar
+          </button>
+          <button className="text-blue-600 hover:underline cursor-pointer">
+            <Link to={`/deletarpedido/${pedido.id}`}>Deletar</Link>
+          </button>
         </div>
       </div>
-      <div className="flex">
-        <Link
-          to={`/editarpedido/${pedido.id}`}
-          className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 
-    flex items-center justify-center py-2"
-        >
-          <button>Editar</button>
-        </Link>
-        <Link
-          to={`/deletarpedido/${pedido.id}`}
-          className="text-white bg-red-400 
-	hover:bg-red-700 w-full flex items-center justify-center"
-        >
-          <button>Deletar</button>
-        </Link>
+      <div className="ml-8">
+        <div className="font-semibold">
+          Cliente: <span className="font-normal">{pedido.cliente?.nome}</span>
+        </div>
+        <div className="font-semibold">
+          Data: <span className="font-normal">{pedido.dataPedido}</span>
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+          <FaMoneyBillWave className="text-green-600 text-xl" />
+          <span className="font-bold text-lg">
+            R${" "}
+            {Number(pedido.valorTotal).toLocaleString("pt-BR", {
+              minimumFractionDigits: 2,
+            })}
+          </span>
+        </div>
       </div>
     </div>
   );

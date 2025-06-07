@@ -15,6 +15,7 @@ import Home from "./pages/home/Home";
 import ListaClientes from "./components/clientes/listaclientes/ListaClientes";
 import FormClientes from "./components/clientes/formclientes/FormClientes";
 import DeletarClientes from "./components/clientes/deletarcliente/DeletarClientes";
+import Oportunidade from "./pages/oportunidade/Oportunidade";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               <Route path="/cadastro" element={<Cadastro />} />
               <Route path="/home" element={<Home />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
+              <Route path="/oportunidades" element={<Oportunidade />} />
               <Route path="/cadastrarpedido" element={<FormPedido />} />
               <Route path="/editarpedido/:id" element={<FormPedido />} />
               <Route path="/deletarpedido/:id" element={<DeletarPedido />} />

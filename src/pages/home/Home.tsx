@@ -1,41 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { buscar } from "../../services/Service";
+import type Pedido from "../../models/Pedido";
 
-interface Cliente {
-  nome: string;
-}
-
-interface Pedido {
-  id: number;
-  dataPedido: string;
-  statusEntrega: string;
-  valorTotal: number;
-  positivo: boolean;
-  cliente: Cliente | null;
-}
-
-const Home: React.FC = () => {
+function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
 
   useEffect(() => {
-  buscar(
-    "/pedidos",
-    (data: Pedido[]) => {
-      setPedidos(data.filter((pedido) => pedido.positivo === true));
-      setLoading(false);
-    },
-    {
-      headers: {
-        Authorization: token,
+    buscar(
+      "/pedidos",
+      (data: Pedido[]) => {
+        setPedidos(data.filter((pedido) => pedido.positivo === true));
+        setLoading(false);
       },
-    }
-  ).catch(() => {
-    setLoading(false);
-  });
-}, []);
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    ).catch(() => {
+      setLoading(false);
+    });
+  }, [token]);
 
   return (
     <div
@@ -77,8 +65,12 @@ const Home: React.FC = () => {
               fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
             }}
           >
-            <span style={{ color: "#2a5bd7", fontWeight: 700 }}>Conecte-se</span> melhor com seus clientes e{" "}
-            <span style={{ color: "#2a5bd7", fontWeight: 700 }}>venda</span> mais todos os dias.
+            <span style={{ color: "#2a5bd7", fontWeight: 700 }}>
+              Conecte-se
+            </span>{" "}
+            melhor com seus clientes e{" "}
+            <span style={{ color: "#2a5bd7", fontWeight: 700 }}>venda</span>{" "}
+            mais todos os dias.
           </p>
         </div>
         <img
@@ -111,9 +103,20 @@ const Home: React.FC = () => {
               margin: "0 auto",
             }}
           >
-            <img src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png" alt="Dicas" width={28} />
+            <img
+              src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
+              alt="Dicas"
+              width={28}
+            />
           </div>
-          <p style={{ marginTop: 8, color: "#223047", fontWeight: 500, fontFamily: "'Montserrat', Arial, Helvetica, sans-serif" }}>
+          <p
+            style={{
+              marginTop: 8,
+              color: "#223047",
+              fontWeight: 500,
+              fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
+            }}
+          >
             dicas
           </p>
         </div>
@@ -130,9 +133,20 @@ const Home: React.FC = () => {
               margin: "0 auto",
             }}
           >
-            <img src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png" alt="Alertas" width={28} />
+            <img
+              src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
+              alt="Alertas"
+              width={28}
+            />
           </div>
-          <p style={{ marginTop: 8, color: "#223047", fontWeight: 500, fontFamily: "'Montserrat', Arial, Helvetica, sans-serif" }}>
+          <p
+            style={{
+              marginTop: 8,
+              color: "#223047",
+              fontWeight: 500,
+              fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
+            }}
+          >
             alertas
           </p>
         </div>
@@ -165,7 +179,13 @@ const Home: React.FC = () => {
           }}
         >
           {loading ? (
-            <p style={{ color: "#D9D9D9", textAlign: "center", fontFamily: "'Montserrat', Arial, Helvetica, sans-serif" }}>
+            <p
+              style={{
+                color: "#D9D9D9",
+                textAlign: "center",
+                fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
+              }}
+            >
               Carregando...
             </p>
           ) : (
@@ -190,12 +210,19 @@ const Home: React.FC = () => {
               </thead>
               <tbody>
                 {pedidos.map((pedido) => (
-                  <tr key={pedido.id} style={{ borderBottom: "1px solid #D9D9D9" }}>
+                  <tr
+                    key={pedido.id}
+                    style={{ borderBottom: "1px solid #D9D9D9" }}
+                  >
                     <td style={tdStyle}>#{pedido.id}</td>
-                    <td style={tdStyle}>{pedido.cliente?.nome || "Cliente não informado"}</td>
+                    <td style={tdStyle}>
+                      {pedido.cliente?.nome || "Cliente não informado"}
+                    </td>
                     <td style={tdStyle}>{pedido.statusEntrega}</td>
                     <td style={tdStyle}>R$ {pedido.valorTotal.toFixed(2)}</td>
-                    <td style={tdStyle}>{new Date(pedido.dataPedido).toLocaleDateString()}</td>
+                    <td style={tdStyle}>
+                      {new Date(pedido.dataPedido).toLocaleDateString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -205,7 +232,7 @@ const Home: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 const thStyle: React.CSSProperties = {
   padding: "14px 18px",

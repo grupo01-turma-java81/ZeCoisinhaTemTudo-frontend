@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect, type ChangeEvent } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar, atualizar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
 import type Cliente from "../../../models/Cliente";
 import type Pedido from "../../../models/Pedido";
 
-function FormPedido() {
+function FormPedido({ id }: { id?: string }) {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -14,8 +14,6 @@ function FormPedido() {
 
   const [cliente, setCliente] = useState<Cliente>({} as Cliente);
   const [pedido, setPedido] = useState<Pedido>({} as Pedido);
-
-  const { id } = useParams<{ id: string }>();
 
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
@@ -156,15 +154,23 @@ function FormPedido() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="statusEntrega">Status da Entrega</label>
-          <input
-            type="text"
-            placeholder="Ex: Em andamento"
+          <select
             name="statusEntrega"
+            id="statusEntrega"
             required
             className="border-2 border-slate-700 rounded p-2"
-            value={pedido.statusEntrega}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-          />
+            value={pedido.statusEntrega || ""}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              atualizarEstado(e as any)
+            }
+          >
+            <option value="" disabled>
+              Selecione o status
+            </option>
+            <option value="Concluído">Concluído</option>
+            <option value="Em Andamento">Em Andamento</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="valorTotal">Preço do pedido</label>

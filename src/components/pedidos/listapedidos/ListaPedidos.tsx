@@ -10,10 +10,22 @@ import ModalPedido from "../modalpedido/ModalPedido";
 function ListaPedidos() {
   const navigate = useNavigate();
 
+  const [modalAberto, setModalAberto] = useState(false);
+  const [idSelecionado, setIdSelecionado] = useState<string | undefined>();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
+
+  function abrirModalNovo() {
+    setIdSelecionado(undefined);
+    setModalAberto(true);
+  }
+
+  function abrirModalEditar(id: string) {
+    setIdSelecionado(id);
+    setModalAberto(true);
+  }
 
   async function buscarPedidos() {
     try {
@@ -52,21 +64,29 @@ function ListaPedidos() {
           wrapperClass="dna-wrapper mx-auto"
         />
       )}
-      <div className="flex justify-center w-full my-4">
-        <div className="container flex flex-col mx-2">
-          <div
-            className="container mx-auto my-4 
-                        grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-          >
-            {pedidos.map((pedido) => (
-              <CardPedido key={pedido.id} pedido={pedido} />
-            ))}
-          </div>
+      <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
+        <div className="w-full max-w-7xl mx-auto my-4">
+          {pedidos.map((pedido) => (
+            <CardPedido
+              key={pedido.id}
+              pedido={pedido}
+              onEditar={abrirModalEditar}
+            />
+          ))}
         </div>
-      </div>
-      <div className="flex justify-around gap-4">
         <div className="flex justify-around gap-4">
-          <ModalPedido />
+          <button
+            className="border rounded px-4 py-2 hover:bg-white hover:text-indigo-800"
+            onClick={abrirModalNovo}
+          >
+            Novo Pedido
+          </button>
+
+          <ModalPedido
+            open={modalAberto}
+            idPedido={idSelecionado}
+            onClose={() => setModalAberto(false)}
+          />
         </div>
       </div>
     </>
