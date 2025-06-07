@@ -5,6 +5,7 @@ import { buscar } from "../../../services/Service";
 import { DNA } from "react-loader-spinner";
 import type Pedido from "../../../models/Pedido";
 import CardPedido from "../cardpedidos/CardPedidos";
+import ModalPedido from "../modalpedido/ModalPedido";
 
 function ListaPedidos() {
   const navigate = useNavigate();
@@ -61,6 +62,11 @@ function ListaPedidos() {
               <CardPedido key={pedido.id} pedido={pedido} />
             ))}
           </div>
+        </div>
+      </div>
+      <div className="flex justify-around gap-4">
+        <div className="flex justify-around gap-4">
+          <ModalPedido />
         </div>
       </div>
     </>

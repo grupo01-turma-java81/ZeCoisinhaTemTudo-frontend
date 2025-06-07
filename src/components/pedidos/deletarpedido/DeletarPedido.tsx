@@ -83,8 +83,10 @@ function DeletarPedido() {
           Pedido
         </header>
         <div className="p-4">
-          <p className="text-xl h-full">{pedido.id}</p>
-          <p>{pedido.statusEntrega}</p>
+          <p className="text-xl h-full">
+            Pedido {pedido.id}: {pedido.statusEntrega}
+          </p>
+          <p>Cliente: {pedido.cliente?.nome}</p>
         </div>
         <div className="flex">
           <button

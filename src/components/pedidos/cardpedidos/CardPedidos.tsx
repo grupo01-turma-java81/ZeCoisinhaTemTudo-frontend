@@ -31,13 +31,7 @@ function CardPedido({ pedido }: CardPedidosProps) {
               ? `Cliente em potencial!`
               : `Cliente insatisfeito.`}
           </p>
-          <p>
-            Abertura do pedido:{" "}
-            {new Intl.DateTimeFormat(undefined, {
-              dateStyle: "full",
-              timeStyle: "medium",
-            }).format(new Date(pedido.dataPedido))}
-          </p>
+          <p>Abertura do pedido: {pedido.dataPedido}</p>
         </div>
       </div>
       <div className="flex">
