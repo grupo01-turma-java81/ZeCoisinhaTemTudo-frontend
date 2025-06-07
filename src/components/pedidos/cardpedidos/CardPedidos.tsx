@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import type Pedido from "../../../models/Pedido";
 import { FaBox, FaMoneyBillWave } from "react-icons/fa";
+import { useState } from "react";
+import ModalDeletarPedido from "../modaldeletarpedido/ModalDeletarPedido";
 
 interface CardPedidosProps {
   pedido: Pedido;
@@ -13,6 +14,8 @@ function CardPedido({ pedido, onEditar }: CardPedidosProps) {
     "Em Andamento": "bg-yellow-400 text-white",
     Cancelado: "bg-red-500 text-white",
   };
+
+  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
 
   return (
     <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-2 mb-4">
@@ -36,9 +39,17 @@ function CardPedido({ pedido, onEditar }: CardPedidosProps) {
           >
             Editar
           </button>
-          <button className="text-blue-600 hover:underline cursor-pointer">
-            <Link to={`/deletarpedido/${pedido.id}`}>Deletar</Link>
+          <button
+            className="text-blue-600 hover:underline cursor-pointer"
+            onClick={() => setModalDeleteOpen(true)}
+          >
+            Deletar
           </button>
+          <ModalDeletarPedido
+            id={pedido.id?.toString() || ""}
+            open={modalDeleteOpen}
+            onClose={() => setModalDeleteOpen(false)}
+          />
         </div>
       </div>
       <div className="ml-8">

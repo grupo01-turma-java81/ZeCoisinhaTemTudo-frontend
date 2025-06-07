@@ -85,10 +85,6 @@ function FormPedido({ id }: { id?: string }) {
     });
   }
 
-  function retornar() {
-    navigate("/pedidos");
-  }
-
   async function gerarNovoPedido(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
@@ -126,9 +122,6 @@ function FormPedido({ id }: { id?: string }) {
         }
       }
     }
-
-    setIsLoading(false);
-    retornar();
   }
 
   const carregandoCliente = cliente.nome === "";
@@ -239,12 +232,13 @@ function FormPedido({ id }: { id?: string }) {
               visible={true}
             />
           ) : (
-            <span>{id !== undefined ? "Atualizar" : "Cadastrar"}</span>
+            <span className="cursor-pointer">
+              {id !== undefined ? "Atualizar" : "Cadastrar"}
+            </span>
           )}
         </button>
       </form>
     </div>
   );
 }
-
 export default FormPedido;

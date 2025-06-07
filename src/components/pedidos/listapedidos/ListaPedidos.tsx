@@ -65,6 +65,19 @@ function ListaPedidos() {
         />
       )}
       <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
+        <div className="flex items-center justify-between gap-x-4 w-full max-w-7xl mx-auto mt-8 mb-6">
+          <div className="bg-white rounded-full px-8 py-2 max-w-4xl w-full">
+            <span className="text-2xl font-bold text-[#E09B96] font-montserrat">
+              Pedidos
+            </span>
+          </div>
+          <button
+            className="flex items-center gap-2 bg-blue-600 text-white font-semibold rounded-full px-8 py-2 text-lg shadow hover:bg-blue-700 transition"
+            onClick={abrirModalNovo}
+          >
+            <span className="text-2xl">+</span> Criar pedido
+          </button>
+        </div>
         <div className="w-full max-w-7xl mx-auto my-4">
           {pedidos.map((pedido) => (
             <CardPedido
@@ -73,20 +86,6 @@ function ListaPedidos() {
               onEditar={abrirModalEditar}
             />
           ))}
-        </div>
-        <div className="flex justify-around gap-4">
-          <button
-            className="border rounded px-4 py-2 hover:bg-white hover:text-indigo-800"
-            onClick={abrirModalNovo}
-          >
-            Novo Pedido
-          </button>
-
-          <ModalPedido
-            open={modalAberto}
-            idPedido={idSelecionado}
-            onClose={() => setModalAberto(false)}
-          />
         </div>
       </div>
     </>
