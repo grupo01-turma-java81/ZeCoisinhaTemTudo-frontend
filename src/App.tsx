@@ -33,11 +33,7 @@ function App() {
               <Route path="/clientes" element={<ListaClientes />} />
               <Route path="/cadastrarcliente" element={<FormClientes />} />
               <Route path="/editarcliente/:cpf" element={<FormClientes />} />
-              <Route
-                path="/deletarcliente/:cpf"
-                element={<DeletarClientes />}
-              />
-              <Route path="/" element={<Home />} />
+              <Route path="/deletarcliente/:cpf" element={<DeletarClientes />} />
             </Routes>
           </div>
           <Footer />

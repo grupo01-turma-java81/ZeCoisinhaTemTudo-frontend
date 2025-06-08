@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ToastAlerta } from "../../utils/ToastAlerta";
 import { useContext, type ReactNode } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -27,39 +27,33 @@ function NavBar() {
             height="48"
           />
         </div>
-        <div className="flex items-center gap-7 text-[16px]">
-          <Link to="" className="text-[#374151] no-underline font-normal">
-            Avaliacoes
-          </Link>
-          <Link to="/home" className="text-[#374151] no-underline font-normal">
-            Home
-          </Link>
-          <Link to="/pedidos" className="text-[#232b3b] no-underline font-bold">
-            Pedidos
-          </Link>
-          <Link
-            to="/oportunidades"
-            className="text-[#374151] no-underline font-normal"
-          >
-            Oportunidades
-          </Link>
-          <Link
-            to=""
-            onClick={logout}
-            className="text-[#374151] no-underline font-normal"
-          >
-            Sair
-          </Link>
-        </div>
+        <ul className="flex items-center gap-7 text-[16px]">
+          {["home", "oportunidades", "pedidos",  "clientes"].map((item) => (
+            <li key={item}>
+              <NavLink
+                to={`/${item}`}
+                className={({ isActive }) =>
+                  `cursor-pointer ${isActive ? "font-bold" : "font-normal"}`
+                }
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </NavLink>
+            </li>
+          ))}
+          <li>
+            <Link to="" onClick={logout}>Sair</Link>
+          </li>
+        </ul>
         <div className="w-10 h-10 rounded-full bg-[#ede7f6] flex items-center justify-center">
           <img
             src={usuario.foto}
             alt="Foto de Perfil"
             className="rounded-4xl"
-            width="28"
-            height="28"
+            width="30"
+            height="30"
           />
         </div>
+
       </nav>
     );
   }
