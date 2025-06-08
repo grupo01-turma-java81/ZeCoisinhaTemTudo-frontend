@@ -14,7 +14,7 @@ function Footer() {
     component = (
       <footer className="bg-[#1a3052] border-t border-[#16243a] py-3 px-10 flex flex-col sm:flex-row items-start sm:items-center justify-between">
         <div>
-          <a href="http://" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/grupo01-turma-java81/ZeCoisinhaTemTudo-frontend" target="_blank" rel="noopener noreferrer">
           <h5 className="text-white text-xl sm:text-2xl font-bold leading-tight">
             ZéCoisinhaTemTudo
           </h5>
