@@ -1,16 +1,22 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import { deletar, buscar } from "../../../services/Service";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { buscar, deletar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 import type Cliente from "../../../models/Cliente";
 
-function DeletarClientes() {
-  const navigate = useNavigate();
-  const { cpf } = useParams<{ cpf: string }>();
+interface DeletarClientesProps {
+  open: boolean;
+  cpf: string;
+  onClose: () => void;
+  onAtualizar: () => void;
+}
 
-  const [cliente, setCliente] = useState<Cliente>({} as Cliente);
+function DeletarClientes({ open, cpf, onClose, onAtualizar }: DeletarClientesProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [cliente, setCliente] = useState<Cliente>({} as Cliente);
 
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
@@ -28,17 +34,11 @@ function DeletarClientes() {
   }
 
   useEffect(() => {
-    if (token === "") {
-      alert("Você precisa estar logado");
-      navigate("/");
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (cpf !== undefined) {
+    if (open && cpf) {
       buscarPorCpf(cpf);
     }
-  }, [cpf]);
+    // eslint-disable-next-line
+  }, [open, cpf]);
 
   async function deletarCliente() {
     setIsLoading(true);
@@ -47,47 +47,34 @@ function DeletarClientes() {
       await deletar(`/clientes/${cpf}`, {
         headers: { Authorization: token },
       });
-      alert("Cliente apagado com sucesso");
+
+      ToastAlerta("Cliente apagado com sucesso", "info");
+      onAtualizar();
+      onClose();
     } catch (error: any) {
       if (error.toString().includes("403")) {
         handleLogout();
       } else {
-        alert("Erro ao deletar o cliente.");
+        ToastAlerta("Erro ao deletar o cliente.", "erro");
       }
     }
 
     setIsLoading(false);
-    retornar();
-  }
-
-  function retornar() {
-    navigate("/clientes");
   }
 
   return (
-    <div className="container w-1/3 mx-auto">
-      <h1 className="text-4xl text-center my-4">Deletar Cliente</h1>
-      <p className="text-center font-semibold mb-4">
-        Você tem certeza de que deseja apagar o cliente a seguir?
-      </p>
-      <div className="border flex flex-col rounded-2xl overflow-hidden justify-between">
-        <header className="py-2 px-6 bg-indigo-600 text-white font-bold text-2xl">
-          Cliente
-        </header>
-        <div className="p-4">
-          <p className="text-xl h-full">{cliente.nome}</p>
-          <p>{cliente.cpf}</p>
+    <Popup open={open} modal onClose={onClose}>
+      <div className="p-6 flex flex-col items-center">
+        <h2 className="text-xl font-bold mb-4">
+          Deseja realmente deletar este cliente?
+        </h2>
+        <div className="mb-4 text-center">
+          <div className="font-semibold">{cliente.nome}</div>
+          <div className="text-gray-500">{cliente.cpf}</div>
         </div>
-        <div className="flex">
+        <div className="flex gap-4 mt-3">
           <button
-            className="text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2"
-            onClick={retornar}
-            disabled={isLoading}
-          >
-            Não
-          </button>
-          <button
-            className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-600 flex items-center justify-center"
+            className="px-4 py-2 rounded bg-red-500 text-white cursor-pointer"
             onClick={deletarCliente}
             disabled={isLoading}
           >
@@ -103,9 +90,16 @@ function DeletarClientes() {
               <span>Sim</span>
             )}
           </button>
+          <button
+            className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
+            onClick={onClose}
+            disabled={isLoading}
+          >
+            Não
+          </button>
         </div>
       </div>
-    </div>
+    </Popup>
   );
 }
 
