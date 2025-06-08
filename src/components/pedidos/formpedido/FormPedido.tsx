@@ -2,7 +2,7 @@ import { useState, useContext, useEffect, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar, atualizar, cadastrar } from "../../../services/Service";
-import { RotatingLines } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
 import type Cliente from "../../../models/Cliente";
 import type Pedido from "../../../models/Pedido";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
@@ -252,12 +252,14 @@ function FormPedido({
           disabled={carregandoCliente}
         >
           {isLoading ? (
-            <RotatingLines
-              strokeColor="white"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="24"
+            <Oval
               visible={true}
+              width="24"
+              height="24"
+              strokeWidth="5"
+              color="#1B2F4F"
+              secondaryColor="#AFC3E3"
+              ariaLabel="oval-loading"
             />
           ) : (
             <span>PRONTO!</span>

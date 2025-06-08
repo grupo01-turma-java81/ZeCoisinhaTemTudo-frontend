@@ -3,10 +3,10 @@ import { buscar } from "../../services/Service";
 import type Pedido from "../../models/Pedido";
 import { useNavigate } from "react-router-dom";
 import "../home/Home.css";
+import { Oval } from "react-loader-spinner";
 
 function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
-  const [loading, setLoading] = useState(true);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
   const navigate = useNavigate();
@@ -20,16 +20,13 @@ function Home() {
       "/pedidos",
       (data: Pedido[]) => {
         setPedidos(data.filter((pedido) => pedido.positivo === true));
-        setLoading(false);
       },
       {
         headers: {
           Authorization: token,
         },
       }
-    ).catch(() => {
-      setLoading(false);
-    });
+    ).catch(() => {});
   }, [token, navigate]);
 
   if (!token) return null;
@@ -90,48 +87,63 @@ function Home() {
           Pedidos com Avaliações Positivas
         </h2>
         <div className="px-8 py-6 bg-[#dddddd] rounded-xl shadow-md mx-4 min-h-[350px]">
-          <table className="w-full border-collapse font-montserrat">
-            <thead>
-              <tr className="border-b border-[#bfc8d6]">
-                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
-                  Pedido
-                </th>
-                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
-                  Cliente
-                </th>
-                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
-                  Status
-                </th>
-                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
-                  Valor
-                </th>
-                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
-                  Data
-                </th>
-                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
-                  Número
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {pedidos.map((pedido) => (
-                <tr key={pedido.id} className="hover:bg-[#e7e7e7] transition">
-                  <td className="px-5 py-3">#{pedido.id}</td>
-                  <td className="px-5 py-3">
-                    {pedido.cliente?.nome || "Cliente não informado"}
-                  </td>
-                  <td className="px-5 py-3">{pedido.statusEntrega}</td>
-                  <td className="px-5 py-3">
-                    R$ {pedido.valorTotal.toFixed(2)}
-                  </td>
-                  <td className="px-5 py-3">
-                    {new Date(pedido.dataPedido).toLocaleDateString()}
-                  </td>
-                  <td className="px-5 py-3">{pedido.cliente?.telefone}</td>
+          {pedidos.length === 0 ? (
+            <div className="flex items-center justify-center pt-20">
+              <Oval
+                visible={true}
+                width="60"
+                height="60"
+                color="#1B2F4F"
+                secondaryColor="#AFC3E3"
+                ariaLabel="oval-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          ) : (
+            <table className="w-full border-collapse font-montserrat">
+              <thead>
+                <tr className="border-b border-[#bfc8d6]">
+                  <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                    Pedido
+                  </th>
+                  <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                    Cliente
+                  </th>
+                  <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                    Status
+                  </th>
+                  <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                    Valor
+                  </th>
+                  <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                    Data
+                  </th>
+                  <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                    Número
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {pedidos.map((pedido) => (
+                  <tr key={pedido.id} className="hover:bg-[#e7e7e7] transition">
+                    <td className="px-5 py-3">#{pedido.id}</td>
+                    <td className="px-5 py-3">
+                      {pedido.cliente?.nome || "Cliente não informado"}
+                    </td>
+                    <td className="px-5 py-3">{pedido.statusEntrega}</td>
+                    <td className="px-5 py-3">
+                      R$ {pedido.valorTotal.toFixed(2)}
+                    </td>
+                    <td className="px-5 py-3">
+                      {new Date(pedido.dataPedido).toLocaleDateString()}
+                    </td>
+                    <td className="px-5 py-3">{pedido.cliente?.telefone}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

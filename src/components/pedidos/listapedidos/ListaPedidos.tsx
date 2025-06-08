@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar } from "../../../services/Service";
-import { DNA } from "react-loader-spinner";
+import { DNA, Oval } from "react-loader-spinner";
 import type Pedido from "../../../models/Pedido";
 import CardPedido from "../cardpedidos/CardPedidos";
 import ModalPedido from "../modalpedido/ModalPedido";
@@ -58,47 +58,52 @@ function ListaPedidos() {
 
   return (
     <>
-      {pedidos.length === 0 && (
-        <DNA
-          visible={true}
-          height="200"
-          width="200"
-          ariaLabel="dna-loading"
-          wrapperStyle={{}}
-          wrapperClass="dna-wrapper mx-auto"
-        />
-      )}
-      <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
-        <div className="flex items-center justify-between gap-x-4 w-full max-w-7xl mx-auto mt-8 mb-6">
-          <div className="bg-white rounded-full px-8 py-2 max-w-3xl w-full">
-            <span className="text-2xl font-bold text-[#E09B96] font-montserrat">
-              Pedidos
-            </span>
+      {pedidos.length === 0 ? (
+        <div className="flex items-center justify-center w-full min-h-screen bg-gray-200">
+          <Oval
+            visible={true}
+            width="60"
+            height="60"
+            color="#1B2F4F"
+            secondaryColor="#AFC3E3"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
+          <div className="flex items-center justify-between gap-x-4 w-full max-w-7xl mx-auto mt-8 mb-6">
+            <div className="bg-white rounded-full px-8 py-2 max-w-3xl w-full">
+              <span className="text-2xl font-bold text-[#E09B96] font-montserrat">
+                Pedidos
+              </span>
+            </div>
+            <button
+              className="flex items-center gap-2 bg-blue-600 text-white font-semibold rounded-full px-8 py-2 text-lg shadow hover:bg-blue-700 transition cursor-pointer"
+              onClick={abrirModalNovo}
+            >
+              <span className="text-2xl">+</span> Criar pedido
+            </button>
           </div>
-          <button
-            className="flex items-center gap-2 bg-blue-600 text-white font-semibold rounded-full px-8 py-2 text-lg shadow hover:bg-blue-700 transition cursor-pointer"
-            onClick={abrirModalNovo}
-          >
-            <span className="text-2xl">+</span> Criar pedido
-          </button>
+          <div className="w-full max-w-7xl mx-auto my-4">
+            {pedidos.map((pedido) => (
+              <CardPedido
+                key={pedido.id}
+                pedido={pedido}
+                onEditar={abrirModalEditar}
+                onAtualizar={atualizarPedidos}
+              />
+            ))}
+          </div>
+          <ModalPedido
+            open={modalAberto}
+            id={idSelecionado}
+            onClose={() => setModalAberto(false)}
+            onAtualizar={atualizarPedidos}
+          />
         </div>
-        <div className="w-full max-w-7xl mx-auto my-4">
-          {pedidos.map((pedido) => (
-            <CardPedido
-              key={pedido.id}
-              pedido={pedido}
-              onEditar={abrirModalEditar}
-              onAtualizar={atualizarPedidos}
-            />
-          ))}
-        </div>
-        <ModalPedido
-          open={modalAberto}
-          id={idSelecionado}
-          onClose={() => setModalAberto(false)}
-          onAtualizar={atualizarPedidos}
-        />
-      </div>
+      )}
     </>
   );
 }
