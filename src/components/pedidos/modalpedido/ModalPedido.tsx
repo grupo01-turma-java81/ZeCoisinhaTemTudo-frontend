@@ -8,12 +8,13 @@ interface ModalPedidoProps {
   id?: string;
   open: boolean;
   onClose: () => void;
+  onAtualizar: () => void;
 }
 
-function ModalPedido({ id, open, onClose }: ModalPedidoProps) {
+function ModalPedido({ id, open, onClose, onAtualizar }: ModalPedidoProps) {
   return (
     <Popup open={open} modal onClose={onClose}>
-      <FormPedido id={id} />
+      <FormPedido id={id} onAtualizar={onAtualizar} onClose={onClose} />
     </Popup>
   );
 }

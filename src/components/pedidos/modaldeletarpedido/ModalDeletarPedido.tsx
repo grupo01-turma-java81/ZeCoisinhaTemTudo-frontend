@@ -4,14 +4,21 @@ import { deletar } from "../../../services/Service";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { RotatingLines } from "react-loader-spinner";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 interface ModalDeletarPedidoProps {
   id: string;
   open: boolean;
   onClose: () => void;
+  onAtualizar: () => void;
 }
 
-function ModalDeletarPedido({ id, open, onClose }: ModalDeletarPedidoProps) {
+function ModalDeletarPedido({
+  id,
+  open,
+  onClose,
+  onAtualizar,
+}: ModalDeletarPedidoProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { usuario, handleLogout } = useContext(AuthContext);
@@ -27,12 +34,14 @@ function ModalDeletarPedido({ id, open, onClose }: ModalDeletarPedidoProps) {
         },
       });
 
-      alert("Pedido apagado com sucesso");
+      ToastAlerta("Pedido apagado com sucesso", "info");
+      onAtualizar();
+      onClose();
     } catch (error: any) {
       if (error.toString().includes("403")) {
         handleLogout();
       } else {
-        alert("Erro ao deletar o pedido.");
+        ToastAlerta("Erro ao deletar o pedido.", "erro");
       }
     }
 
@@ -45,7 +54,7 @@ function ModalDeletarPedido({ id, open, onClose }: ModalDeletarPedidoProps) {
         <h2 className="text-xl font-bold mb-4">
           Deseja realmente deletar este pedido?
         </h2>
-        <div className="flex gap-4">
+        <div className="flex gap-4 mt-3">
           <button
             className="px-4 py-2 rounded bg-red-500 text-white cursor-pointer"
             onClick={deletarPedido}

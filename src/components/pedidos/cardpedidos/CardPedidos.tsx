@@ -6,9 +6,10 @@ import ModalDeletarPedido from "../modaldeletarpedido/ModalDeletarPedido";
 interface CardPedidosProps {
   pedido: Pedido;
   onEditar: (id: string) => void;
+  onAtualizar: () => void;
 }
 
-function CardPedido({ pedido, onEditar }: CardPedidosProps) {
+function CardPedido({ pedido, onEditar, onAtualizar }: CardPedidosProps) {
   const statusMap: { [key: string]: string } = {
     Concluído: "bg-green-500 text-white",
     "Em Andamento": "bg-yellow-400 text-white",
@@ -49,6 +50,7 @@ function CardPedido({ pedido, onEditar }: CardPedidosProps) {
             id={pedido.id?.toString() || ""}
             open={modalDeleteOpen}
             onClose={() => setModalDeleteOpen(false)}
+            onAtualizar={onAtualizar}
           />
         </div>
       </div>

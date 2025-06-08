@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { buscar } from "../../services/Service";
 import type Pedido from "../../models/Pedido";
 import { useNavigate } from "react-router-dom";
+import "../home/Home.css";
 
 function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
@@ -34,203 +35,83 @@ function Home() {
   if (!token) return null;
 
   return (
-    <div
-      style={{
-        fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-        background: "#fff",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "48px 60px 32px 60px",
-          background: "#fff",
-        }}
-      >
+    <div className="font-montserrat bg-white min-h-screen">
+      <div className="flex justify-between items-center px-16 pt-12 pb-8 bg-white">
         <div>
-          <h1
-            style={{
-              fontSize: 48,
-              color: "#223047",
-              fontWeight: 700,
-              marginBottom: 16,
-              letterSpacing: 1,
-              fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-            }}
-          >
+          <h1 className="text-5xl text-[#223047] font-bold mb-4 tracking-wide font-montserrat">
             BEM VINDO!
           </h1>
-          <p
-            style={{
-              fontSize: 28,
-              maxWidth: 600,
-              lineHeight: "1.3",
-              fontWeight: 500,
-              fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-            }}
-          >
-            <span style={{ color: "#2a5bd7", fontWeight: 700 }}>
-              Conecte-se
-            </span>{" "}
-            melhor com seus clientes e{" "}
-            <span style={{ color: "#2a5bd7", fontWeight: 700 }}>venda</span>{" "}
-            mais todos os dias.
+          <p className="text-2xl max-w-xl leading-snug font-semibold font-montserrat">
+            <span className="text-[#2a5bd7] font-bold">Conecte-se</span> melhor
+            com seus clientes e{" "}
+            <span className="text-[#2a5bd7] font-bold">venda</span> mais todos
+            os dias.
           </p>
         </div>
         <img
           src="https://i.postimg.cc/GtXQwkfb/Test-Creative-removebg-preview.png"
           alt="Ilustração de vendas"
-          style={{ maxWidth: 400, height: "auto" }}
+          className="max-w-[400px] h-auto"
         />
       </div>
 
-      {/* Dicas e Alertas */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 60,
-          background: "#AFC3E3",
-          padding: "24px 0",
-        }}
-      >
-        <div style={{ textAlign: "center" }}>
-          <div
-            style={{
-              background: "#bfcbe6",
-              borderRadius: "50%",
-              width: 48,
-              height: 48,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto",
-            }}
-          >
+      <div className="flex justify-center gap-16 bg-[#AFC3E3] py-6">
+        <div className="text-center">
+          <div className="bg-[#bfcbe6] rounded-full w-12 h-12 flex items-center justify-center mx-auto">
             <img
               src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
               alt="Dicas"
               width={28}
             />
           </div>
-          <p
-            style={{
-              marginTop: 8,
-              color: "#223047",
-              fontWeight: 500,
-              fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-            }}
-          >
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat">
             dicas
           </p>
         </div>
-        <div style={{ textAlign: "center" }}>
-          <div
-            style={{
-              background: "#bfcbe6",
-              borderRadius: "50%",
-              width: 48,
-              height: 48,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto",
-            }}
-          >
+        <div className="text-center">
+          <div className="bg-[#bfcbe6] rounded-full w-12 h-12 flex items-center justify-center mx-auto">
             <img
               src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
               alt="Alertas"
               width={28}
             />
           </div>
-          <p
-            style={{
-              marginTop: 8,
-              color: "#223047",
-              fontWeight: 500,
-              fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-            }}
-          >
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat">
             alertas
           </p>
         </div>
       </div>
 
-      {/* Card de Pedidos Positivos */}
-      <div style={{ padding: "32px 60px" }}>
-        <h2
-          style={{
-            fontSize: 22,
-            color: "#223047",
-            marginBottom: 16,
-            fontWeight: 700,
-            letterSpacing: 0.5,
-            fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-          }}
-        >
+      <div className="px-16 py-8">
+        <h2 className="text-2xl text-[#223047] mb-4 font-bold tracking-wide font-montserrat">
           Pedidos com Avaliações Positivas
         </h2>
-        <div
-          style={{
-            background: "#D9D9D9",
-            borderRadius: 10,
-            padding: 40,
-            minHeight: 400,
-            boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-          }}
-        >
+        <div className="bg-[#D9D9D9] rounded-xl p-10 min-h-[400px] shadow-md flex flex-col justify-start">
           {loading ? (
-            <p
-              style={{
-                color: "#D9D9D9",
-                textAlign: "center",
-                fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-              }}
-            >
+            <p className="text-[#D9D9D9] text-center font-montserrat">
               Carregando...
             </p>
           ) : (
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                background: "#fff",
-                borderRadius: 8,
-                overflow: "hidden",
-                fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-              }}
-            >
+            <table className="w-full border-collapse bg-white rounded-lg overflow-hidden font-montserrat">
               <thead>
-                <tr style={{ backgroundColor: "#D9D9D9", textAlign: "left" }}>
-                  <th style={thStyle}>Pedido</th>
-                  <th style={thStyle}>Cliente</th>
-                  <th style={thStyle}>Status</th>
-                  <th style={thStyle}>Valor</th>
-                  <th style={thStyle}>Data</th>
+                <tr className="bg-[#D9D9D9] text-left">
+                  <th>Pedido</th>
+                  <th>Cliente</th>
+                  <th>Status</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                  <th>Número</th>
                 </tr>
               </thead>
               <tbody>
                 {pedidos.map((pedido) => (
-                  <tr
-                    key={pedido.id}
-                    style={{ borderBottom: "1px solid #D9D9D9" }}
-                  >
-                    <td style={tdStyle}>#{pedido.id}</td>
-                    <td style={tdStyle}>
-                      {pedido.cliente?.nome || "Cliente não informado"}
-                    </td>
-                    <td style={tdStyle}>{pedido.statusEntrega}</td>
-                    <td style={tdStyle}>R$ {pedido.valorTotal.toFixed(2)}</td>
-                    <td style={tdStyle}>
-                      {new Date(pedido.dataPedido).toLocaleDateString()}
-                    </td>
+                  <tr key={pedido.id} className="border-b border-[#D9D9D9]">
+                    <td>#{pedido.id}</td>
+                    <td>{pedido.cliente?.nome || "Cliente não informado"}</td>
+                    <td>{pedido.statusEntrega}</td>
+                    <td>R$ {pedido.valorTotal.toFixed(2)}</td>
+                    <td>{new Date(pedido.dataPedido).toLocaleDateString()}</td>
+                    <td>{pedido.cliente?.telefone}</td>
                   </tr>
                 ))}
               </tbody>
@@ -241,20 +122,5 @@ function Home() {
     </div>
   );
 }
-
-const thStyle: React.CSSProperties = {
-  padding: "14px 18px",
-  fontWeight: "bold",
-  color: "#223047",
-  fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-  fontSize: 18,
-};
-
-const tdStyle: React.CSSProperties = {
-  padding: "14px 18px",
-  color: "#223047",
-  fontFamily: "'Montserrat', Arial, Helvetica, sans-serif",
-  fontSize: 17,
-};
 
 export default Home;

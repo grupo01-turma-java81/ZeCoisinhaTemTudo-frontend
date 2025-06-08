@@ -52,6 +52,10 @@ function ListaPedidos() {
     buscarPedidos();
   });
 
+  function atualizarPedidos() {
+    buscarPedidos();
+  }
+
   return (
     <>
       {pedidos.length === 0 && (
@@ -84,6 +88,7 @@ function ListaPedidos() {
               key={pedido.id}
               pedido={pedido}
               onEditar={abrirModalEditar}
+              onAtualizar={atualizarPedidos}
             />
           ))}
         </div>
@@ -91,6 +96,7 @@ function ListaPedidos() {
           open={modalAberto}
           id={idSelecionado}
           onClose={() => setModalAberto(false)}
+          onAtualizar={atualizarPedidos}
         />
       </div>
     </>

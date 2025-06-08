@@ -5,8 +5,17 @@ import { buscar, atualizar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
 import type Cliente from "../../../models/Cliente";
 import type Pedido from "../../../models/Pedido";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
-function FormPedido({ id }: { id?: string }) {
+function FormPedido({
+  id,
+  onAtualizar,
+  onClose,
+}: {
+  id?: string;
+  onAtualizar: () => void;
+  onClose: () => void;
+}) {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,14 +76,14 @@ function FormPedido({ id }: { id?: string }) {
     if (id !== undefined) {
       buscarPedidoPorId(id);
     }
-  });
+  }, [id]);
 
   useEffect(() => {
     setPedido({
       ...pedido,
       cliente: cliente,
     });
-  }, [cliente, pedido]);
+  }, [cliente]);
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setPedido({
@@ -101,12 +110,14 @@ function FormPedido({ id }: { id?: string }) {
           },
         });
 
-        alert("Pedido atualizada com sucesso");
+        ToastAlerta("Pedido atualizado com sucesso", "sucesso");
+        onAtualizar();
+        onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
           handleLogout();
         } else {
-          alert("Erro ao atualizar o Pedido");
+          ToastAlerta("Erro ao atualizar o Pedido", "erro");
         }
       }
     } else {
@@ -117,12 +128,14 @@ function FormPedido({ id }: { id?: string }) {
           },
         });
 
-        alert("Pedido cadastrado com sucesso");
+        ToastAlerta("Pedido cadastrado com sucesso", "sucesso");
+        onAtualizar();
+        onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
           handleLogout();
         } else {
-          alert("Erro ao cadastrar o Pedido");
+          ToastAlerta("Erro ao cadastrar o Pedido", "erro");
         }
       }
     }
@@ -189,6 +202,13 @@ function FormPedido({ id }: { id?: string }) {
             name="Positivo"
             id="Positivo"
             className="border p-2 border-slate-800 rounded"
+            value={
+              pedido.positivo === true
+                ? "true"
+                : pedido.positivo === false
+                ? "false"
+                : ""
+            }
             onChange={(e) =>
               setPedido({
                 ...pedido,
@@ -210,9 +230,11 @@ function FormPedido({ id }: { id?: string }) {
             name="Cliente"
             id="Cliente"
             className="border p-2 border-slate-800 rounded"
+            value={cliente.cpf || ""}
             onChange={(e) => buscarClientePorId(e.currentTarget.value)}
+            required
           >
-            <option value="" selected disabled>
+            <option value="" disabled>
               Selecione o Cliente
             </option>
 
