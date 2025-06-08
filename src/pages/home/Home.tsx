@@ -36,12 +36,12 @@ function Home() {
 
   return (
     <div className="font-montserrat bg-white min-h-screen">
-      <div className="flex justify-between items-center px-16 pt-12 pb-8 bg-white">
+      <div className="flex justify-between items-center px-24 pt-16 pb-12 bg-white">
         <div>
-          <h1 className="text-5xl text-[#223047] font-bold mb-4 tracking-wide font-montserrat">
+          <h1 className="text-7xl text-[#223047] font-bold mb-6 tracking-wide font-montserrat drop-shadow-lg">
             BEM VINDO!
           </h1>
-          <p className="text-2xl max-w-xl leading-snug font-semibold font-montserrat">
+          <p className="text-3xl max-w-2xl leading-snug font-semibold font-montserrat mt-4">
             <span className="text-[#2a5bd7] font-bold">Conecte-se</span> melhor
             com seus clientes e{" "}
             <span className="text-[#2a5bd7] font-bold">venda</span> mais todos
@@ -51,72 +51,87 @@ function Home() {
         <img
           src="https://i.postimg.cc/GtXQwkfb/Test-Creative-removebg-preview.png"
           alt="Ilustração de vendas"
-          className="max-w-[400px] h-auto"
+          className="w-[520px] h-auto mr-20"
         />
       </div>
 
-      <div className="flex justify-center gap-16 bg-[#AFC3E3] py-6">
+      <div className="flex justify-center gap-30 bg-[#d7e1f2] py-4">
         <div className="text-center">
-          <div className="bg-[#bfcbe6] rounded-full w-12 h-12 flex items-center justify-center mx-auto">
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
             <img
               src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
               alt="Dicas"
-              width={28}
+              width={40}
+              height={40}
             />
           </div>
-          <p className="mt-2 text-[#223047] font-semibold font-montserrat">
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
             dicas
           </p>
         </div>
         <div className="text-center">
-          <div className="bg-[#bfcbe6] rounded-full w-12 h-12 flex items-center justify-center mx-auto">
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
             <img
               src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
               alt="Alertas"
-              width={28}
+              width={40}
+              height={40}
             />
           </div>
-          <p className="mt-2 text-[#223047] font-semibold font-montserrat">
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
             alertas
           </p>
         </div>
       </div>
 
       <div className="px-16 py-8">
-        <h2 className="text-2xl text-[#223047] mb-4 font-bold tracking-wide font-montserrat">
+        <div className="border-t border-[#bfc8d6] mb-6" />
+        <h2 className="text-3xl text-[#223047] mb-4 font-bold tracking-wide font-montserrat ml-8 mt-8">
           Pedidos com Avaliações Positivas
         </h2>
-        <div className="bg-[#D9D9D9] rounded-xl p-10 min-h-[400px] shadow-md flex flex-col justify-start">
-          {loading ? (
-            <p className="text-[#D9D9D9] text-center font-montserrat">
-              Carregando...
-            </p>
-          ) : (
-            <table className="w-full border-collapse bg-white rounded-lg overflow-hidden font-montserrat">
-              <thead>
-                <tr className="bg-[#D9D9D9] text-left">
-                  <th>Pedido</th>
-                  <th>Cliente</th>
-                  <th>Status</th>
-                  <th>Valor</th>
-                  <th>Data</th>
-                  <th>Número</th>
+        <div className="px-8 py-6 bg-[#dddddd] rounded-xl shadow-md mx-4 min-h-[350px]">
+          <table className="w-full border-collapse font-montserrat">
+            <thead>
+              <tr className="border-b border-[#bfc8d6]">
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Pedido
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Cliente
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Status
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Valor
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Data
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Número
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {pedidos.map((pedido) => (
+                <tr key={pedido.id} className="hover:bg-[#e7e7e7] transition">
+                  <td className="px-5 py-3">#{pedido.id}</td>
+                  <td className="px-5 py-3">
+                    {pedido.cliente?.nome || "Cliente não informado"}
+                  </td>
+                  <td className="px-5 py-3">{pedido.statusEntrega}</td>
+                  <td className="px-5 py-3">
+                    R$ {pedido.valorTotal.toFixed(2)}
+                  </td>
+                  <td className="px-5 py-3">
+                    {new Date(pedido.dataPedido).toLocaleDateString()}
+                  </td>
+                  <td className="px-5 py-3">{pedido.cliente?.telefone}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {pedidos.map((pedido) => (
-                  <tr key={pedido.id} className="border-b border-[#D9D9D9]">
-                    <td>#{pedido.id}</td>
-                    <td>{pedido.cliente?.nome || "Cliente não informado"}</td>
-                    <td>{pedido.statusEntrega}</td>
-                    <td>R$ {pedido.valorTotal.toFixed(2)}</td>
-                    <td>{new Date(pedido.dataPedido).toLocaleDateString()}</td>
-                    <td>{pedido.cliente?.telefone}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
