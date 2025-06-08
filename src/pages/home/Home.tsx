@@ -38,10 +38,10 @@ function Home() {
     <div className="font-montserrat bg-white min-h-screen">
       <div className="flex justify-between items-center px-24 pt-16 pb-12 bg-white">
         <div>
-          <h1 className="text-7xl text-[#223047] font-bold mb-6 tracking-wide font-montserrat drop-shadow-lg">
+          <h1 className="text-8xl text-[#223047] font-bold mb-6 tracking-wide font-montserrat drop-shadow-lg">
             BEM VINDO!
           </h1>
-          <p className="text-3xl max-w-2xl leading-snug font-semibold font-montserrat mt-4">
+          <p className="text-3xl max-w-3xl leading-snug font-semibold font-montserrat mt-4">
             <span className="text-[#2a5bd7] font-bold">Conecte-se</span> melhor
             com seus clientes e{" "}
             <span className="text-[#2a5bd7] font-bold">venda</span> mais todos
@@ -49,9 +49,9 @@ function Home() {
           </p>
         </div>
         <img
-          src="https://i.postimg.cc/GtXQwkfb/Test-Creative-removebg-preview.png"
+          src="https://i.postimg.cc/Qxq7rXv1/Design-sem-nome-27.png"
           alt="Ilustração de vendas"
-          className="w-[520px] h-auto mr-20"
+          className="w-[800px] h-auto mr-30"
         />
       </div>
 

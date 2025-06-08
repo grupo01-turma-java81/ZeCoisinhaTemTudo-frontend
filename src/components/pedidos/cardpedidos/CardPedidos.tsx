@@ -19,8 +19,8 @@ function CardPedido({ pedido, onEditar, onAtualizar }: CardPedidosProps) {
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-2 mb-4">
-      <div className="flex items-center gap-3">
+    <div className="bg-white rounded-xl shadow p-6 pl-1 flex flex-col gap-2 mb-4">
+      <div className="flex items-center gap-3 ml-7">
         <FaBox className="text-2xl text-gray-700" />
         <span className="font-bold text-lg">Pedido</span>
         <span className="text-green-600 font-bold">
