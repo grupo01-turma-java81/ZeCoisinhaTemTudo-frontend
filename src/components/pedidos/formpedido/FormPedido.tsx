@@ -1,12 +1,21 @@
 import { useState, useContext, useEffect, type ChangeEvent } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar, atualizar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
 import type Cliente from "../../../models/Cliente";
 import type Pedido from "../../../models/Pedido";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
-function FormPedido() {
+function FormPedido({
+  id,
+  onAtualizar,
+  onClose,
+}: {
+  id?: string;
+  onAtualizar: () => void;
+  onClose: () => void;
+}) {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,15 +24,12 @@ function FormPedido() {
   const [cliente, setCliente] = useState<Cliente>({} as Cliente);
   const [pedido, setPedido] = useState<Pedido>({} as Pedido);
 
-  const { id } = useParams<{ id: string }>();
-  const { cpf } = useParams<{ cpf: string }>();
-
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
-  async function buscarPedidoPorId(cpf: string) {
+  async function buscarPedidoPorId(id: string) {
     try {
-      await buscar(`/pedidos/${cpf}`, setPedido, {
+      await buscar(`/pedidos/${id}`, setPedido, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -33,9 +39,9 @@ function FormPedido() {
     }
   }
 
-  async function buscarClientePorCpf(cpf: string) {
+  async function buscarClientePorId(id: string) {
     try {
-      await buscar(`/clientes/${cpf}`, setCliente, {
+      await buscar(`/clientes/${id}`, setCliente, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -62,15 +68,15 @@ function FormPedido() {
       alert("Você precisa estar logado");
       navigate("/");
     }
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
     buscarClientes();
 
-    if (cpf !== undefined) {
-      buscarPedidoPorId(cpf);
+    if (id !== undefined) {
+      buscarPedidoPorId(id);
     }
-  }, [cpf]);
+  }, [id]);
 
   useEffect(() => {
     setPedido({
@@ -104,12 +110,14 @@ function FormPedido() {
           },
         });
 
-        alert("Pedido atualizada com sucesso");
+        ToastAlerta("Pedido atualizado com sucesso", "sucesso");
+        onAtualizar();
+        onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
           handleLogout();
         } else {
-          alert("Erro ao atualizar o Pedido");
+          ToastAlerta("Erro ao atualizar o Pedido", "erro");
         }
       }
     } else {
@@ -120,17 +128,18 @@ function FormPedido() {
           },
         });
 
-        alert("Pedido cadastrado com sucesso");
+        ToastAlerta("Pedido cadastrado com sucesso", "sucesso");
+        onAtualizar();
+        onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
           handleLogout();
         } else {
-          alert("Erro ao cadastrar o Pedido");
+          ToastAlerta("Erro ao cadastrar o Pedido", "erro");
         }
       }
     }
 
-    setIsLoading(false);
     retornar();
   }
 
@@ -157,15 +166,23 @@ function FormPedido() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="statusEntrega">Status da Entrega</label>
-          <input
-            type="text"
-            placeholder="Ex: Em andamento"
+          <select
             name="statusEntrega"
+            id="statusEntrega"
             required
             className="border-2 border-slate-700 rounded p-2"
-            value={pedido.statusEntrega}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-          />
+            value={pedido.statusEntrega || ""}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              atualizarEstado(e as any)
+            }
+          >
+            <option value="" disabled>
+              Selecione o status
+            </option>
+            <option value="Concluído">Concluído</option>
+            <option value="Em Andamento">Em Andamento</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="valorTotal">Preço do pedido</label>
@@ -185,6 +202,13 @@ function FormPedido() {
             name="Positivo"
             id="Positivo"
             className="border p-2 border-slate-800 rounded"
+            value={
+              pedido.positivo === true
+                ? "true"
+                : pedido.positivo === false
+                ? "false"
+                : ""
+            }
             onChange={(e) =>
               setPedido({
                 ...pedido,
@@ -206,9 +230,11 @@ function FormPedido() {
             name="Cliente"
             id="Cliente"
             className="border p-2 border-slate-800 rounded"
-            onChange={(e) => buscarClientePorCpf(e.currentTarget.value)}
+            value={cliente.cpf || ""}
+            onChange={(e) => buscarClientePorId(e.currentTarget.value)}
+            required
           >
-            <option value="" selected disabled>
+            <option value="" disabled>
               Selecione o Cliente
             </option>
 
@@ -221,8 +247,8 @@ function FormPedido() {
         </div>
         <button
           type="submit"
-          className="rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800
-                               text-white font-bold w-1/2 mx-auto py-2 flex justify-center"
+          className="rounded disabled:bg-slate-200 bg-[#1a3052] hover:bg-[#232e3f]
+                               text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
           disabled={carregandoCliente}
         >
           {isLoading ? (
@@ -234,12 +260,11 @@ function FormPedido() {
               visible={true}
             />
           ) : (
-            <span>{id !== undefined ? "Atualizar" : "Cadastrar"}</span>
+            <span>PRONTO!</span>
           )}
         </button>
       </form>
     </div>
   );
 }
-
 export default FormPedido;

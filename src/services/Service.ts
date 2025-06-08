@@ -23,8 +23,17 @@ export const buscar = async (
   setDados: Function,
   header: Object
 ) => {
-  const resposta = await api.get(url, header);
-  setDados(resposta.data);
+  try {
+    const resposta = await api.get(url, header);
+    if (resposta.status === 401 || resposta.status === 403) {
+      localStorage.removeItem("usuario");
+      window.location.href = "/";
+      return;
+    }
+    setDados(resposta.data);
+  } catch (error: any) {
+    console.log(error);
+  }
 };
 
 export const cadastrar = async (

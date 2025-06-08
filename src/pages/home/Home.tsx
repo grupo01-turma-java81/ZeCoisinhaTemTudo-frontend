@@ -1,216 +1,141 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { buscar } from "../../services/Service";
+import type Pedido from "../../models/Pedido";
+import { useNavigate } from "react-router-dom";
+import "../home/Home.css";
 
-const Home: React.FC = () => {
+function Home() {
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [loading, setLoading] = useState(true);
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  const token = usuario.token || "";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+      return;
+    }
+    buscar(
+      "/pedidos",
+      (data: Pedido[]) => {
+        setPedidos(data.filter((pedido) => pedido.positivo === true));
+        setLoading(false);
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    ).catch(() => {
+      setLoading(false);
+    });
+  }, [token, navigate]);
+
+  if (!token) return null;
+
   return (
-    <div
-      style={{
-        background: "#f5f6fa",
-        minHeight: "100vh",
-        width: "100vw",
-      }}
-    >
-      <main
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "40px 20px",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            color: "#223047",
-            fontWeight: 700,
-            fontSize: "3rem",
-            marginBottom: 40,
-            letterSpacing: 1,
-          }}
-        >
-          BEM VINDO!
-        </h1>
-        <section>
-          <div
-            style={{
-              display: "flex",
-              gap: 32,
-              justifyContent: "center",
-              marginBottom: 40,
-            }}
-          >
-            <div
-              style={{
-                background: "#bfc1c4",
-                borderRadius: 16,
-                width: 170,
-                height: 140,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 48,
-                cursor: "pointer",
-                transition: "transform 0.2s, filter 0.2s",
-              }}
-              tabIndex={0}
-              role="button"
-              aria-label="Acessar card 1"
-              onMouseOver={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")}
-              onFocus={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onBlur={e => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <span>Icone 1</span>
-            </div>
-            <div
-              style={{
-                background: "#bfc1c4",
-                borderRadius: 16,
-                width: 170,
-                height: 140,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 48,
-                cursor: "pointer",
-                transition: "transform 0.2s, filter 0.2s",
-              }}
-              tabIndex={0}
-              role="button"
-              aria-label="Acessar card 2"
-              onMouseOver={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")}
-              onFocus={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onBlur={e => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <span>Icone 2</span>
-            </div>
-            <div
-              style={{
-                background: "#bfc1c4",
-                borderRadius: 16,
-                width: 170,
-                height: 140,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 48,
-                cursor: "pointer",
-                transition: "transform 0.2s, filter 0.2s",
-              }}
-              tabIndex={0}
-              role="button"
-              aria-label="Acessar card 3"
-              onMouseOver={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")}
-              onFocus={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onBlur={e => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <span>Icone 3</span>
-            </div>
-            <div
-              style={{
-                background: "#bfc1c4",
-                borderRadius: 16,
-                width: 170,
-                height: 140,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                transition: "transform 0.2s, filter 0.2s",
-              }}
-              tabIndex={0}
-              role="button"
-              aria-label="Acessar avaliação"
-              onMouseOver={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")}
-              onFocus={e => (e.currentTarget.style.transform = "scale(1.04)")}
-              onBlur={e => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <span style={{ fontSize: 48, fontWeight: 700 }}>5,0</span>
-              <div style={{ textAlign: "center" }}>
-                <span style={{ fontWeight: 600, fontSize: 14 }}>Avaliação</span>
-                <div style={{ color: "#f7c948", fontSize: 20 }}>★★★★★</div>
-              </div>
-            </div>
-          </div>
-        </section>
+    <div className="font-montserrat bg-white min-h-screen">
+      <div className="flex justify-between items-center px-24 pt-16 pb-12 bg-white">
+        <div>
+          <h1 className="text-7xl text-[#223047] font-bold mb-6 tracking-wide font-montserrat drop-shadow-lg">
+            BEM VINDO!
+          </h1>
+          <p className="text-3xl max-w-2xl leading-snug font-semibold font-montserrat mt-4">
+            <span className="text-[#2a5bd7] font-bold">Conecte-se</span> melhor
+            com seus clientes e{" "}
+            <span className="text-[#2a5bd7] font-bold">venda</span> mais todos
+            os dias.
+          </p>
+        </div>
+        <img
+          src="https://i.postimg.cc/GtXQwkfb/Test-Creative-removebg-preview.png"
+          alt="Ilustração de vendas"
+          className="w-[520px] h-auto mr-20"
+        />
+      </div>
 
-        <section>
-          <hr style={{ margin: "32px 0 0 0", borderColor: "#bdbdbd" }} />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              margin: "24px 0 0 0",
-              gap: 16,
-            }}
-          >
-            <h2
-              style={{
-                fontWeight: 700,
-                fontSize: 20,
-                margin: 0,
-                padding: 0,
-                letterSpacing: 0.2,
-                color: "#223047",
-              }}
-            >
-              Pedidos Recentes
-            </h2>
+      <div className="flex justify-center gap-30 bg-[#d7e1f2] py-4">
+        <div className="text-center">
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
+            <img
+              src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
+              alt="Dicas"
+              width={40}
+              height={40}
+            />
           </div>
-          <div
-            style={{
-              background: "#d1d3d6",
-              borderRadius: 8,
-              padding: 24,
-              marginTop: 12,
-              overflowX: "auto",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-            }}
-          >
-            <table style={{ minWidth: 700, width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Pedido
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Cliente
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Status
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Valor
-                  </th>
-                  <th style={{ textAlign: "left", padding: "8px 16px", fontWeight: 700, fontSize: 16, color: "#223047" }}>
-                    Data
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ padding: "8px 16px" }}>#1234</td>
-                  <td style={{ padding: "8px 16px" }}>João S.</td>
-                  <td style={{ padding: "8px 16px" }}>A caminho</td>
-                  <td style={{ padding: "8px 16px" }}>R$ 250,00</td>
-                  <td style={{ padding: "8px 16px" }}>05/06/2025</td>
-                </tr>
-                <tr>
-                  <td style={{ padding: "8px 16px" }}>#1235</td>
-                  <td style={{ padding: "8px 16px" }}>Ana R.</td>
-                  <td style={{ padding: "8px 16px" }}>Pendente</td>
-                  <td style={{ padding: "8px 16px" }}>R$ 180,00</td>
-                  <td style={{ padding: "8px 16px" }}>06/06/2025</td>
-                </tr>
-              </tbody>
-            </table>
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
+            dicas
+          </p>
+        </div>
+        <div className="text-center">
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
+            <img
+              src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
+              alt="Alertas"
+              width={40}
+              height={40}
+            />
           </div>
-        </section>
-      </main>
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
+            alertas
+          </p>
+        </div>
+      </div>
+
+      <div className="px-16 py-8">
+        <div className="border-t border-[#bfc8d6] mb-6" />
+        <h2 className="text-3xl text-[#223047] mb-4 font-bold tracking-wide font-montserrat ml-8 mt-8">
+          Pedidos com Avaliações Positivas
+        </h2>
+        <div className="px-8 py-6 bg-[#dddddd] rounded-xl shadow-md mx-4 min-h-[350px]">
+          <table className="w-full border-collapse font-montserrat">
+            <thead>
+              <tr className="border-b border-[#bfc8d6]">
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Pedido
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Cliente
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Status
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Valor
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Data
+                </th>
+                <th className="px-5 py-3 text-[#6c7a93] text-xl font-bold text-left">
+                  Número
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {pedidos.map((pedido) => (
+                <tr key={pedido.id} className="hover:bg-[#e7e7e7] transition">
+                  <td className="px-5 py-3">#{pedido.id}</td>
+                  <td className="px-5 py-3">
+                    {pedido.cliente?.nome || "Cliente não informado"}
+                  </td>
+                  <td className="px-5 py-3">{pedido.statusEntrega}</td>
+                  <td className="px-5 py-3">
+                    R$ {pedido.valorTotal.toFixed(2)}
+                  </td>
+                  <td className="px-5 py-3">
+                    {new Date(pedido.dataPedido).toLocaleDateString()}
+                  </td>
+                  <td className="px-5 py-3">{pedido.cliente?.telefone}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default Home;
