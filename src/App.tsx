@@ -7,7 +7,6 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ListaPedidos from "./components/pedidos/listapedidos/ListaPedidos";
 import { AuthProvider } from "./contexts/AuthContext";
-import FormPedido from "./components/pedidos/formpedido/FormPedido";
 import Login from "./pages/login/Login";
 import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/Home";
