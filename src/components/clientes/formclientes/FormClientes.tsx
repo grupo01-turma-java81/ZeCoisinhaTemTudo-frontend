@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext, type ChangeEvent } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import type Cliente from "../../../models/Cliente";
 import { buscar, cadastrar, atualizar } from "../../../services/Service";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 interface FormClientesProps {
+  cpf?: string;
   onClienteCadastrado?: (cliente: Cliente) => void;
 }
 
-const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
+const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado }) => {
   const [cliente, setCliente] = useState<Cliente>({
-    cpf: 0,
+    cpf: "",
     nome: "",
     telefone: "",
     endereco: "",
@@ -20,7 +21,6 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
   });
 
   const navigate = useNavigate();
-  const { cpf } = useParams<{ cpf: string }>();
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
@@ -29,11 +29,20 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
       alert("Você precisa estar logado");
       navigate("/");
     }
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
-    if (cpf !== undefined) {
+    if (cpf) {
       buscarClientePorCpf(cpf);
+    } else {
+      setCliente({
+        cpf: "",
+        nome: "",
+        telefone: "",
+        endereco: "",
+        dataCadastro: "",
+        pedido: [],
+      });
     }
     // eslint-disable-next-line
   }, [cpf]);
@@ -60,13 +69,24 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (cpf !== undefined) {
+    let clienteParaEnviar: any = {
+      cpf: cliente.cpf,
+      nome: cliente.nome,
+      telefone: cliente.telefone,
+      endereco: cliente.endereco
+    };
+
+    if (cpf && cliente.dataCadastro) {
+      clienteParaEnviar.dataCadastro = cliente.dataCadastro;
+    }
+
+    if (cpf) {
       try {
-        await atualizar(`/clientes`, cliente, setCliente, {
+        await atualizar(`/clientes`, clienteParaEnviar, setCliente, {
           headers: { Authorization: token },
         });
         toast.success("Cliente atualizado com sucesso!");
-        navigate("/clientes");
+        if (onClienteCadastrado) onClienteCadastrado(clienteParaEnviar);
       } catch (error: any) {
         if (error.toString().includes("403")) {
           handleLogout();
@@ -76,11 +96,11 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
       }
     } else {
       try {
-        await cadastrar("/clientes", cliente, (novoCliente: Cliente) => {
+        await cadastrar("/clientes", clienteParaEnviar, (novoCliente: Cliente) => {
           if (onClienteCadastrado) onClienteCadastrado(novoCliente);
         }, { headers: { Authorization: token } });
         setCliente({
-          cpf: 0,
+          cpf: "",
           nome: "",
           telefone: "",
           endereco: "",
@@ -88,7 +108,6 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
           pedido: [],
         });
         toast.success("Cliente cadastrado com sucesso!");
-        navigate("/clientes");
       } catch (error: any) {
         if (error.toString().includes("403")) {
           handleLogout();
@@ -102,72 +121,77 @@ const FormClientes: React.FC<FormClientesProps> = ({ onClienteCadastrado }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow p-6 max-w-xl mx-auto mb-8"
+      className="w-full max-w-md mx-auto font-sans"
     >
-      <h2 className="text-lg font-semibold mb-4">
-        {cpf !== undefined ? "Editar Cliente" : "Cadastrar Cliente"}
+      <h2 className="text-4xl text-center my-8">
+        {cpf ? "Editar Cliente" : "Cadastrar Cliente"}
       </h2>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">CPF</label>
+      <div className="mb-6">
+        <label className="block text-base font-medium mb-2 font-sans">CPF</label>
         <input
-          type="number"
+          type="text"
           name="cpf"
-          value={cliente.cpf || ""}
+          value={cliente.cpf}
           onChange={atualizarEstado}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
-          disabled={cpf !== undefined}
+          disabled={!!cpf}
+          minLength={10}
+          maxLength={11}
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Nome</label>
+      <div className="mb-6">
+        <label className="block text-base font-medium mb-2 font-sans">Nome</label>
         <input
           type="text"
           name="nome"
           value={cliente.nome}
           onChange={atualizarEstado}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Telefone</label>
+      <div className="mb-6">
+        <label className="block text-base font-medium mb-2 font-sans">Telefone</label>
         <input
           type="text"
           name="telefone"
           value={cliente.telefone}
           onChange={atualizarEstado}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
+          minLength={14}
+          maxLength={14}
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Endereço</label>
+      <div className="mb-6">
+        <label className="block text-base font-medium mb-2 font-sans">Endereço</label>
         <input
           type="text"
           name="endereco"
           value={cliente.endereco}
           onChange={atualizarEstado}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Data de Cadastro</label>
+      <div className="mb-8">
+        <label className="block text-base font-medium mb-2 font-sans">Data de Cadastro</label>
         <input
-          type="date"
+          type="text"
           name="dataCadastro"
-          value={cliente.dataCadastro}
+          value={cliente.dataCadastro || ""}
           onChange={atualizarEstado}
-          className="w-full border rounded px-3 py-2"
-          required
+          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
+          disabled
+          placeholder="Preenchido automaticamente"
         />
       </div>
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+        className="w-full bg-[#16213E] text-white text-lg font-bold py-3 rounded hover:bg-[#0f1730] transition font-sans"
       >
-        {cpf !== undefined ? "Atualizar" : "Cadastrar"}
+        {cpf ? "PRONTO!" : "PRONTO!"}
       </button>
     </form>
   );
