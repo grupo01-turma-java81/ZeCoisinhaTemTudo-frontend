@@ -13,9 +13,10 @@ function ListaClientes() {
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
-  // Controle dos modais
   const [modalAberto, setModalAberto] = useState(false);
-  const [cpfSelecionado, setCpfSelecionado] = useState<string | undefined>(undefined);
+  const [cpfSelecionado, setCpfSelecionado] = useState<string | undefined>(
+    undefined
+  );
 
   const [modalDeletarAberto, setModalDeletarAberto] = useState(false);
   const [cpfDeletar, setCpfDeletar] = useState<string | undefined>(undefined);
@@ -79,7 +80,6 @@ function ListaClientes() {
         </button>
       </div>
       <div className="flex flex-col gap-4 max-w-7xl mx-auto w-full">
-        {/* Cabeçalho dos cards */}
         <div className="hidden md:grid grid-cols-6 bg-transparent px-6 py-2 font-bold text-[#E28B7C]">
           <span>CPF</span>
           <span>Nome</span>
@@ -88,7 +88,6 @@ function ListaClientes() {
           <span>Data de cadastro</span>
           <span className="text-center">Ações</span>
         </div>
-        {/* Lista de clientes */}
         {clientes.length === 0 ? (
           <div className="flex justify-center py-8">
             <DNA
@@ -106,14 +105,24 @@ function ListaClientes() {
               key={cliente.cpf}
               className="bg-white rounded-xl shadow-sm grid grid-cols-2 md:grid-cols-6 items-center px-6 py-4 min-h-[56px] gap-y-2"
             >
-              <span className="text-base font-normal break-all">{cliente.cpf}</span>
-              <span className="text-base font-normal break-all">{cliente.nome}</span>
-              <span className="text-base font-normal break-all hidden md:block">{cliente.telefone}</span>
-              <span className="text-base font-normal break-all hidden md:block">{cliente.endereco}</span>
+              <span className="text-base font-normal break-all">
+                {cliente.cpf}
+              </span>
+              <span className="text-base font-normal break-all">
+                {cliente.nome}
+              </span>
               <span className="text-base font-normal break-all hidden md:block">
-                {cliente.dataCadastro
-                  ? cliente.dataCadastro
-                  : <span className="text-gray-400 italic">-</span>}
+                {cliente.telefone}
+              </span>
+              <span className="text-base font-normal break-all hidden md:block">
+                {cliente.endereco}
+              </span>
+              <span className="text-base font-normal break-all hidden md:block">
+                {cliente.dataCadastro ? (
+                  cliente.dataCadastro
+                ) : (
+                  <span className="text-gray-400 italic">-</span>
+                )}
               </span>
               <div className="flex gap-2 justify-center">
                 <button
@@ -121,8 +130,19 @@ function ListaClientes() {
                   className="text-blue-600 hover:text-blue-900 transition cursor-pointer"
                   onClick={() => abrirModalEditar(cliente.cpf)}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m2 2H7a2 2 0 01-2-2v-5a2 2 0 012-2h5a2 2 0 012 2v5a2 2 0 01-2 2z" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 inline"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m2 2H7a2 2 0 01-2-2v-5a2 2 0 012-2h5a2 2 0 012 2v5a2 2 0 01-2 2z"
+                    />
                   </svg>
                 </button>
                 <button
@@ -130,8 +150,19 @@ function ListaClientes() {
                   className="text-red-600 hover:text-red-900 transition cursor-pointer"
                   onClick={() => abrirModalDeletar(cliente.cpf)}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 inline"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>

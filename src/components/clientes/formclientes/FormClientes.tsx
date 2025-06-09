@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useContext, type ChangeEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  type ChangeEvent,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import type Cliente from "../../../models/Cliente";
 import { buscar, cadastrar, atualizar } from "../../../services/Service";
@@ -10,7 +15,7 @@ interface FormClientesProps {
   onClienteCadastrado?: (cliente: Cliente) => void;
 }
 
-const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado }) => {
+function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
   const [cliente, setCliente] = useState<Cliente>({
     cpf: "",
     nome: "",
@@ -69,11 +74,11 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    let clienteParaEnviar: any = {
+    const clienteParaEnviar: any = {
       cpf: cliente.cpf,
       nome: cliente.nome,
       telefone: cliente.telefone,
-      endereco: cliente.endereco
+      endereco: cliente.endereco,
     };
 
     if (cpf && cliente.dataCadastro) {
@@ -96,9 +101,14 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
       }
     } else {
       try {
-        await cadastrar("/clientes", clienteParaEnviar, (novoCliente: Cliente) => {
-          if (onClienteCadastrado) onClienteCadastrado(novoCliente);
-        }, { headers: { Authorization: token } });
+        await cadastrar(
+          "/clientes",
+          clienteParaEnviar,
+          (novoCliente: Cliente) => {
+            if (onClienteCadastrado) onClienteCadastrado(novoCliente);
+          },
+          { headers: { Authorization: token } }
+        );
         setCliente({
           cpf: "",
           nome: "",
@@ -119,15 +129,14 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-md mx-auto font-sans"
-    >
+    <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto font-sans">
       <h2 className="text-4xl text-center my-8">
         {cpf ? "Editar Cliente" : "Cadastrar Cliente"}
       </h2>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">CPF</label>
+        <label className="block text-base font-medium mb-2 font-sans">
+          CPF
+        </label>
         <input
           type="text"
           name="cpf"
@@ -141,7 +150,9 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
         />
       </div>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">Nome</label>
+        <label className="block text-base font-medium mb-2 font-sans">
+          Nome
+        </label>
         <input
           type="text"
           name="nome"
@@ -152,7 +163,9 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
         />
       </div>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">Telefone</label>
+        <label className="block text-base font-medium mb-2 font-sans">
+          Telefone
+        </label>
         <input
           type="text"
           name="telefone"
@@ -165,7 +178,9 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
         />
       </div>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">Endereço</label>
+        <label className="block text-base font-medium mb-2 font-sans">
+          Endereço
+        </label>
         <input
           type="text"
           name="endereco"
@@ -176,7 +191,9 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
         />
       </div>
       <div className="mb-8">
-        <label className="block text-base font-medium mb-2 font-sans">Data de Cadastro</label>
+        <label className="block text-base font-medium mb-2 font-sans">
+          Data de Cadastro
+        </label>
         <input
           type="text"
           name="dataCadastro"
@@ -195,6 +212,6 @@ const FormClientes: React.FC<FormClientesProps> = ({ cpf, onClienteCadastrado })
       </button>
     </form>
   );
-};
+}
 
 export default FormClientes;

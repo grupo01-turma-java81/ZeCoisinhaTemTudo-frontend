@@ -28,7 +28,7 @@ function NavBar() {
           />
         </div>
         <ul className="flex items-center gap-7 text-[16px]">
-          {["home", "oportunidades", "pedidos",  "clientes"].map((item) => (
+          {["home", "pedidos", "clientes"].map((item) => (
             <li key={item}>
               <NavLink
                 to={`/${item}`}
@@ -41,7 +41,9 @@ function NavBar() {
             </li>
           ))}
           <li>
-            <Link to="" onClick={logout}>Sair</Link>
+            <Link to="" onClick={logout}>
+              Sair
+            </Link>
           </li>
         </ul>
         <div className="w-10 h-10 rounded-full bg-[#ede7f6] flex items-center justify-center">
@@ -53,7 +55,6 @@ function NavBar() {
             height="30"
           />
         </div>
-
       </nav>
     );
   }
