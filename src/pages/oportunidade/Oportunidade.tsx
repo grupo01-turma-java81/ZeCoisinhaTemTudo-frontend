@@ -24,39 +24,33 @@ function Oportunidade() {
         </div>
       </div>
 
-      <div className="border-t border-[#bfc8d6] mx-8 my-8" />
+      <div className="border-t border-[#bfc8d6] mx-40 my-8" />
 
-      <div className="flex flex-col md:flex-row justify-center items-center gap-8 px-8 pb-12">
-        <div className="bg-white rounded-lg shadow-md flex flex-col items-center w-[260px] p-4">
-          <img
-            src="https://i.postimg.cc/6TJQxRgJ/4265a1eb6fb8dd88dd50f6e72a414e63db6d8b68.jpg"
-            alt="Comunicação pós-venda"
-            className="w-full h-[120px] object-cover rounded"
-          />
-          <span className="mt-4 text-[#1a3e7a] font-semibold text-lg text-center">
-            Comunicacao pós-venda
+      <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-8 pb-12">
+        <div
+          className="bg-[url('https://i.postimg.cc/6TJQxRgJ/4265a1eb6fb8dd88dd50f6e72a414e63db6d8b68.jpg')]
+  bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px]"
+        >
+          <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
+            Experiência de compra
           </span>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md flex flex-col items-center w-[260px] p-4">
-          <img
-            src="https://i.postimg.cc/JhmP42Zt/5cfadc274c6278dcf2fa5c42e2efecac15bd286f.jpg"
-            alt="Experiência de compra"
-            className="w-full h-[120px] object-cover rounded"
-          />
-          <span className="mt-4 text-[#1a3e7a] font-semibold text-lg text-center">
-            Experiencia de compra
-          </span>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-md flex flex-col items-center w-[260px] p-4">
-          <img
-            src="https://i.postimg.cc/C5j4gC5b/9ece8a969e9e400131ab9319cd6e83354ff9e9e4.png"
-            alt="Benefícios exclusivos"
-            className="w-full h-[120px] object-cover rounded"
-          />
-          <span className="mt-4 text-[#1a3e7a] font-semibold text-lg text-center">
+        <div
+          className="bg-[url('https://i.postimg.cc/JhmP42Zt/5cfadc274c6278dcf2fa5c42e2efecac15bd286f.jpg')]
+  bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px]"
+        >
+          <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
             Benefícios exclusivos
+          </span>
+        </div>
+
+        <div
+          className="bg-[url('https://i.postimg.cc/ZRMZqLyv/Design-sem-nome-29.png')]
+  bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px]"
+        >
+          <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
+            Comunicação pós-venda
           </span>
         </div>
       </div>
