@@ -1,54 +1,39 @@
-# React + TypeScript + Vite
+# :shopping_cart: Zé Coisinha Tem Tudo 
+Projeto desenvolvido pela equipe de alunos do Generation Brasil no Projeto Integrador Full-Stack.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🏪 Descrição do Projeto
 
-Currently, two official plugins are available:
+Este CRM foi desenvolvido para ajudar equipes de vendas a cadastrar e gerenciar **clientes** e **potenciais clientes (leads)**, acompanhar o **status de atendimento**, registrar **interações** e **etapas de negociação** e melhorar a organização do processo de vendas e **aumentar a conversão!**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔑 Objetivo
+**Registro de todas as vendas**: Permite aos usuários registrar todas as interações com os clientes, facilitando o acompanhamento do desempenho e a avaliação do atendimento prestado.
 
-## Expanding the ESLint configuration
+**Interface Intuitiva e Agradável**: Desenvolvida com foco na usabilidade, nossa interface oferece uma navegação fluida e agradável, facilitando o acesso a todas as funcionalidades da aplicação.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Contato Direto**: Queremos que você, vendedor, e sua equipe consigam identificar oportunidades e entrem em contato direto com o cliente a partir da nossa aplicação!
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 🕹 ️Resolução de Problema
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+O projeto visa resolver problemas como:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* Falta de organização no relacionamento com clientes.
+* Dificuldade em identificar oportunidades de venda.
+* Falta de controle sobre a qualidade do atendimento.
+* Desorganização das atividades da equipe de vendas.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 👤Colaboradores do Projeto
+
+| Nome             | GitHub                           |
+|------------------|----------------------------------|
+| Vinícius Cristhian      | [@ViniCristhian](https://github.com/ViniCristhian) |
+| Iago Willian           | [@IagoWiliian](https://github.com/IagoWiliian) |
+| Giulio Gabriel            | [@GiulioArantes](https://github.com/GiulioArantes) |
+| Yasmim Ruescas           | [@Yasmimruescas](https://github.com/Yasmimruescas) |
+| Vitoria Camilly    | [@vitoriacamilly](https://github.com/Vitoriacmlly) |
+| Bruno Daniel          | [@BrunoDaniel13](https://github.com/BrunoDaniel13) |
+
+## 💾Observações
+
+Este projeto está em constante evolução — buscamos sempre aprimorar a experiência e as funcionalidades oferecidas. Se você tem sugestões, ideias ou encontrou algo que pode ser melhorado, sua contribuição será muito bem-vinda!
+
+Entre em contato com qualquer um dos colaboradores do projeto e venha somar com a gente. 💡🚀
