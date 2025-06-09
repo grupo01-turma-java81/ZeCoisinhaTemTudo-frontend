@@ -26,7 +26,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
     pedido: [],
   });
 
-  const [isLoading, setIsLoading] = useState(false); // 👈 NOVO ESTADO
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { usuario, handleLogout } = useContext(AuthContext);
