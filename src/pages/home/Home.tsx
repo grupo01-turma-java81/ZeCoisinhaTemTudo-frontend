@@ -53,21 +53,29 @@ function Home() {
       </div>
 
       <div className="flex justify-center gap-30 bg-[#d7e1f2] py-4">
-        <div className="text-center">
-          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
-            <img
-              src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
-              alt="Dicas"
-              width={40}
-              height={40}
-            />
+        <div
+          className="text-center cursor-pointer"
+          onClick={() => navigate("/perfil")}
+        >
+          <div className="text-center">
+            <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
+              <img
+                src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
+                alt="Dicas"
+                width={40}
+                height={40}
+              />
+            </div>
+            <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
+              Perfil
+            </p>
           </div>
-          <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
-            brainstorming
-          </p>
         </div>
-        <div className="text-center">
-          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
+        <div
+          className="text-center cursor-pointer"
+          onClick={() => navigate("/oportunidades")}
+        >
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
             <img
               src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
               alt="Alertas"

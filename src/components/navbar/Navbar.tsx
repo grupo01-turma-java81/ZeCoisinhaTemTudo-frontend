@@ -10,7 +10,7 @@ function NavBar() {
 
   function logout() {
     handleLogout();
-    ToastAlerta("O Usuário foi desconectado com sucesso!", "info");
+    ToastAlerta("O Usuário foi desconectado com sucesso!", "sucesso");
     navigate("/");
   }
 
@@ -28,7 +28,7 @@ function NavBar() {
           />
         </div>
         <ul className="flex items-center gap-7 text-[16px]">
-          {["home", "pedidos", "clientes"].map((item) => (
+          {["home", "pedidos", "clientes", "oportunidades"].map((item) => (
             <li key={item}>
               <NavLink
                 to={`/${item}`}
@@ -47,6 +47,7 @@ function NavBar() {
           </li>
         </ul>
         <div className="w-10 h-10 rounded-full bg-[#ede7f6] flex items-center justify-center">
+          <Link to="/perfil">
           <img
             src={usuario.foto}
             alt="Foto de Perfil"
@@ -54,6 +55,7 @@ function NavBar() {
             width="30"
             height="30"
           />
+          </Link>
         </div>
       </nav>
     );

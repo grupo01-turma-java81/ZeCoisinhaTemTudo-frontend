@@ -195,20 +195,6 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           required
         />
       </div>
-      <div className="mb-8">
-        <label className="block text-base font-medium mb-2 font-sans">
-          Data de Cadastro
-        </label>
-        <input
-          type="text"
-          name="dataCadastro"
-          value={cliente.dataCadastro || ""}
-          onChange={atualizarEstado}
-          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
-          disabled
-          placeholder="Preenchido automaticamente"
-        />
-      </div>
       <button
         type="submit"
         className="w-full bg-[#16213E] text-white text-lg font-bold py-3 rounded hover:bg-[#0f1730] transition font-sans flex justify-center cursor-pointer"

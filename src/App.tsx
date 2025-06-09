@@ -11,6 +11,8 @@ import Login from "./pages/login/Login";
 import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/Home";
 import ListaClientes from "./components/clientes/listaclientes/ListaClientes";
+import Perfil from "./components/perfil/Perfil";
+import Oportunidade from "./pages/oportunidade/Oportunidade";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/pedidos" element={<ListaPedidos />} />
               <Route path="/clientes" element={<ListaClientes />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/oportunidades" element={<Oportunidade />} />
             </Routes>
           </div>
           <Footer />
