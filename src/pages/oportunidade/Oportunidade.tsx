@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { buscar } from "../../services/Service";
 import type Pedido from "../../models/Pedido";
-import "../oportunidade/Oportunidade.css";
+import type Cliente from "../../models/Cliente";
+import { FaWhatsapp } from "react-icons/fa";
+import { Oval } from "react-loader-spinner";
 
 function Oportunidade() {
-  const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
   const [loading, setLoading] = useState(true);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
@@ -13,7 +15,14 @@ function Oportunidade() {
     buscar(
       "/pedidos",
       (data: Pedido[]) => {
-        setPedidos(data.filter((pedido) => pedido.positivo === true));
+        const positivos = data.filter((pedido) => pedido.positivo === true && pedido.cliente);
+        const clientesUnicos: { [cpf: string]: Cliente } = {};
+        positivos.forEach((pedido) => {
+          if (pedido.cliente && pedido.cliente.cpf) {
+            clientesUnicos[pedido.cliente.cpf] = pedido.cliente;
+          }
+        });
+        setClientes(Object.values(clientesUnicos));
         setLoading(false);
       },
       {
@@ -27,106 +36,89 @@ function Oportunidade() {
   }, [token]);
 
   return (
-    <div className="font-montserrat bg-white min-h-screen">
-      <div className="flex justify-between items-center px-16 pt-12 pb-8 bg-white">
-        <div>
-          <h1 className="text-5xl text-[#223047] font-bold mb-4 tracking-wide font-montserrat">
-            BEM VINDO AS OPORTUNIDADES!
-          </h1>
-          <p className="text-2xl max-w-xl leading-snug font-semibold font-montserrat">
-            <span className="text-[#2a5bd7] font-bold">Conecte-se</span> melhor
-            com seus clientes e{" "}
-            <span className="text-[#2a5bd7] font-bold">venda</span> mais todos
-            os dias.
-          </p>
-        </div>
+    <div className="font-montserrat bg-gray-200 min-h-screen">
+      {/* Topo ilustrativo e título */}
+      <div className="flex flex-col md:flex-row justify-between items-center px-4 md:px-16 pt-8 pb-4 bg-white">
         <img
           src="https://i.postimg.cc/GtXQwkfb/Test-Creative-removebg-preview.png"
           alt="Ilustração de vendas"
-          className="max-w-[400px] h-auto"
+          className="max-w-[350px] md:max-w-[420px] h-auto mb-4 md:mb-0"
         />
-      </div>
-
-      <div className="flex justify-center gap-16 bg-[#AFC3E3] py-6">
-        <div className="text-center">
-          <div className="bg-[#bfcbe6] rounded-full w-12 h-12 flex items-center justify-center mx-auto">
-            <img
-              src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
-              alt="Dicas"
-              width={28}
-            />
-          </div>
-          <p className="mt-2 text-[#223047] font-semibold font-montserrat">
-            dicas
-          </p>
-        </div>
-        <div className="text-center">
-          <div className="bg-[#bfcbe6] rounded-full w-12 h-12 flex items-center justify-center mx-auto">
-            <img
-              src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
-              alt="Alertas"
-              width={28}
-            />
-          </div>
-          <p className="mt-2 text-[#223047] font-semibold font-montserrat">
-            alertas
+        <div className="flex-1 flex flex-col items-center md:items-start">
+          <h1 className="text-5xl md:text-6xl text-[#223047] font-bold mb-2 leading-tight text-center md:text-left">
+            OPORTU<br className="hidden md:block" />NIDADES
+          </h1>
+          <p className="text-xl md:text-2xl max-w-2xl leading-snug font-semibold font-montserrat text-center md:text-left">
+            Fidelize para crescer: <span className="text-[#2a5bd7] font-bold">estratégias inteligentes</span> que fazem seu cliente voltar — e indicar!
           </p>
         </div>
       </div>
 
-      <div className="px-16 py-8">
-        <h2 className="text-2xl text-[#223047] mb-4 font-bold tracking-wide font-montserrat">
-          Pedidos com Avaliações Positivas
-        </h2>
-        <div className="bg-[#D9D9D9] rounded-xl p-10 min-h-[400px] shadow-md flex flex-col justify-start">
+      {/* Lista de clientes */}
+      <div className="px-2 md:px-16 pb-10">
+        <div className="max-w-7xl mx-auto w-full">
+          {/* Cabeçalho dos cards */}
+          <div className="grid grid-cols-2 md:grid-cols-6 bg-transparent px-2 md:px-8 py-2 font-bold text-[#223047]">
+            <span>CPF</span>
+            <span>Nome</span>
+            <span className="hidden md:block">Telefone</span>
+            <span className="hidden md:block">Endereço</span>
+            <span className="hidden md:block">Data de cadastro</span>
+            <span className="text-center">Contato direto</span>
+          </div>
+          {/* Linha divisória */}
+          <div className="border-b-2 border-[#bfcbe6] mb-2" />
+          {/* Lista de cards */}
           {loading ? (
-            <p className="text-[#D9D9D9] text-center font-montserrat">
-              Carregando...
+            <div className="flex justify-center py-8">
+              <Oval
+                visible={true}
+                height="60"
+                width="60"
+                color="#1B2F4F"
+                secondaryColor="#AFC3E3"
+                strokeWidth={5}
+                ariaLabel="oval-loading"
+                wrapperClass="mx-auto"
+              />
+            </div>
+          ) : clientes.length === 0 ? (
+            <p className="text-[#223047] text-center font-montserrat py-8">
+              Nenhum cliente com avaliação positiva encontrado.
             </p>
           ) : (
-            <table className="w-full border-collapse bg-white rounded-lg overflow-hidden font-montserrat">
-              <thead>
-                <tr className="bg-[#D9D9D9] text-left">
-                  <th>Pedido</th>
-                  <th>Cliente</th>
-                  <th>Status</th>
-                  <th>Valor</th>
-                  <th>Data</th>
-                  <th>Número</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pedidos.map((pedido) => (
-                  <tr key={pedido.id} className="border-b border-[#D9D9D9]">
-                    <td>#{pedido.id}</td>
-                    <td>{pedido.cliente?.nome || "Cliente não informado"}</td>
-                    <td>{pedido.statusEntrega}</td>
-                    <td>R$ {pedido.valorTotal.toFixed(2)}</td>
-                    <td>{new Date(pedido.dataPedido).toLocaleDateString()}</td>
-                    <td>
-                      {pedido.cliente?.telefone && (
-                        <button
-                          className="bg-[#25D366] text-white border-8 cursor-pointer"
-                          onClick={() => {
-                            const numero = `55${pedido.cliente?.telefone.replace(
-                              /\D/g,
-                              ""
-                            )}`;
-                            const mensagem = encodeURIComponent(
-                              `Olá, ${pedido.cliente?.nome}, tudo bem?`
-                            );
-                            const url = `https://wa.me/${numero}?text=${mensagem}`;
-                            window.open(url, "_blank");
-                          }}
-                        >
-                          WhatsApp
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            clientes.map((cliente) => (
+              <div
+                key={cliente.cpf}
+                className="bg-white rounded-xl shadow grid grid-cols-2 md:grid-cols-6 items-center px-2 md:px-8 py-5 min-h-[64px] mb-3"
+              >
+                <span className="text-base md:text-lg font-normal break-all">{cliente.cpf}</span>
+                <span
+                  className="text-base md:text-lg font-normal break-all truncate"
+                  title={cliente.nome}
+                >
+                  {cliente.nome}
+                </span>
+                <span className="text-base md:text-lg font-normal break-all hidden md:block">{cliente.telefone}</span>
+                <span className="text-base md:text-lg font-normal break-all hidden md:block">{cliente.endereco}</span>
+                <span className="text-base md:text-lg font-normal break-all hidden md:block">
+                  {cliente.dataCadastro
+                    ? cliente.dataCadastro
+                    : <span className="text-gray-400 italic">-</span>}
+                </span>
+                <span className="flex justify-center items-center">
+                  <a
+                    href={`https://wa.me/${cliente.telefone?.replace(/\D/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#25D366] rounded-full p-2 hover:bg-[#128C7E] transition"
+                    title="Enviar mensagem no WhatsApp"
+                  >
+                    <FaWhatsapp className="text-white text-2xl" />
+                  </a>
+                </span>
+              </div>
+            ))
           )}
         </div>
       </div>
