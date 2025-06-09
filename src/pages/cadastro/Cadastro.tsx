@@ -3,6 +3,8 @@ import { cadastrarUsuario } from "../../services/Service";
 import type Usuario from "../../models/Usuario";
 import iconLogo from "../../assets/logo_ze.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
+import { ToastAlerta } from "../../utils/ToastAlerta";
 
 function Cadastro() {
   const navegar = useNavigate();
@@ -33,14 +35,14 @@ function Cadastro() {
 
       try {
         await cadastrarUsuario("/usuarios/cadastrar", usuario, setUsuario);
-        alert("Usuário cadastrado com sucesso!");
+        ToastAlerta("Usuário cadastrado com sucesso!", "sucesso");
       } catch {
-        alert("Erro ao cadastrar o usuário!");
+        ToastAlerta("Erro ao cadastrar o usuário!", "erro");
       }
 
       setEstaCarregando(false);
     } else {
-      alert("Dados do usuário inconsistentes! Verifique as informações.");
+      ToastAlerta("Dados do usuário inconsistentes! Verifique as informações.", "info");
       setUsuario({ ...usuario, senha: "" });
       setConfirmarSenha("");
     }
@@ -132,9 +134,18 @@ function Cadastro() {
           <button
             type="submit"
             disabled={estaCarregando}
-            className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
           >
-            {estaCarregando ? "Cadastrando..." : "Cadastrar!"}
+            {estaCarregando ?
+              <Oval
+                visible={true}
+                width="24"
+                height="24"
+                strokeWidth="5"
+                color="#1B2F4F"
+                secondaryColor="#AFC3E3"
+                ariaLabel="oval-loading" />
+              : <span>Cadastrar</span>}
           </button>
         </form>
       </div>
