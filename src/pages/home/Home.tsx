@@ -63,7 +63,7 @@ function Home() {
             />
           </div>
           <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
-            dicas
+            brainstorming
           </p>
         </div>
         <div className="text-center">
@@ -76,7 +76,7 @@ function Home() {
             />
           </div>
           <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
-            alertas
+            Oportunidades
           </p>
         </div>
       </div>

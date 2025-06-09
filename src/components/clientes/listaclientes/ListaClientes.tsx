@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar } from "../../../services/Service";
-import { DNA } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
 import type Cliente from "../../../models/Cliente";
 import ModalCliente from "../modalcliente/ModalCliente";
 import DeletarClientes from "../deletarcliente/DeletarClientes";
@@ -89,14 +89,16 @@ function ListaClientes() {
           <span className="text-center">Ações</span>
         </div>
         {clientes.length === 0 ? (
-          <div className="flex justify-center py-8">
-            <DNA
+          <div className="flex items-center justify-center w-full min-h-screen bg-gray-200">
+            <Oval
               visible={true}
-              height="80"
-              width="80"
-              ariaLabel="dna-loading"
+              width="60"
+              height="60"
+              color="#1B2F4F"
+              secondaryColor="#AFC3E3"
+              ariaLabel="oval-loading"
               wrapperStyle={{}}
-              wrapperClass="dna-wrapper mx-auto"
+              wrapperClass=""
             />
           </div>
         ) : (

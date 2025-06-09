@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar } from "../../../services/Service";
-import { DNA, Oval } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
 import type Pedido from "../../../models/Pedido";
 import CardPedido from "../cardpedidos/CardPedidos";
 import ModalPedido from "../modalpedido/ModalPedido";
