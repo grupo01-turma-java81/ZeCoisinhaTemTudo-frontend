@@ -66,8 +66,11 @@ function Home() {
             brainstorming
           </p>
         </div>
-        <div className="text-center">
-          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto">
+        <div
+          className="text-center cursor-pointer"
+          onClick={() => navigate("/oportunidades")}
+        >
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
             <img
               src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
               alt="Alertas"
