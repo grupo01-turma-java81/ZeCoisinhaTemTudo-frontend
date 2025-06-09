@@ -57,7 +57,6 @@ function ListaClientes() {
 
   useEffect(() => {
     buscarClientes();
-    // eslint-disable-next-line
   }, []);
 
   function atualizarClientes() {
@@ -89,16 +88,16 @@ function ListaClientes() {
           <span className="text-center">Ações</span>
         </div>
         {clientes.length === 0 ? (
-          <div className="flex items-center justify-center w-full min-h-screen bg-gray-200">
+          <div className="flex justify-center py-8">
             <Oval
               visible={true}
-              width="60"
               height="60"
+              width="60"
               color="#1B2F4F"
               secondaryColor="#AFC3E3"
+              strokeWidth={5}
               ariaLabel="oval-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
+              wrapperClass="mx-auto"
             />
           </div>
         ) : (

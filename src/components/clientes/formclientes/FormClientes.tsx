@@ -9,6 +9,7 @@ import type Cliente from "../../../models/Cliente";
 import { buscar, cadastrar, atualizar } from "../../../services/Service";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { Oval } from "react-loader-spinner"; 
 
 interface FormClientesProps {
   cpf?: string;
@@ -24,6 +25,8 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
     dataCadastro: "",
     pedido: [],
   });
+
+  const [isLoading, setIsLoading] = useState(false); // 👈 NOVO ESTADO
 
   const navigate = useNavigate();
   const { usuario, handleLogout } = useContext(AuthContext);
@@ -49,7 +52,6 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
         pedido: [],
       });
     }
-    // eslint-disable-next-line
   }, [cpf]);
 
   async function buscarClientePorCpf(cpf: string) {
@@ -73,6 +75,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setIsLoading(true); 
 
     const clienteParaEnviar: any = {
       cpf: cliente.cpf,
@@ -126,6 +129,8 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
         }
       }
     }
+
+    setIsLoading(false); 
   }
 
   return (
@@ -206,9 +211,22 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
       </div>
       <button
         type="submit"
-        className="w-full bg-[#16213E] text-white text-lg font-bold py-3 rounded hover:bg-[#0f1730] transition font-sans"
+        className="w-full bg-[#16213E] text-white text-lg font-bold py-3 rounded hover:bg-[#0f1730] transition font-sans flex justify-center cursor-pointer"
+        disabled={isLoading}
       >
-        {cpf ? "PRONTO!" : "PRONTO!"}
+        {isLoading ? (
+          <Oval
+            visible={true}
+            width="24"
+            height="24"
+            strokeWidth="5"
+            color="#ffffff"
+            secondaryColor="#AFC3E3"
+            ariaLabel="oval-loading"
+          />
+        ) : (
+          <span>PRONTO!</span>
+        )}
       </button>
     </form>
   );

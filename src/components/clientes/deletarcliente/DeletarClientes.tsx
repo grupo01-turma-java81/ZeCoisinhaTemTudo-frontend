@@ -3,7 +3,7 @@ import "reactjs-popup/dist/index.css";
 import { deletar, buscar } from "../../../services/Service";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { RotatingLines } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
 import type Cliente from "../../../models/Cliente";
 
@@ -79,12 +79,15 @@ function DeletarClientes({ open, cpf, onClose, onAtualizar }: DeletarClientesPro
             disabled={isLoading}
           >
             {isLoading ? (
-              <RotatingLines
-                strokeColor="white"
-                strokeWidth="5"
-                animationDuration="0.75"
-                width="24"
-                visible={true}
+              <Oval
+              height={24}
+              width={24}
+              color="white"
+              secondaryColor="#cbd5e1"
+              strokeWidth={5}
+              strokeWidthSecondary={5}
+              visible={true}
+              ariaLabel="oval-loading"
               />
             ) : (
               <span>Sim</span>
