@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar } from "../../../services/Service";
-import { DNA } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner"; 
 import type Cliente from "../../../models/Cliente";
 import ModalCliente from "../modalcliente/ModalCliente";
 import DeletarClientes from "../deletarcliente/DeletarClientes";
@@ -13,7 +13,6 @@ function ListaClientes() {
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
-  // Controle dos modais
   const [modalAberto, setModalAberto] = useState(false);
   const [cpfSelecionado, setCpfSelecionado] = useState<string | undefined>(undefined);
 
@@ -56,7 +55,6 @@ function ListaClientes() {
 
   useEffect(() => {
     buscarClientes();
-    // eslint-disable-next-line
   }, []);
 
   function atualizarClientes() {
@@ -91,13 +89,15 @@ function ListaClientes() {
         {/* Lista de clientes */}
         {clientes.length === 0 ? (
           <div className="flex justify-center py-8">
-            <DNA
+            <Oval
               visible={true}
-              height="80"
-              width="80"
-              ariaLabel="dna-loading"
-              wrapperStyle={{}}
-              wrapperClass="dna-wrapper mx-auto"
+              height="60"
+              width="60"
+              color="#1B2F4F"
+              secondaryColor="#AFC3E3"
+              strokeWidth={5}
+              ariaLabel="oval-loading"
+              wrapperClass="mx-auto"
             />
           </div>
         ) : (
@@ -111,9 +111,7 @@ function ListaClientes() {
               <span className="text-base font-normal break-all hidden md:block">{cliente.telefone}</span>
               <span className="text-base font-normal break-all hidden md:block">{cliente.endereco}</span>
               <span className="text-base font-normal break-all hidden md:block">
-                {cliente.dataCadastro
-                  ? cliente.dataCadastro
-                  : <span className="text-gray-400 italic">-</span>}
+                {cliente.dataCadastro ? cliente.dataCadastro : <span className="text-gray-400 italic">-</span>}
               </span>
               <div className="flex gap-2 justify-center">
                 <button
