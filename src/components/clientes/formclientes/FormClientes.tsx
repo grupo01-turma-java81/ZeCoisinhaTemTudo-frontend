@@ -9,7 +9,7 @@ import type Cliente from "../../../models/Cliente";
 import { buscar, cadastrar, atualizar } from "../../../services/Service";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Oval } from "react-loader-spinner"; 
+import { Oval } from "react-loader-spinner";
 
 interface FormClientesProps {
   cpf?: string;
@@ -26,7 +26,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
     pedido: [],
   });
 
-  const [isLoading, setIsLoading] = useState(false); // 👈 NOVO ESTADO
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { usuario, handleLogout } = useContext(AuthContext);
@@ -75,7 +75,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
 
     const clienteParaEnviar: any = {
       cpf: cliente.cpf,
@@ -130,7 +130,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
       }
     }
 
-    setIsLoading(false); 
+    setIsLoading(false);
   }
 
   return (
