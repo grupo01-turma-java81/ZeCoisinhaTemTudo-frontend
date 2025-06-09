@@ -135,9 +135,7 @@ function Home() {
                     <td className="px-5 py-3">
                       R$ {pedido.valorTotal.toFixed(2)}
                     </td>
-                    <td className="px-5 py-3">
-                      {new Date(pedido.dataPedido).toLocaleDateString()}
-                    </td>
+                    <td className="px-5 py-3">{pedido.dataPedido}</td>
                     <td className="px-5 py-3">{pedido.cliente?.telefone}</td>
                   </tr>
                 ))}
