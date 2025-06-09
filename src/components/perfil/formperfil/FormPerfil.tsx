@@ -1,0 +1,132 @@
+import { useState, useContext, useEffect, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { atualizar } from "../../../services/Service";
+import { Oval } from "react-loader-spinner";
+import type Usuario from "../../../models/Usuario";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
+
+interface FormPerfilProps {
+    onClose: () => void;
+}
+
+function FormPerfil({ onClose }: FormPerfilProps) {
+    const navigate = useNavigate();
+    const { usuario, handleLogout } = useContext(AuthContext);
+    const token = usuario.token;
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [usuarioPerfil, setUsuarioPerfil] = useState<Usuario>({ ...usuario });
+
+    useEffect(() => {
+        if (!token) {
+            alert("Você precisa estar logado");
+            navigate("/");
+        }
+    }, [token, navigate]);
+
+    function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+        setUsuarioPerfil({
+            ...usuarioPerfil,
+            [e.target.name]: e.target.value,
+        });
+    }
+
+    async function atualizarPerfil(e: ChangeEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            await atualizar(`/usuarios/atualizar`, usuarioPerfil, setUsuarioPerfil, {
+                headers: {
+                    Authorization: token,
+                },
+            });
+            ToastAlerta("Perfil atualizado com sucesso", "sucesso");
+            onClose();
+        } catch (error: any) {
+            if (error.toString().includes("403")) {
+                handleLogout();
+            } else {
+                ToastAlerta("Erro ao atualizar o perfil", "erro");
+            }
+        }
+
+        setIsLoading(false);
+    }
+
+    return (
+        <div className="container flex flex-col mx-auto items-center">
+            <h1 className="text-4xl text-center my-8">Editar Perfil</h1>
+            <form className="flex flex-col w-1/2 gap-4" onSubmit={atualizarPerfil}>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="nome">Nome</label>
+                    <input
+                        type="text"
+                        name="nome"
+                        required
+                        className="border-2 border-slate-700 rounded p-2"
+                        value={usuarioPerfil.nome || ""}
+                        onChange={atualizarEstado}
+                    />
+                </div>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="usuario">E-mail</label>
+                    <input
+                        type="email"
+                        name="usuario"
+                        required
+                        className="border-2 border-slate-700 rounded p-2"
+                        readOnly
+                        value={usuarioPerfil.usuario || ""}
+                    />
+                </div>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="senha">Senha</label>
+                    <input
+                        type="password"
+                        name="senha"
+                        required
+                        minLength={8}
+                        className="border-2 border-slate-700 rounded p-2"
+                        value={usuarioPerfil.senha || ""}
+                        onChange={atualizarEstado}
+                        placeholder="Digite sua senha"
+                    />
+                </div>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="foto">Foto (URL)</label>
+                    <input
+                        type="text"
+                        name="foto"
+                        className="border-2 border-slate-700 rounded p-2"
+                        value={usuarioPerfil.foto || ""}
+                        onChange={atualizarEstado}
+                        placeholder="Link da sua foto (opcional)"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    className="rounded disabled:bg-slate-200 bg-[#1a3052] hover:bg-[#232e3f]
+                               text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
+                    disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <Oval
+                            visible={true}
+                            width="24"
+                            height="24"
+                            strokeWidth="5"
+                            color="#1B2F4F"
+                            secondaryColor="#AFC3E3"
+                            ariaLabel="oval-loading" />
+                    ) : (
+                        <span>Atualizar</span>
+                    )}
+                </button>
+            </form>
+        </div>
+    );
+}
+
+export default FormPerfil;
