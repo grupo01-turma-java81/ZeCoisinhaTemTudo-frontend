@@ -9,7 +9,7 @@ import type Cliente from "../../../models/Cliente";
 import { buscar, cadastrar, atualizar } from "../../../services/Service";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Oval } from "react-loader-spinner"; 
+import { Oval } from "react-loader-spinner";
 
 interface FormClientesProps {
   cpf?: string;
@@ -75,7 +75,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
 
     const clienteParaEnviar: any = {
       cpf: cliente.cpf,
@@ -130,7 +130,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
       }
     }
 
-    setIsLoading(false); 
+    setIsLoading(false);
   }
 
   return (
@@ -193,20 +193,6 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           onChange={atualizarEstado}
           className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
-        />
-      </div>
-      <div className="mb-8">
-        <label className="block text-base font-medium mb-2 font-sans">
-          Data de Cadastro
-        </label>
-        <input
-          type="text"
-          name="dataCadastro"
-          value={cliente.dataCadastro || ""}
-          onChange={atualizarEstado}
-          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
-          disabled
-          placeholder="Preenchido automaticamente"
         />
       </div>
       <button
