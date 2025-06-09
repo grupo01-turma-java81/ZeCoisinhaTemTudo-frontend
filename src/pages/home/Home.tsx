@@ -55,7 +55,7 @@ function Home() {
       <div className="flex justify-center gap-30 bg-[#d7e1f2] py-4">
         <div
           className="text-center cursor-pointer"
-          onClick={() => navigate("/clientes")}
+          onClick={() => navigate("/perfil")}
         >
           <div className="text-center">
             <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
@@ -67,7 +67,7 @@ function Home() {
               />
             </div>
             <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
-              Clientes
+              Perfil
             </p>
           </div>
         </div>

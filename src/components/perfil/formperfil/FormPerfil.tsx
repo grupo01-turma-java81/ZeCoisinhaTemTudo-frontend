@@ -7,7 +7,7 @@ import type Usuario from "../../../models/Usuario";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 interface FormPerfilProps {
-    onClose: () => void;
+  onClose: () => void;
 }
 
 function FormPerfil({ onClose }: FormPerfilProps) {
@@ -56,11 +56,16 @@ function FormPerfil({ onClose }: FormPerfilProps) {
     };
 
     try {
-      await atualizar(`/usuarios/atualizar`, dadosAtualizados, setUsuarioPerfil, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      await atualizar(
+        `/usuarios/atualizar`,
+        dadosAtualizados,
+        setUsuarioPerfil,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       await buscar(`/usuarios/${usuario.id}`, setUsuarioPerfil, {
         headers: { Authorization: token },
       });
@@ -111,8 +116,8 @@ function FormPerfil({ onClose }: FormPerfilProps) {
             name="senha"
             className="border-2 border-slate-700 rounded p-2"
             value={novaSenha}
-            onChange={e => setNovaSenha(e.target.value)}
-            placeholder="Digite uma nova senha (opcional)"
+            onChange={(e) => setNovaSenha(e.target.value)}
+            placeholder="Digite a senha"
             minLength={8}
           />
         </div>
