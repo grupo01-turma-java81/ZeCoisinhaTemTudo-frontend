@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import type UsuarioLogin from "../../models/UsuarioLogin";
 import iconLogo from "../../assets/logo_ze.svg";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Oval } from "react-loader-spinner";
 
 function Login() {
   const navigate = useNavigate();
-  const { usuario, handleLogin } = useContext(AuthContext);
+  const { usuario, handleLogin, isLoading } = useContext(AuthContext);
 
   const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>(
     {} as UsuarioLogin
@@ -85,9 +86,22 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition"
+            className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition flex justify-center items-center"
           >
-            Entre!
+            {isLoading ?
+              <Oval
+                visible={true}
+                width="24"
+                height="24"
+                strokeWidth="5"
+                color="#1B2F4F"
+                secondaryColor="#AFC3E3"
+                ariaLabel="oval-loading"
+              />
+              :
+              <span>Entrar</span>
+            }
+
           </button>
         </form>
       </div>
