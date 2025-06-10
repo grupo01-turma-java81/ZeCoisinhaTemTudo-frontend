@@ -2,12 +2,13 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "./ModalCliente.css";
 import FormClientes from "../formclientes/FormClientes";
+import type Cliente from "../../../models/Cliente";
 
 interface ModalClienteProps {
   cpf?: string;
   open: boolean;
   onClose: () => void;
-  onAtualizar: () => void;
+  onAtualizar: (clienteAtualizado: Cliente) => void;
 }
 
 function ModalCliente({ cpf, open, onClose, onAtualizar }: ModalClienteProps) {
@@ -20,8 +21,8 @@ function ModalCliente({ cpf, open, onClose, onAtualizar }: ModalClienteProps) {
     >
       <FormClientes
         cpf={cpf}
-        onClienteCadastrado={() => {
-          onAtualizar();
+        onClienteCadastrado={(clienteAtualizado) => {
+          onAtualizar(clienteAtualizado);
           onClose();
         }}
       />

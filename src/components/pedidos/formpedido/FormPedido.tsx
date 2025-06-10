@@ -13,7 +13,7 @@ function FormPedido({
   onClose,
 }: {
   id?: string;
-  onAtualizar: () => void;
+  onAtualizar: (pedido: Pedido) => void;
   onClose: () => void;
 }) {
   const navigate = useNavigate();
@@ -111,7 +111,7 @@ function FormPedido({
         });
 
         ToastAlerta("Pedido atualizado com sucesso", "sucesso");
-        onAtualizar();
+        onAtualizar(pedido); // <-- alterado aqui
         onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
@@ -129,7 +129,7 @@ function FormPedido({
         });
 
         ToastAlerta("Pedido cadastrado com sucesso", "sucesso");
-        onAtualizar();
+        onAtualizar(pedido); // <-- alterado aqui
         onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
