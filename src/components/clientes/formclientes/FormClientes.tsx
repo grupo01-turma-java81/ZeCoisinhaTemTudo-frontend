@@ -152,6 +152,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           disabled={!!cpf}
           minLength={10}
           maxLength={11}
+          placeholder="Insira apenas números"
         />
       </div>
       <div className="mb-6">
@@ -165,6 +166,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           onChange={atualizarEstado}
           className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
+          placeholder="Nome do cliente"
         />
       </div>
       <div className="mb-6">
@@ -178,8 +180,9 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           onChange={atualizarEstado}
           className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
-          minLength={14}
+          minLength={11}
           maxLength={14}
+          placeholder="Insira o DDD"
         />
       </div>
       <div className="mb-6">
@@ -193,6 +196,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           onChange={atualizarEstado}
           className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
+          placeholder="Logradouro e número"
         />
       </div>
       <button
