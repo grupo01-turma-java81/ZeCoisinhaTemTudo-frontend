@@ -14,7 +14,12 @@ interface DeletarClientesProps {
   onAtualizar: () => void;
 }
 
-function DeletarClientes({ open, cpf, onClose, onAtualizar }: DeletarClientesProps) {
+function DeletarClientes({
+  open,
+  cpf,
+  onClose,
+  onAtualizar,
+}: DeletarClientesProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cliente, setCliente] = useState<Cliente>({} as Cliente);
 
@@ -64,6 +69,14 @@ function DeletarClientes({ open, cpf, onClose, onAtualizar }: DeletarClientesPro
 
   return (
     <Popup open={open} modal onClose={onClose}>
+      <button
+        onClick={onClose}
+        className="absolute top-3 left-4 text-2xl text-gray-400 hover:text-gray-700 font-bold z-10 cursor-pointer"
+        aria-label="Fechar"
+        type="button"
+      >
+        ×
+      </button>
       <div className="p-6 flex flex-col items-center">
         <h2 className="text-xl font-bold mb-4">
           Deseja realmente deletar este cliente?
@@ -80,14 +93,14 @@ function DeletarClientes({ open, cpf, onClose, onAtualizar }: DeletarClientesPro
           >
             {isLoading ? (
               <Oval
-              height={24}
-              width={24}
-              color="white"
-              secondaryColor="#cbd5e1"
-              strokeWidth={5}
-              strokeWidthSecondary={5}
-              visible={true}
-              ariaLabel="oval-loading"
+                height={24}
+                width={24}
+                color="white"
+                secondaryColor="#cbd5e1"
+                strokeWidth={5}
+                strokeWidthSecondary={5}
+                visible={true}
+                ariaLabel="oval-loading"
               />
             ) : (
               <span>Sim</span>

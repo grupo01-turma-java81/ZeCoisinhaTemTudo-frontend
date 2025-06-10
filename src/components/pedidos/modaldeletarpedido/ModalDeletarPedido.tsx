@@ -50,6 +50,14 @@ function ModalDeletarPedido({
 
   return (
     <Popup open={open} modal onClose={onClose}>
+      <button
+        onClick={onClose}
+        className="absolute top-3 left-4 text-2xl text-gray-400 hover:text-gray-700 font-bold z-10 cursor-pointer"
+        aria-label="Fechar"
+        type="button"
+      >
+        ×
+      </button>
       <div className="p-6 flex flex-col items-center">
         <h2 className="text-xl font-bold mb-4">
           Deseja realmente deletar este pedido?

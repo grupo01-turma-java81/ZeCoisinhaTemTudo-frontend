@@ -18,6 +18,14 @@ function ModalCliente({ cpf, open, onClose, onAtualizar }: ModalClienteProps) {
       onClose={onClose}
       className="reactjs-popup-overlay"
     >
+      <button
+        onClick={onClose}
+        className="absolute top-3 left-4 text-2xl text-gray-400 hover:text-gray-700 font-bold z-10 cursor-pointer"
+        aria-label="Fechar"
+        type="button"
+      >
+        ×
+      </button>
       <FormClientes
         cpf={cpf}
         onClienteCadastrado={() => {
