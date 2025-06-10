@@ -65,7 +65,7 @@ function Perfil() {
                             alt="Foto de Perfil"
                             className="w-32 h-32 rounded-full object-cover mb-2"
                         />
-                        <button onClick={logout} className="text-blue-600 hover:underline">
+                        <button onClick={logout} className="text-blue-600 hover:underline text-sm">
                             Sair
                         </button>
                     </div>
@@ -73,7 +73,8 @@ function Perfil() {
                     <div className="flex flex-col w-full md:w-3/4 bg-white rounded-xl shadow-md p-6">
                         <div className="flex justify-between items-start">
                             <div>
-                                <h2 className="text-2xl font-semibold text-gray-800 mb-1">{usuarioAtual.nome}</h2>
+                                <p className="text-xs">Empresa: </p>
+                                <h2 className="text-2xl font-bold text-gray-800 mb-1">{usuarioAtual.nome}</h2>
                                 <button
                                     onClick={abrirModal}
                                     className="text-blue-600 hover:underline text-sm"
