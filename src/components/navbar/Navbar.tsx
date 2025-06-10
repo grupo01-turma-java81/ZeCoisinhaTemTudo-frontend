@@ -28,7 +28,7 @@ function NavBar() {
           />
         </div>
         <ul className="flex items-center gap-7 text-[16px]">
-          {["home", "pedidos", "clientes"].map((item) => (
+          {["home", "pedidos", "clientes", "oportunidades"].map((item) => (
             <li key={item}>
               <NavLink
                 to={`/${item}`}
