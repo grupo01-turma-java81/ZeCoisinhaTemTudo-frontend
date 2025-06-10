@@ -76,7 +76,7 @@ function Perfil() {
           <div className="flex flex-col w-full md:w-3/4 bg-white rounded-xl shadow-md p-6">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs">Empresa: </p>
+                <p className="text-xs">Empresa/colaborador: </p>
                 <h2 className="text-2xl font-bold text-gray-800 mb-1">
                   {usuarioAtual.nome}
                 </h2>
