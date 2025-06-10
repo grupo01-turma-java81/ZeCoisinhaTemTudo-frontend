@@ -185,17 +185,18 @@ function FormPedido({
           </select>
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="valorTotal">Preço do pedido</label>
-          <input
-            type="text"
-            placeholder="Ex: 200"
-            name="valorTotal"
-            required
-            className="border-2 border-slate-700 rounded p-2"
-            value={pedido.valorTotal}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-          />
-        </div>
+  <label htmlFor="valorTotal">Preço do pedido </label>
+  <input
+    type="text"
+    placeholder="Ex: 200 (Insira apenas números) "
+    name="valorTotal"
+    required
+    className="border-2 border-slate-700 rounded p-2"
+    value={pedido.valorTotal}
+    onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+  />
+  <span className="text-sm text-slate-500">O sistema automaticamente formata em R$. </span>
+</div>
         <div className="flex flex-col gap-2">
           <p>Cliente satisfeito?</p>
           <select
