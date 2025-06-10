@@ -1,4 +1,4 @@
-import type Cliente from '../../../models/Cliente';
+import type Cliente from "../../../models/Cliente";
 
 interface CardClientesProps {
   cliente: Cliente;
@@ -17,8 +17,19 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
           className="text-blue-600 hover:text-blue-900 transition cursor-pointer"
           onClick={onEditar}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m2 2H7a2 2 0 01-2-2v-5a2 2 0 012-2h5a2 2 0 012 2v5a2 2 0 01-2 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 inline"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m2 2H7a2 2 0 01-2-2v-5a2 2 0 012-2h5a2 2 0 012 2v5a2 2 0 01-2 2z"
+            />
           </svg>
         </button>
         <button
@@ -26,8 +37,19 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
           className="text-red-600 hover:text-red-900 transition cursor-pointer"
           onClick={onDeletar}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 inline"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>

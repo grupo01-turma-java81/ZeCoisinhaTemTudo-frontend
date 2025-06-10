@@ -78,7 +78,7 @@ function ListaClientes() {
           <span className="text-2xl">+</span> Adicionar cliente
         </button>
       </div>
-      <div className="flex flex-col gap-4 max-w-7xl mx-auto w-full">
+      <div className="flex flex-col gap-4 max-w-7xl mx-auto w-full pb-10">
         <div className="hidden md:grid grid-cols-6 bg-transparent px-6 py-2 font-bold text-[#E28B7C]">
           <span>CPF</span>
           <span>Nome</span>
