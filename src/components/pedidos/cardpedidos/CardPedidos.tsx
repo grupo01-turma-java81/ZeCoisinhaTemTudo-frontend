@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import type Pedido from "../../../models/Pedido";
 import { FaBox, FaMoneyBillWave } from "react-icons/fa";
 import { useState } from "react";
@@ -19,7 +20,11 @@ function CardPedido({ pedido, onEditar, onAtualizar }: CardPedidosProps) {
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-xl shadow p-6 pl-1 flex flex-col gap-2 mb-4">
+    <motion.div
+      whileHover={{ scale: 1.02, boxShadow: "0 8px 32px #6c7a9355" }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="bg-white rounded-xl shadow p-6 pl-1 flex flex-col gap-2 mb-4"
+    >
       <div className="flex items-center gap-3 ml-7">
         <FaBox className="text-2xl text-gray-700" />
         <span className="font-bold text-lg">Pedido</span>
@@ -71,7 +76,7 @@ function CardPedido({ pedido, onEditar, onAtualizar }: CardPedidosProps) {
           </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -4,6 +4,7 @@ import type Pedido from "../../models/Pedido";
 import { useNavigate } from "react-router-dom";
 import "../home/Home.css";
 import { Oval } from "react-loader-spinner";
+import { motion } from "framer-motion";
 
 function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
@@ -11,11 +12,19 @@ function Home() {
   const token = usuario.token || "";
   const navigate = useNavigate();
 
+  const frases = [
+    "Em home você encontra oportunidades exclusivas!",
+    "Em oportunidades ,faça contato direto com seu cliente! ",
+    "Gerencie seus pedidos e clientes!",
+  ];
+  const [fraseIndex, setFraseIndex] = useState(0);
+
   useEffect(() => {
     if (!token) {
       navigate("/");
       return;
     }
+
     buscar(
       "/pedidos",
       (data: Pedido[]) => {
@@ -29,10 +38,18 @@ function Home() {
     ).catch(() => {});
   }, [token, navigate]);
 
+  
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setFraseIndex((prev) => (prev + 1) % frases.length);
+    }, 5000);
+    return () => clearInterval(intervalo);
+  }, []);
+
   if (!token) return null;
 
   return (
-    <div className="font-montserrat bg-white min-h-screen">
+    <div className="font-montserrat bg-white min-h-screen relative">
       <div className="flex justify-between items-center px-24 pt-16 pb-12 bg-white">
         <div>
           <h1 className="text-8xl text-[#223047] font-bold mb-6 tracking-wide font-montserrat drop-shadow-lg">
@@ -57,19 +74,17 @@ function Home() {
           className="text-center cursor-pointer"
           onClick={() => navigate("/perfil")}
         >
-          <div className="text-center">
-            <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
-              <img
-                src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
-                alt="Dicas"
-                width={40}
-                height={40}
-              />
-            </div>
-            <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
-              Perfil
-            </p>
+          <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
+            <img
+              src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
+              alt="Dicas"
+              width={40}
+              height={40}
+            />
           </div>
+          <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
+            Perfil
+          </p>
         </div>
         <div
           className="text-center cursor-pointer"
@@ -104,8 +119,6 @@ function Home() {
                 color="#1B2F4F"
                 secondaryColor="#AFC3E3"
                 ariaLabel="oval-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
               />
             </div>
           ) : (
@@ -152,6 +165,24 @@ function Home() {
           )}
         </div>
       </div>
+
+      
+      <motion.div
+        className="fixed bottom-5 right-5 z-50 flex items-end gap-2"
+        initial={{ y: 0 }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div className="bg-white shadow-lg rounded-xl px-4 py-2 text-sm text-[#223047] font-semibold border border-[#ccc] max-w-xs">
+          {frases[fraseIndex]}
+        </div>
+
+        <img
+          src="https://ik.imagekit.io/uhimtlk7c/ChatGPT%20Image%2017%20de%20jun.%20de%202025,%2017_42_20.png?updatedAt=1750193011828"
+          alt="Mascote Zé Coisinha"
+          className="w-20 h-auto drop-shadow-md"
+        />
+      </motion.div>
     </div>
   );
 }

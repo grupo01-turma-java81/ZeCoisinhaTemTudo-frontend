@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
+import { FiCopy } from "react-icons/fi";
 import type Cliente from "../../../models/Cliente";
+import { useState } from "react";
 
 interface CardClientesProps {
   cliente: Cliente;
@@ -7,11 +10,50 @@ interface CardClientesProps {
 }
 
 function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
+  const [copied, setCopied] = useState<string | null>(null);
+
+  function handleCopy(text: string, field: string) {
+    navigator.clipboard.writeText(text);
+    setCopied(field);
+    setTimeout(() => setCopied(null), 1200);
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow-sm flex items-center px-6 py-4 min-h-[56px] mb-3">
-      <span className="text-base font-normal mr-6">{cliente.cpf}</span>
-      <span className="text-base font-normal">{cliente.nome}</span>
-      <div className="ml-auto flex gap-2">
+    <motion.div
+      whileHover={{ scale: 1.02, boxShadow: "0 8px 32px #6c7a9355" }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-6 items-center px-6 py-4 min-h-[56px] gap-y-2"
+    >
+      <span className="text-base font-normal flex items-center gap-1 break-all">
+        {cliente.cpf}
+        <button
+          title="Copiar CPF"
+          className="text-gray-500 hover:text-blue-600 transition"
+          onClick={() => handleCopy(cliente.cpf, "cpf")}
+        >
+          <FiCopy />
+        </button>
+        {copied === "cpf" && (
+          <span className="text-xs text-green-600 ml-1">Copiado!</span>
+        )}
+      </span>
+      <span className="text-base font-normal break-all">{cliente.nome}</span>
+      <span className="text-base font-normal flex items-center gap-1 break-all">
+        {cliente.telefone}
+        <button
+          title="Copiar Telefone"
+          className="text-gray-500 hover:text-blue-600 transition"
+          onClick={() => handleCopy(cliente.telefone, "telefone")}
+        >
+          <FiCopy />
+        </button>
+        {copied === "telefone" && (
+          <span className="text-xs text-green-600 ml-1">Copiado!</span>
+        )}
+      </span>
+      <span className="text-base font-normal break-all">{cliente.endereco}</span>
+      <span className="text-base font-normal break-all">{cliente.dataCadastro}</span>
+      <div className="flex gap-2 justify-center">
         <button
           title="Editar"
           className="text-blue-600 hover:text-blue-900 transition cursor-pointer"
@@ -53,7 +95,7 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
           </svg>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
