@@ -111,7 +111,7 @@ function FormPedido({
         });
 
         ToastAlerta("Pedido atualizado com sucesso", "sucesso");
-        onAtualizar(pedido); // <-- alterado aqui
+        onAtualizar(pedido);
         onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
@@ -129,7 +129,7 @@ function FormPedido({
         });
 
         ToastAlerta("Pedido cadastrado com sucesso", "sucesso");
-        onAtualizar(pedido); // <-- alterado aqui
+        onAtualizar(pedido);
         onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
