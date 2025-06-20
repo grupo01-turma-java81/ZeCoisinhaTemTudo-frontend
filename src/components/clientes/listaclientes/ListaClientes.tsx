@@ -58,9 +58,17 @@ function ListaClientes() {
     buscarClientes();
   }, []);
 
-  function atualizarClientes() {
+  function atualizarClientes(clienteAtualizado?: Cliente) {
+  if (clienteAtualizado) {
+    setClientes((clientes) =>
+      clientes.map((c) =>
+        c.cpf === clienteAtualizado.cpf ? clienteAtualizado : c
+      )
+    );
+  } else {
     buscarClientes();
   }
+}
 
   return (
     <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">

@@ -50,10 +50,14 @@ function ListaPedidos() {
 
   useEffect(() => {
     buscarPedidos();
-  });
+  }, []);
 
-  function atualizarPedidos() {
-    buscarPedidos();
+  function atualizarPedidoNaLista(pedidoAtualizado: Pedido) {
+    setPedidos((pedidos) =>
+      pedidos.map((p) =>
+        p.id === pedidoAtualizado.id ? pedidoAtualizado : p
+      )
+    );
   }
 
   return (
@@ -92,7 +96,7 @@ function ListaPedidos() {
                 key={pedido.id}
                 pedido={pedido}
                 onEditar={abrirModalEditar}
-                onAtualizar={atualizarPedidos}
+                onAtualizar={atualizarPedidoNaLista} 
               />
             ))}
           </div>
@@ -100,7 +104,7 @@ function ListaPedidos() {
             open={modalAberto}
             id={idSelecionado}
             onClose={() => setModalAberto(false)}
-            onAtualizar={atualizarPedidos}
+            onAtualizar={atualizarPedidoNaLista} 
           />
         </div>
       )}
