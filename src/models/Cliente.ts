@@ -1,10 +1,11 @@
 import type Pedido from "./Pedido";
 
 export default interface Cliente {
-  cpf: string; // Alterado para string
+  id: number;
+  cpf: string;
   nome: string;
   telefone: string;
   endereco: string;
-  dataCadastro?: string; // Opcional, preenchido pelo backend
+  dataCadastro?: string;
   pedido?: Pedido[] | null;
 }

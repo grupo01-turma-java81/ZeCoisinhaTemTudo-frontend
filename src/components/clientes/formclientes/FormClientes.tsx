@@ -12,19 +12,12 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Oval } from "react-loader-spinner";
 
 interface FormClientesProps {
-  cpf?: string;
+  id?: number;
   onClienteCadastrado?: (cliente: Cliente) => void;
 }
 
-function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
-  const [cliente, setCliente] = useState<Cliente>({
-    cpf: "",
-    nome: "",
-    telefone: "",
-    endereco: "",
-    dataCadastro: "",
-    pedido: [],
-  });
+function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
+  const [cliente, setCliente] = useState<Cliente>({} as Cliente);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,23 +33,16 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
   }, [token, navigate]);
 
   useEffect(() => {
-    if (cpf) {
-      buscarClientePorCpf(cpf);
+    if (id) {
+      buscarClientePorId(id);
     } else {
-      setCliente({
-        cpf: "",
-        nome: "",
-        telefone: "",
-        endereco: "",
-        dataCadastro: "",
-        pedido: [],
-      });
+      setCliente({} as Cliente);
     }
-  }, [cpf]);
+  }, [id]);
 
-  async function buscarClientePorCpf(cpf: string) {
+  async function buscarClientePorId(id: number) {
     try {
-      await buscar(`/clientes/${cpf}`, setCliente, {
+      await buscar(`/clientes/${id}`, setCliente, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -78,17 +64,18 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
     setIsLoading(true);
 
     const clienteParaEnviar: any = {
+      id: cliente.id,
       cpf: cliente.cpf,
       nome: cliente.nome,
       telefone: cliente.telefone,
       endereco: cliente.endereco,
     };
 
-    if (cpf && cliente.dataCadastro) {
+    if (id && cliente.dataCadastro) {
       clienteParaEnviar.dataCadastro = cliente.dataCadastro;
     }
 
-    if (cpf) {
+    if (id) {
       try {
         await atualizar(`/clientes`, clienteParaEnviar, setCliente, {
           headers: { Authorization: token },
@@ -112,14 +99,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           },
           { headers: { Authorization: token } }
         );
-        setCliente({
-          cpf: "",
-          nome: "",
-          telefone: "",
-          endereco: "",
-          dataCadastro: "",
-          pedido: [],
-        });
+        setCliente({} as Cliente);
         toast.success("Cliente cadastrado com sucesso!");
       } catch (error: any) {
         if (error.toString().includes("403")) {
@@ -136,7 +116,7 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto font-sans">
       <h2 className="text-4xl text-center my-8">
-        {cpf ? "Editar Cliente" : "Cadastrar Cliente"}
+        {id ? "Editar Cliente" : "Cadastrar Cliente"}
       </h2>
       <div className="mb-6">
         <label className="block text-base font-medium mb-2 font-sans">
@@ -149,7 +129,6 @@ function FormClientes({ cpf, onClienteCadastrado }: FormClientesProps) {
           onChange={atualizarEstado}
           className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
           required
-          disabled={!!cpf}
           minLength={10}
           maxLength={11}
           placeholder="Insira apenas números"

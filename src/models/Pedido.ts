@@ -7,6 +7,8 @@ export default interface Pedido {
   statusEntrega: string;
   valorTotal: number;
   positivo: boolean;
+  comentario: string;
+  nota: number;
   cliente: Cliente | null;
   usuario: Usuario | null;
 }

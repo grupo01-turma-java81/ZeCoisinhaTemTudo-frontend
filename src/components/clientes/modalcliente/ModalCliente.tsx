@@ -5,13 +5,13 @@ import FormClientes from "../formclientes/FormClientes";
 import type Cliente from "../../../models/Cliente";
 
 interface ModalClienteProps {
-  cpf?: string;
+  id?: number;
   open: boolean;
   onClose: () => void;
   onAtualizar: (clienteAtualizado: Cliente) => void;
 }
 
-function ModalCliente({ cpf, open, onClose, onAtualizar }: ModalClienteProps) {
+function ModalCliente({ id, open, onClose, onAtualizar }: ModalClienteProps) {
   return (
     <Popup
       open={open}
@@ -28,7 +28,7 @@ function ModalCliente({ cpf, open, onClose, onAtualizar }: ModalClienteProps) {
         ×
       </button>
       <FormClientes
-        cpf={cpf}
+        id={id}
         onClienteCadastrado={(clienteAtualizado) => {
           onAtualizar(clienteAtualizado);
           onClose();

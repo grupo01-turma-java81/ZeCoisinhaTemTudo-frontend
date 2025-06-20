@@ -15,23 +15,25 @@ function ListaClientes() {
   const token = usuario.token;
 
   const [modalAberto, setModalAberto] = useState(false);
-  const [cpfSelecionado, setCpfSelecionado] = useState<string | undefined>(undefined);
+  const [idSelecionado, setIdSelecionado] = useState<number | undefined>(
+    undefined
+  );
 
   const [modalDeletarAberto, setModalDeletarAberto] = useState(false);
-  const [cpfDeletar, setCpfDeletar] = useState<string | undefined>(undefined);
+  const [idDeletar, setIdDeletar] = useState<number | undefined>(undefined);
 
   function abrirModalNovo() {
-    setCpfSelecionado(undefined);
+    setIdSelecionado(undefined);
     setModalAberto(true);
   }
 
-  function abrirModalEditar(cpf: string) {
-    setCpfSelecionado(cpf);
+  function abrirModalEditar(id: number) {
+    setIdSelecionado(id);
     setModalAberto(true);
   }
 
-  function abrirModalDeletar(cpf: string) {
-    setCpfDeletar(cpf);
+  function abrirModalDeletar(id: number) {
+    setIdDeletar(id);
     setModalDeletarAberto(true);
   }
 
@@ -59,16 +61,21 @@ function ListaClientes() {
   }, []);
 
   function atualizarClientes(clienteAtualizado?: Cliente) {
-  if (clienteAtualizado) {
-    setClientes((clientes) =>
-      clientes.map((c) =>
-        c.cpf === clienteAtualizado.cpf ? clienteAtualizado : c
-      )
-    );
-  } else {
-    buscarClientes();
+    if (clienteAtualizado) {
+      setClientes((clientes) => {
+        const existe = clientes.some((c) => c.id === clienteAtualizado.id);
+        if (existe) {
+          return clientes.map((c) =>
+            c.id === clienteAtualizado.id ? clienteAtualizado : c
+          );
+        } else {
+          return [...clientes, clienteAtualizado];
+        }
+      });
+    } else {
+      buscarClientes();
+    }
   }
-}
 
   return (
     <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
@@ -110,23 +117,23 @@ function ListaClientes() {
         ) : (
           clientes.map((cliente) => (
             <CardClientes
-              key={cliente.cpf}
+              key={cliente.id}
               cliente={cliente}
-              onEditar={() => abrirModalEditar(cliente.cpf)}
-              onDeletar={() => abrirModalDeletar(cliente.cpf)}
+              onEditar={() => abrirModalEditar(cliente.id)}
+              onDeletar={() => abrirModalDeletar(cliente.id)}
             />
           ))
         )}
       </div>
       <ModalCliente
         open={modalAberto}
-        cpf={cpfSelecionado}
+        id={idSelecionado}
         onClose={() => setModalAberto(false)}
         onAtualizar={atualizarClientes}
       />
       <DeletarClientes
         open={modalDeletarAberto}
-        cpf={cpfDeletar || ""}
+        id={idDeletar}
         onClose={() => setModalDeletarAberto(false)}
         onAtualizar={atualizarClientes}
       />

@@ -9,14 +9,14 @@ import type Cliente from "../../../models/Cliente";
 
 interface DeletarClientesProps {
   open: boolean;
-  cpf: string;
+  id: number;
   onClose: () => void;
   onAtualizar: () => void;
 }
 
 function DeletarClientes({
   open,
-  cpf,
+  id,
   onClose,
   onAtualizar,
 }: DeletarClientesProps) {
@@ -26,9 +26,9 @@ function DeletarClientes({
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
-  async function buscarPorCpf(cpf: string) {
+  async function buscarPorId(id: number) {
     try {
-      await buscar(`/clientes/${cpf}`, setCliente, {
+      await buscar(`/clientes/${id}`, setCliente, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -39,17 +39,17 @@ function DeletarClientes({
   }
 
   useEffect(() => {
-    if (open && cpf) {
-      buscarPorCpf(cpf);
+    if (open && id) {
+      buscarPorId(id);
     }
     // eslint-disable-next-line
-  }, [open, cpf]);
+  }, [open, id]);
 
   async function deletarCliente() {
     setIsLoading(true);
 
     try {
-      await deletar(`/clientes/${cpf}`, {
+      await deletar(`/clientes/${id}`, {
         headers: { Authorization: token },
       });
 
