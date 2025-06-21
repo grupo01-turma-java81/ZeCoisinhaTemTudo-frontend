@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import "../home/Home.css";
 import { Oval } from "react-loader-spinner";
 import { motion } from "framer-motion";
+import bell from "../../assets/home/bell.webp";
+import creative from "../../assets/home/creative.webp";
+import homeMainImg from "../../assets/home/homeMainImg.webp";
+import mascote from "../../assets/home/mascote.png";
 
 function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
@@ -38,7 +42,6 @@ function Home() {
     ).catch(() => {});
   }, [token, navigate]);
 
-  
   useEffect(() => {
     const intervalo = setInterval(() => {
       setFraseIndex((prev) => (prev + 1) % frases.length);
@@ -63,7 +66,7 @@ function Home() {
           </p>
         </div>
         <img
-          src="https://i.postimg.cc/Qxq7rXv1/Design-sem-nome-27.png"
+          src={homeMainImg}
           alt="Ilustração de vendas"
           className="w-[800px] h-auto mr-30"
         />
@@ -75,12 +78,7 @@ function Home() {
           onClick={() => navigate("/perfil")}
         >
           <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
-            <img
-              src="https://i.postimg.cc/mkKPHkzQ/Test-Creative-Photoroom-1.png"
-              alt="Dicas"
-              width={40}
-              height={40}
-            />
+            <img src={creative} alt="Dicas" width={40} height={40} />
           </div>
           <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
             Perfil
@@ -91,12 +89,7 @@ function Home() {
           onClick={() => navigate("/oportunidades")}
         >
           <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
-            <img
-              src="https://i.postimg.cc/KzqkmJmp/Test-Creative-Photoroom.png"
-              alt="Alertas"
-              width={40}
-              height={40}
-            />
+            <img src={bell} alt="Alertas" width={40} height={40} />
           </div>
           <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
             Oportunidades
@@ -166,7 +159,6 @@ function Home() {
         </div>
       </div>
 
-      
       <motion.div
         className="fixed bottom-5 right-5 z-50 flex items-end gap-2"
         initial={{ y: 0 }}
@@ -178,7 +170,7 @@ function Home() {
         </div>
 
         <img
-          src="https://ik.imagekit.io/uhimtlk7c/ChatGPT%20Image%2017%20de%20jun.%20de%202025,%2017_42_20.png?updatedAt=1750193011828"
+          src={mascote}
           alt="Mascote Zé Coisinha"
           className="w-20 h-auto drop-shadow-md"
         />

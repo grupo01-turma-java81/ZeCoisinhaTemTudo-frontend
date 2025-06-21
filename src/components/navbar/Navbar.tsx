@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ToastAlerta } from "../../utils/ToastAlerta";
 import { useContext, type ReactNode } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import logo from "../../assets/navbar/logo.webp";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function NavBar() {
       <nav className="flex items-center justify-between bg-[#fafafa] px-10 pl-6 h-16 border-b border-[#e0e0e0] font-inherit">
         <div className="flex items-center">
           <img
-            src="https://i.postimg.cc/VN4kLqSp/Login-1-1.png"
+            src={logo}
             alt="Logo do ZéCoisinhaTemTudo"
             width="48"
             height="48"
@@ -48,13 +49,13 @@ function NavBar() {
         </ul>
         <div className="w-10 h-10 rounded-full bg-[#ede7f6] flex items-center justify-center">
           <Link to="/perfil">
-          <img
-            src={usuario.foto}
-            alt="Foto de Perfil"
-            className="rounded-4xl"
-            width="30"
-            height="30"
-          />
+            <img
+              src={usuario.foto}
+              alt="Foto de Perfil"
+              className="rounded-4xl"
+              width="30"
+              height="30"
+            />
           </Link>
         </div>
       </nav>

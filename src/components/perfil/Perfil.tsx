@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import ModalPerfil from "./modalperfil/ModalPerfil";
 import type Usuario from "../../models/Usuario";
 import { buscar } from "../../services/Service";
-import imagem1 from "../../assets/imagem1.svg";
-import imagem2 from "../../assets/imagem2.svg";
-import imagem3 from "../../assets/imagem3.svg";
+import imagem1 from "../../assets/perfil/imagem1.svg";
+import imagem2 from "../../assets/perfil/imagem2.svg";
+import imagem3 from "../../assets/perfil/imagem3.svg";
 
 function Perfil() {
   const { usuario, handleLogout } = useContext(AuthContext);

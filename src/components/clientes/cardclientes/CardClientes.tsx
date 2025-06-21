@@ -20,7 +20,7 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02, boxShadow: "0 8px 32px #6c7a9355" }}
+      whileHover={{ scale: 1.008, boxShadow: "0 8px 32px #6c7a9355" }}
       transition={{ type: "spring", stiffness: 300 }}
       className="bg-white rounded-xl grid grid-cols-2 md:grid-cols-6 items-center px-6 py-4 min-h-[56px] gap-y-2"
     >
@@ -28,7 +28,7 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
         {cliente.cpf}
         <button
           title="Copiar CPF"
-          className="text-gray-500 hover:text-blue-600 transition"
+          className="text-gray-500 hover:text-blue-600 transition cursor-pointer"
           onClick={() => handleCopy(cliente.cpf, "cpf")}
         >
           <FiCopy />
@@ -42,7 +42,7 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
         {cliente.telefone}
         <button
           title="Copiar Telefone"
-          className="text-gray-500 hover:text-blue-600 transition"
+          className="text-gray-500 hover:text-blue-600 transition cursor-pointer"
           onClick={() => handleCopy(cliente.telefone, "telefone")}
         >
           <FiCopy />
@@ -51,8 +51,12 @@ function CardClientes({ cliente, onEditar, onDeletar }: CardClientesProps) {
           <span className="text-xs text-green-600 ml-1">Copiado!</span>
         )}
       </span>
-      <span className="text-base font-normal break-all">{cliente.endereco}</span>
-      <span className="text-base font-normal break-all">{cliente.dataCadastro}</span>
+      <span className="text-base font-normal break-all">
+        {cliente.endereco}
+      </span>
+      <span className="text-base font-normal break-all">
+        {cliente.dataCadastro}
+      </span>
       <div className="flex gap-2 justify-center">
         <button
           title="Editar"

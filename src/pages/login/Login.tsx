@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type UsuarioLogin from "../../models/UsuarioLogin";
-import iconLogo from "../../assets/logo_ze.svg";
+import iconLogo from "../../assets/cadastro/logo_ze.svg";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Oval } from "react-loader-spinner";
 
@@ -88,7 +88,7 @@ function Login() {
             type="submit"
             className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition flex justify-center items-center"
           >
-            {isLoading ?
+            {isLoading ? (
               <Oval
                 visible={true}
                 width="24"
@@ -98,10 +98,9 @@ function Login() {
                 secondaryColor="#AFC3E3"
                 ariaLabel="oval-loading"
               />
-              :
+            ) : (
               <span>Entrar</span>
-            }
-
+            )}
           </button>
         </form>
       </div>

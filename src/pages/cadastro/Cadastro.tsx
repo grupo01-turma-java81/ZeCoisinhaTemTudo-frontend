@@ -1,7 +1,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { cadastrarUsuario } from "../../services/Service";
 import type Usuario from "../../models/Usuario";
-import iconLogo from "../../assets/logo_ze.svg";
+import iconLogo from "../../assets/cadastro/logo_ze.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import { ToastAlerta } from "../../utils/ToastAlerta";
@@ -42,7 +42,10 @@ function Cadastro() {
 
       setEstaCarregando(false);
     } else {
-      ToastAlerta("Dados do usuário inconsistentes! Verifique as informações.", "info");
+      ToastAlerta(
+        "Dados do usuário inconsistentes! Verifique as informações.",
+        "info"
+      );
       setUsuario({ ...usuario, senha: "" });
       setConfirmarSenha("");
     }
@@ -71,7 +74,9 @@ function Cadastro() {
       </div>
 
       <div className="w-[62%] bg-gray-100 flex flex-col justify-center items-center px-32">
-        <h2 className="text-3xl font-bold text-[#1C2C4C] mb-1">Crie sua conta!</h2>
+        <h2 className="text-3xl font-bold text-[#1C2C4C] mb-1">
+          Crie sua conta!
+        </h2>
         <p className="text-sm text-[#1C2C4C] mb-8">
           Preencha os campos abaixo corretamente.
         </p>
@@ -136,7 +141,7 @@ function Cadastro() {
             disabled={estaCarregando}
             className="w-full bg-[#1C2C4C] text-white py-2 font-bold rounded hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
           >
-            {estaCarregando ?
+            {estaCarregando ? (
               <Oval
                 visible={true}
                 width="24"
@@ -144,8 +149,11 @@ function Cadastro() {
                 strokeWidth="5"
                 color="#1B2F4F"
                 secondaryColor="#AFC3E3"
-                ariaLabel="oval-loading" />
-              : <span>Cadastrar</span>}
+                ariaLabel="oval-loading"
+              />
+            ) : (
+              <span>Cadastrar</span>
+            )}
           </button>
         </form>
       </div>
