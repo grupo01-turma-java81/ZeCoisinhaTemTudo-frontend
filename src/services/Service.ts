@@ -44,6 +44,7 @@ export const cadastrar = async (
 ) => {
   const resposta = await api.post(url, dados, header);
   setDados(resposta.data);
+  return resposta.data;
 };
 
 export const atualizar = async (

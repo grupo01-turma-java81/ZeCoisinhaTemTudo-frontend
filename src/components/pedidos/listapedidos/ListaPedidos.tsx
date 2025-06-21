@@ -53,11 +53,16 @@ function ListaPedidos() {
   }, []);
 
   function atualizarPedidoNaLista(pedidoAtualizado: Pedido) {
-    setPedidos((pedidos) =>
-      pedidos.map((p) =>
-        p.id === pedidoAtualizado.id ? pedidoAtualizado : p
-      )
-    );
+    setPedidos((pedidos) => {
+      const existe = pedidos.some((p) => p.id === pedidoAtualizado.id);
+      if (existe) {
+        return pedidos.map((p) =>
+          p.id === pedidoAtualizado.id ? pedidoAtualizado : p
+        );
+      } else {
+        return [...pedidos, pedidoAtualizado];
+      }
+    });
   }
 
   return (
@@ -96,7 +101,7 @@ function ListaPedidos() {
                 key={pedido.id}
                 pedido={pedido}
                 onEditar={abrirModalEditar}
-                onAtualizar={atualizarPedidoNaLista} 
+                onAtualizar={atualizarPedidoNaLista}
               />
             ))}
           </div>
@@ -104,7 +109,7 @@ function ListaPedidos() {
             open={modalAberto}
             id={idSelecionado}
             onClose={() => setModalAberto(false)}
-            onAtualizar={atualizarPedidoNaLista} 
+            onAtualizar={atualizarPedidoNaLista}
           />
         </div>
       )}

@@ -20,9 +20,9 @@ function FormPedido({
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [clientes, setClientes] = useState<Cliente[]>([]);
-
   const [cliente, setCliente] = useState<Cliente>({} as Cliente);
   const [pedido, setPedido] = useState<Pedido>({} as Pedido);
+  const [etapa, setEtapa] = useState<1 | 2>(1);
 
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
@@ -85,7 +85,9 @@ function FormPedido({
     });
   }, [cliente]);
 
-  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+  function atualizarEstado(
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) {
     setPedido({
       ...pedido,
       [e.target.name]: e.target.value,
@@ -122,14 +124,14 @@ function FormPedido({
       }
     } else {
       try {
-        await cadastrar(`/pedidos`, pedido, setPedido, {
+        const novoPedido = await cadastrar(`/pedidos`, pedido, setPedido, {
           headers: {
             Authorization: token,
           },
         });
 
         ToastAlerta("Pedido cadastrado com sucesso", "sucesso");
-        onAtualizar(pedido);
+        onAtualizar(novoPedido);
         onClose();
       } catch (error: any) {
         if (error.toString().includes("403")) {
@@ -152,122 +154,183 @@ function FormPedido({
       </h1>
 
       <form className="flex flex-col w-1/2 gap-4" onSubmit={gerarNovoPedido}>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="dataPedido">Data do Pedido</label>
-          <input
-            type="text"
-            placeholder="dd/mm/yyyy"
-            name="dataPedido"
-            required
-            className="border-2 border-slate-700 rounded p-2"
-            value={pedido.dataPedido}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="statusEntrega">Status da Entrega</label>
-          <select
-            name="statusEntrega"
-            id="statusEntrega"
-            required
-            className="border-2 border-slate-700 rounded p-2"
-            value={pedido.statusEntrega || ""}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              atualizarEstado(e as any)
-            }
-          >
-            <option value="" disabled>
-              Selecione o status
-            </option>
-            <option value="Concluído">Concluído</option>
-            <option value="Em Andamento">Em Andamento</option>
-            <option value="Cancelado">Cancelado</option>
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="valorTotal">Preço do pedido </label>
-          <input
-            type="text"
-            placeholder="Ex: 200 (Insira apenas números) "
-            name="valorTotal"
-            required
-            className="border-2 border-slate-700 rounded p-2"
-            value={pedido.valorTotal}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-          />
-          <span className="text-sm text-slate-500">
-            O sistema automaticamente formata em R$.{" "}
-          </span>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p>Cliente satisfeito?</p>
-          <select
-            name="Positivo"
-            id="Positivo"
-            className="border p-2 border-slate-800 rounded"
-            value={
-              pedido.positivo === true
-                ? "true"
-                : pedido.positivo === false
-                ? "false"
-                : ""
-            }
-            onChange={(e) =>
-              setPedido({
-                ...pedido,
-                positivo: e.target.value === "true",
-              })
-            }
-            required
-          >
-            <option value="" disabled>
-              Selecione a opção:
-            </option>
-            <option value="true">Sim</option>
-            <option value="false">Não</option>
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p>Cliente que solicitou o pedido</p>
-          <select
-            name="Cliente"
-            id="Cliente"
-            className="border p-2 border-slate-800 rounded"
-            value={cliente.cpf || ""}
-            onChange={(e) => buscarClientePorId(e.currentTarget.value)}
-            required
-          >
-            <option value="" disabled>
-              Selecione o Cliente
-            </option>
+        {etapa == 1 && (
+          <>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="dataPedido">Data do Pedido</label>
+              <input
+                type="text"
+                placeholder="dd/mm/yyyy"
+                name="dataPedido"
+                required
+                className="border-2 border-slate-700 rounded p-2"
+                value={pedido.dataPedido}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  atualizarEstado(e)
+                }
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="statusEntrega">Status da Entrega</label>
+              <select
+                name="statusEntrega"
+                id="statusEntrega"
+                required
+                className="border-2 border-slate-700 rounded p-2"
+                value={pedido.statusEntrega || ""}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  atualizarEstado(e as any)
+                }
+              >
+                <option value="" disabled>
+                  Selecione o status
+                </option>
+                <option value="Concluído">Concluído</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Cancelado">Cancelado</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="valorTotal">Preço do pedido </label>
+              <input
+                type="text"
+                placeholder="Ex: 200 (Insira apenas números) "
+                name="valorTotal"
+                required
+                className="border-2 border-slate-700 rounded p-2"
+                value={pedido.valorTotal}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  atualizarEstado(e)
+                }
+              />
+              <span className="text-sm text-slate-500">
+                O sistema automaticamente formata em R$.{" "}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p>Cliente que solicitou o pedido</p>
+              <select
+                name="Cliente"
+                id="Cliente"
+                className="border p-2 border-slate-800 rounded"
+                value={cliente.id || ""}
+                onChange={(e) => buscarClientePorId(e.currentTarget.value)}
+                required
+              >
+                <option value="" disabled>
+                  Selecione o Cliente
+                </option>
 
-            {clientes.map((cliente) => (
-              <>
-                <option value={cliente.cpf}>{cliente.nome}</option>
-              </>
-            ))}
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="rounded disabled:bg-slate-200 bg-[#1a3052] hover:bg-[#232e3f]
-                               text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
-          disabled={carregandoCliente}
-        >
-          {isLoading ? (
-            <Oval
-              visible={true}
-              width="24"
-              height="24"
-              strokeWidth="5"
-              color="#1B2F4F"
-              secondaryColor="#AFC3E3"
-              ariaLabel="oval-loading"
-            />
-          ) : (
-            <span>PRONTO!</span>
-          )}
-        </button>
+                {clientes.map((cliente) => (
+                  <>
+                    <option value={cliente.id}>{cliente.nome}</option>
+                  </>
+                ))}
+              </select>
+            </div>
+            <button
+              type="button"
+              className="rounded bg-blue-600 hover:bg-blue-700 text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
+              onClick={() => setEtapa(2)}
+              disabled={carregandoCliente}
+            >
+              Próximo
+            </button>
+          </>
+        )}
+        {etapa == 2 && (
+          <>
+            <div className="flex flex-col gap-2">
+              <p>Cliente satisfeito?</p>
+              <select
+                name="Positivo"
+                id="Positivo"
+                className="border p-2 border-slate-800 rounded"
+                value={
+                  pedido.positivo === true
+                    ? "true"
+                    : pedido.positivo === false
+                    ? "false"
+                    : ""
+                }
+                onChange={(e) =>
+                  setPedido({
+                    ...pedido,
+                    positivo: e.target.value === "true",
+                  })
+                }
+                required
+              >
+                <option value="" disabled>
+                  Selecione a opção:
+                </option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="nota">Nota (1 a 5)</label>
+              <select
+                name="nota"
+                id="nota"
+                className="border p-2 border-slate-800 rounded"
+                value={pedido.nota || ""}
+                onChange={atualizarEstado}
+                required
+              >
+                <option value="" disabled>
+                  Selecione a nota
+                </option>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="comentario">Comentário do Cliente</label>
+              <textarea
+                name="comentario"
+                id="comentario"
+                className="border p-2 border-slate-800 rounded"
+                value={pedido.comentario || ""}
+                onChange={atualizarEstado}
+                rows={3}
+                placeholder="Deixe um comentário sobre o pedido"
+                required
+              />
+            </div>
+            <div className="flex gap-2 mt-2">
+              <button
+                type="button"
+                className="rounded bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-6 py-2 cursor-pointer"
+                onClick={() => setEtapa(1)}
+              >
+                Voltar
+              </button>
+              <button
+                type="submit"
+                className="rounded bg-blue-600 hover:bg-blue-700 text-white font-bold w-full py-2 flex justify-center cursor-pointer"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Oval
+                    visible={true}
+                    width="24"
+                    height="24"
+                    strokeWidth="5"
+                    color="#1B2F4F"
+                    secondaryColor="#AFC3E3"
+                    ariaLabel="oval-loading"
+                  />
+                ) : (
+                  <span>Finalizar</span>
+                )}
+              </button>
+            </div>
+          </>
+        )}
       </form>
     </div>
   );
