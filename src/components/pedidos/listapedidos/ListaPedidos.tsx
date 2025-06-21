@@ -52,17 +52,21 @@ function ListaPedidos() {
     buscarPedidos();
   }, []);
 
-  function atualizarPedidoNaLista(pedidoAtualizado: Pedido) {
-    setPedidos((pedidos) => {
-      const existe = pedidos.some((p) => p.id === pedidoAtualizado.id);
-      if (existe) {
-        return pedidos.map((p) =>
-          p.id === pedidoAtualizado.id ? pedidoAtualizado : p
-        );
-      } else {
-        return [...pedidos, pedidoAtualizado];
-      }
-    });
+  function atualizarPedidoNaLista(pedidoOuId: Pedido | string | number) {
+    if (typeof pedidoOuId === "string" || typeof pedidoOuId === "number") {
+      setPedidos((pedidos) =>
+        pedidos.filter((p) => p.id !== Number(pedidoOuId))
+      );
+    } else if (pedidoOuId) {
+      setPedidos((pedidos) => {
+        const existe = pedidos.some((p) => p.id === pedidoOuId.id);
+        if (existe) {
+          return pedidos.map((p) => (p.id === pedidoOuId.id ? pedidoOuId : p));
+        } else {
+          return [...pedidos, pedidoOuId];
+        }
+      });
+    }
   }
 
   return (

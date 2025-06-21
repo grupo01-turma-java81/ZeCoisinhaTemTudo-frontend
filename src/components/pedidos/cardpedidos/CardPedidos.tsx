@@ -7,7 +7,7 @@ import ModalDeletarPedido from "../modaldeletarpedido/ModalDeletarPedido";
 interface CardPedidosProps {
   pedido: Pedido;
   onEditar: (id: string) => void;
-  onAtualizar?: (pedidoAtualizado: Pedido) => void;
+  onAtualizar?: (pedidoAtualizado: Pedido | number) => void;
 }
 
 function CardPedido({ pedido, onEditar, onAtualizar }: CardPedidosProps) {
@@ -53,10 +53,10 @@ function CardPedido({ pedido, onEditar, onAtualizar }: CardPedidosProps) {
             Deletar
           </button>
           <ModalDeletarPedido
-            id={pedido.id?.toString() || ""}
+            id={pedido.id}
             open={modalDeleteOpen}
             onClose={() => setModalDeleteOpen(false)}
-            onAtualizar={() => onAtualizar(pedido)}
+            onAtualizar={onAtualizar}
           />
         </div>
       </div>

@@ -7,10 +7,10 @@ import { RotatingLines } from "react-loader-spinner";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 interface ModalDeletarPedidoProps {
-  id: string;
+  id: number;
   open: boolean;
   onClose: () => void;
-  onAtualizar: () => void;
+  onAtualizar: (id: number) => void;
 }
 
 function ModalDeletarPedido({
@@ -35,7 +35,7 @@ function ModalDeletarPedido({
       });
 
       ToastAlerta("Pedido apagado com sucesso", "info");
-      onAtualizar();
+      onAtualizar(Number(id));
       onClose();
     } catch (error: any) {
       if (error.toString().includes("403")) {
