@@ -6,6 +6,7 @@ import { Oval } from "react-loader-spinner";
 import type Pedido from "../../../models/Pedido";
 import CardPedido from "../cardpedidos/CardPedidos";
 import ModalPedido from "../modalpedido/ModalPedido";
+import DashboardPedidos from "../dashboardpedido/DashboardPedido";
 
 function ListaPedidos() {
   const navigate = useNavigate();
@@ -99,7 +100,8 @@ function ListaPedidos() {
               <span className="text-2xl">+</span> Criar pedido
             </button>
           </div>
-          <div className="w-full max-w-7xl mx-auto my-4">
+          <DashboardPedidos pedidos={pedidos} />
+          <div className="w-full max-w-7xl mx-auto mt-6 mb-4">
             {pedidos.map((pedido) => (
               <CardPedido
                 key={pedido.id}
