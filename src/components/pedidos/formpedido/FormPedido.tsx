@@ -159,27 +159,43 @@ function FormPedido({
       >
         {etapa == 1 && (
           <>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="dataPedido">Data do Pedido</label>
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="dataPedido"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Data do Pedido
+                </label>
+              </div>
               <input
                 type="text"
-                placeholder="dd/mm/yyyy"
+                id="dataPedido"
                 name="dataPedido"
                 required
-                className="border-2 border-slate-700 rounded p-2"
+                placeholder="dd/mm/yyyy"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
                 value={pedido.dataPedido}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
               />
             </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="statusEntrega">Status da Entrega</label>
+
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="statusEntrega"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Status da Entrega
+                </label>
+              </div>
               <select
-                name="statusEntrega"
                 id="statusEntrega"
+                name="statusEntrega"
                 required
-                className="border-2 border-slate-700 rounded p-2"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 cursor-pointer"
                 value={pedido.statusEntrega || ""}
                 onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                   atualizarEstado(e as any)
@@ -193,29 +209,46 @@ function FormPedido({
                 <option value="Cancelado">Cancelado</option>
               </select>
             </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="valorTotal">Preço do pedido </label>
+
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="valorTotal"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Preço do pedido
+                </label>
+                <span className="block mb-2 text-sm text-gray-500">
+                  O sistema automaticamente formata em R$.
+                </span>
+              </div>
               <input
                 type="text"
-                placeholder="Ex: 200 (Insira apenas números) "
+                id="valorTotal"
                 name="valorTotal"
                 required
-                className="border-2 border-slate-700 rounded p-2"
+                placeholder="Ex: 200 (Insira apenas números)"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
                 value={pedido.valorTotal}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
               />
-              <span className="text-sm text-slate-500">
-                O sistema automaticamente formata em R$.{" "}
-              </span>
             </div>
-            <div className="flex flex-col gap-2">
-              <p>Cliente que solicitou o pedido</p>
+
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="Cliente"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Cliente que solicitou o pedido
+                </label>
+              </div>
               <select
-                name="Cliente"
                 id="Cliente"
-                className="border p-2 border-slate-800 rounded"
+                name="Cliente"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 cursor-pointer"
                 value={cliente.id || ""}
                 onChange={(e) => buscarClientePorId(e.currentTarget.value)}
                 required
@@ -223,14 +256,14 @@ function FormPedido({
                 <option value="" disabled>
                   Selecione o Cliente
                 </option>
-
                 {clientes.map((cliente) => (
-                  <>
-                    <option value={cliente.id}>{cliente.nome}</option>
-                  </>
+                  <option key={cliente.id} value={cliente.id}>
+                    {cliente.nome}
+                  </option>
                 ))}
               </select>
             </div>
+
             <button
               type="button"
               className="rounded bg-blue-600 hover:bg-blue-700 text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
@@ -243,12 +276,19 @@ function FormPedido({
         )}
         {etapa == 2 && (
           <>
-            <div className="flex flex-col gap-2">
-              <p>Cliente satisfeito?</p>
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="Positivo"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Cliente satisfeito?
+                </label>
+              </div>
               <select
                 name="Positivo"
                 id="Positivo"
-                className="border p-2 border-slate-800 rounded"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 cursor-pointer"
                 value={
                   pedido.positivo === true
                     ? "true"
@@ -271,12 +311,23 @@ function FormPedido({
                 <option value="false">Não</option>
               </select>
             </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="nota">Nota (1 a 5)</label>
+
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="nota"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Nota
+                </label>
+                <span className="block mb-2 text-sm text-gray-500">
+                  (1 - 5)
+                </span>
+              </div>
               <select
                 name="nota"
                 id="nota"
-                className="border p-2 border-slate-800 rounded"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 cursor-pointer"
                 value={pedido.nota || ""}
                 onChange={atualizarEstado}
                 required
@@ -291,12 +342,20 @@ function FormPedido({
                 ))}
               </select>
             </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="comentario">Comentário do Cliente</label>
+
+            <div>
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <label
+                  htmlFor="comentario"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Comentário do Cliente
+                </label>
+              </div>
               <textarea
                 name="comentario"
                 id="comentario"
-                className="border p-2 border-slate-800 rounded"
+                className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
                 value={pedido.comentario || ""}
                 onChange={atualizarEstado}
                 rows={3}
@@ -304,10 +363,11 @@ function FormPedido({
                 required
               />
             </div>
+
             <div className="flex gap-2 mt-2">
               <button
                 type="button"
-                className="rounded bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-6 py-2 cursor-pointer"
+                className="py-2 px-6 gap-x-2 text-sm font-medium rounded border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 cursor-pointer"
                 onClick={() => setEtapa(1)}
               >
                 Voltar

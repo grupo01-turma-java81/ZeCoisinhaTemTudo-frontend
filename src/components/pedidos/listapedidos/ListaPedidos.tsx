@@ -15,6 +15,7 @@ function ListaPedidos() {
   const [modalAberto, setModalAberto] = useState(false);
   const [idSelecionado, setIdSelecionado] = useState<string | undefined>();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [pedidosVisiveis, setPedidosVisiveis] = useState(6);
 
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
@@ -53,6 +54,10 @@ function ListaPedidos() {
   useEffect(() => {
     buscarPedidos();
   }, []);
+
+  useEffect(() => {
+    setPedidosVisiveis(6);
+  }, [pedidos.length]);
 
   function atualizarPedidoNaLista(pedidoOuId: Pedido | string | number) {
     if (typeof pedidoOuId === "string" || typeof pedidoOuId === "number") {
@@ -119,7 +124,7 @@ function ListaPedidos() {
           </div>
           <DashboardPedidos pedidos={pedidos} />
           <div className="w-full max-w-7xl mx-auto mt-6 mb-4">
-            {pedidos.map((pedido) => (
+            {pedidos.slice(0, pedidosVisiveis).map((pedido) => (
               <CardPedido
                 key={pedido.id}
                 pedido={pedido}
@@ -127,6 +132,16 @@ function ListaPedidos() {
                 onAtualizar={atualizarPedidoNaLista}
               />
             ))}
+            {pedidosVisiveis < pedidos.length && (
+              <div className="flex justify-center my-6">
+                <button
+                  className="bg-transparent text-gray-800 border border-gray-600 rounded-xl px-8 py-3 text-base font-medium shadow-none hover:border-blue-300 hover:text-blue-900 transition cursor-pointer"
+                  onClick={() => setPedidosVisiveis((prev) => prev + 6)}
+                >
+                  Carregar Mais
+                </button>
+              </div>
+            )}
           </div>
           <ModalPedido
             open={modalAberto}

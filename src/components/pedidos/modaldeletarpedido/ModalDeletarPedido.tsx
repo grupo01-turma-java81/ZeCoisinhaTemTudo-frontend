@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { RotatingLines } from "react-loader-spinner";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
+import { FaBox } from "react-icons/fa";
 
 interface ModalDeletarPedidoProps {
   id: number;
@@ -60,7 +61,8 @@ function ModalDeletarPedido({
       </button>
       <div className="p-6 flex flex-col items-center">
         <h2 className="text-xl font-bold mb-4">
-          Deseja realmente deletar este pedido?
+          Deseja realmente deletar o pedido{" "}
+          <span className="text-green-600 font-bold ml-1">#{id}</span> ?
         </h2>
         <div className="flex gap-4 mt-3">
           <button
