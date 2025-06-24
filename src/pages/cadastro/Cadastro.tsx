@@ -1,7 +1,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { cadastrarUsuario } from "../../services/Service";
 import type Usuario from "../../models/Usuario";
-import iconLogo from "../../assets/cadastro/logo_ze.svg";
+import iconLogo from "../../assets/cadastro/logo_ze.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import { ToastAlerta } from "../../utils/ToastAlerta";

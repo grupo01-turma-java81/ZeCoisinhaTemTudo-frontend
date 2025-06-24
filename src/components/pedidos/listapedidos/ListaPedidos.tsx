@@ -7,6 +7,7 @@ import type Pedido from "../../../models/Pedido";
 import CardPedido from "../cardpedidos/CardPedidos";
 import ModalPedido from "../modalpedido/ModalPedido";
 import DashboardPedidos from "../dashboardpedido/DashboardPedido";
+import bgSquares from "../../../assets/bg-squares.webp";
 
 function ListaPedidos() {
   const navigate = useNavigate();
@@ -86,19 +87,35 @@ function ListaPedidos() {
           />
         </div>
       ) : (
-        <div className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen">
-          <div className="flex items-center justify-between gap-x-4 w-full max-w-7xl mx-auto mt-8 mb-6">
-            <div className="bg-white rounded-full px-8 py-2 max-w-3xl w-full">
-              <span className="text-2xl font-bold text-[#E09B96] font-montserrat">
-                Pedidos
+        <div
+          style={{
+            backgroundImage: `url(${bgSquares})`,
+            backgroundRepeat: "no-repeat",
+          }}
+          className="flex flex-col w-full flex-1 bg-gray-200 px-4 md:px-10 min-h-screen"
+        >
+          <div className="w-full max-w-7xl mx-auto flex flex-col items-center mt-8 mb-8">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-2">
+              Controle total dos seus pedidos
+              <br />e indicadores em um só lugar
+            </h1>
+            <div className="flex items-center gap-2 mb-2 mt-4">
+              <span className="bg-[#1a3052] text-white text-xs font-bold rounded px-2 py-1 mr-2 rotate-[-5deg]">
+                Novo
+              </span>
+              <span className="text-base text-gray-700">
+                Dê o primeiro passo para uma gestão mais eficiente e
+                inteligente.
               </span>
             </div>
-            <button
-              className="flex items-center gap-2 bg-blue-600 text-white font-semibold rounded-full px-8 py-2 text-lg shadow hover:bg-blue-700 transition cursor-pointer"
-              onClick={abrirModalNovo}
-            >
-              <span className="text-2xl">+</span> Criar pedido
-            </button>
+            <div className="flex flex-col items-center mt-6 mb-2">
+              <button
+                className="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold rounded-full px-8 py-3 text-lg shadow flex items-center gap-2 cursor-pointer"
+                onClick={abrirModalNovo}
+              >
+                <span className="text-2xl">+</span> Crie seu pedido
+              </button>
+            </div>
           </div>
           <DashboardPedidos pedidos={pedidos} />
           <div className="w-full max-w-7xl mx-auto mt-6 mb-4">

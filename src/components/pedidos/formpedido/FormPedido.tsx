@@ -153,7 +153,10 @@ function FormPedido({
         {id !== undefined ? "Editar Pedido" : "Cadastrar Pedido"}
       </h1>
 
-      <form className="flex flex-col w-1/2 gap-4" onSubmit={gerarNovoPedido}>
+      <form
+        className="flex flex-col w-3/4 max-w-2xl gap-6"
+        onSubmit={gerarNovoPedido}
+      >
         {etapa == 1 && (
           <>
             <div className="flex flex-col gap-2">

@@ -1,18 +1,61 @@
-.popup-content {
+.popup-content,
+.popup-content.popup-content {
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
   border-radius: 1rem;
-  padding: 2rem 2rem 2.5rem 2rem;
   background: #fff;
-  max-width: 650px;
-  width: 95vw;
   margin: 0 auto;
   box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-@media (min-width: 640px) {
-  .popup-content {
-    max-width: 650px;
-  }
+.modal-pedido-container {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.modal-pedido-logo {
+  background: #1a3052;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.modal-pedido-logo-img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.modal-pedido-logo-text {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+}
+
+.modal-pedido-content {
+  flex: 1;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
 }

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type UsuarioLogin from "../../models/UsuarioLogin";
-import iconLogo from "../../assets/cadastro/logo_ze.svg";
+import iconLogo from "../../assets/cadastro/logo_ze.webp";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Oval } from "react-loader-spinner";
 
