@@ -3,7 +3,7 @@ import "reactjs-popup/dist/index.css";
 import { deletar, buscar } from "../../../services/Service";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Oval } from "react-loader-spinner";
+import { Oval, RotatingLines } from "react-loader-spinner";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
 import type Cliente from "../../../models/Cliente";
 
@@ -68,50 +68,81 @@ function DeletarClientes({
   }
 
   return (
-    <Popup open={open} modal onClose={onClose}>
+    <Popup
+      open={open}
+      modal
+      onClose={onClose}
+      contentStyle={{
+        maxWidth: "22rem",
+        width: "100%",
+        borderRadius: "1rem",
+        padding: 0,
+        overflow: "visible",
+      }}
+    >
       <button
         onClick={onClose}
-        className="absolute top-3 left-4 text-2xl text-gray-400 hover:text-gray-700 font-bold z-10 cursor-pointer"
+        className="absolute top-2 left-4 text-2xl text-gray-400 hover:text-gray-700 font-bold z-10 cursor-pointer"
         aria-label="Fechar"
         type="button"
       >
         ×
       </button>
-      <div className="p-6 flex flex-col items-center">
-        <h2 className="text-xl font-bold mb-4">
-          Deseja realmente deletar este cliente?
-        </h2>
-        <div className="mb-4 text-center">
-          <div className="font-semibold">{cliente.nome}</div>
-          <div className="text-gray-500">{cliente.cpf}</div>
+      <div className="flex flex-col items-center p-6 bg-white rounded-xl relative min-h-[20rem]">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mb-4 mt-2">
+          <svg
+            className="w-7 h-7 text-red-500"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </div>
-        <div className="flex gap-4 mt-3">
+
+        <div className="text-lg font-bold text-center mb-2">
+          Deletar cliente {cliente.nome || ""}
+        </div>
+
+        <div className="w-full border-b border-gray-200 my-3"></div>
+
+        <div className="text-center text-gray-600 mb-6 px-2">
+          Esta ação é{" "}
+          <span className="font-semibold text-red-500">permanente</span> e não
+          poderá ser desfeita.
+          <br />
+          Tem certeza que deseja excluir este cliente?
+        </div>
+
+        <div className="flex flex-col gap-2 w-full">
           <button
-            className="px-4 py-2 rounded bg-red-500 text-white cursor-pointer"
+            className="w-full py-2 rounded bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center justify-center cursor-pointer"
             onClick={deletarCliente}
             disabled={isLoading}
           >
             {isLoading ? (
-              <Oval
-                height={24}
-                width={24}
-                color="white"
-                secondaryColor="#cbd5e1"
-                strokeWidth={5}
-                strokeWidthSecondary={5}
+              <RotatingLines
+                strokeColor="white"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="24"
                 visible={true}
-                ariaLabel="oval-loading"
               />
             ) : (
-              <span>Sim</span>
+              "Deletar"
             )}
           </button>
           <button
-            className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
+            className="w-full py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold cursor-pointer"
             onClick={onClose}
             disabled={isLoading}
           >
-            Não
+            Cancelar
           </button>
         </div>
       </div>

@@ -5,7 +5,6 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { RotatingLines } from "react-loader-spinner";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
-import logoZe from "../../../assets/cadastro/logo_ze.webp";
 
 interface ModalDeletarPedidoProps {
   id: number;
@@ -62,6 +61,14 @@ function ModalDeletarPedido({
         overflow: "visible",
       }}
     >
+      <button
+        onClick={onClose}
+        className="absolute top-2 left-4 text-2xl text-gray-400 hover:text-gray-700 font-bold z-10 cursor-pointer"
+        aria-label="Fechar"
+        type="button"
+      >
+        ×
+      </button>
       <div className="flex flex-col items-center p-6 bg-white rounded-xl relative min-h-[20rem]">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mb-4 mt-2">
           <svg
