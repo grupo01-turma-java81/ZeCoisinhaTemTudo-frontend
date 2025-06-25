@@ -23,14 +23,14 @@ O projeto visa resolver problemas como:
 
 ## 👤Colaboradores do Projeto
 
-| Nome             | GitHub                           |
-|------------------|----------------------------------|
-| Vinícius Cristhian      | [@ViniCristhian](https://github.com/ViniCristhian) |
-| Iago Willian           | [@IagoWiliian](https://github.com/IagoWiliian) |
-| Giulio Gabriel            | [@GiulioArantes](https://github.com/GiulioArantes) |
-| Yasmim Ruescas           | [@Yasmimruescas](https://github.com/Yasmimruescas) |
-| Vitoria Camilly    | [@vitoriacamilly](https://github.com/Vitoriacmlly) |
-| Bruno Daniel          | [@BrunoDaniel13](https://github.com/BrunoDaniel13) |
+| Nome             | GitHub                           | LinkedIn |  
+|------------------|----------------------------------|------------------------|
+| Vinícius Cristhian      | [@ViniCristhian](https://github.com/ViniCristhian) | [vinicristhian](https://www.linkedin.com/in/vinicristhian/) |
+| Iago Willian           | [@IagoWiliian](https://github.com/IagoWiliian) | [iago-willian-](https://www.linkedin.com/in/iago-willian-/)
+| Giulio Gabriel            | [@GiulioArantes](https://github.com/GiulioArantes) | [giulio-arantes](https://www.linkedin.com/in/giulio-arantes/)
+| Yasmim Ruescas           | [@Yasmimruescas](https://github.com/Yasmimruescas) | [yasmim-ruescas](https://www.linkedin.com/in/yasmim-ruescas/)
+| Vitoria Camilly    | [@vitoriacamilly](https://github.com/Vitoriacmlly) | [vitoria-camilly](https://www.linkedin.com/in/vitoria-camilly/)
+| Bruno Daniel          | [@BrunoDaniel13](https://github.com/BrunoDaniel13) | [bruno-daniel](https://www.linkedin.com/in/bruno-daniel-ferreira-leite/)
 
 ## 💾Observações
 
