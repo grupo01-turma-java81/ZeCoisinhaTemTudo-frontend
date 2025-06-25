@@ -13,6 +13,7 @@ import oportunidadesMain from "../../assets/oportunidade/oportunidadesMain.webp"
 function Oportunidade() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [loading, setLoading] = useState(true);
+  const [clientesVisiveis, setClientesVisiveis] = useState(5);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
 
@@ -41,6 +42,10 @@ function Oportunidade() {
       setLoading(false);
     });
   }, [token]);
+
+  useEffect(() => {
+    setClientesVisiveis(5);
+  }, [clientes.length]);
 
   return (
     <div className="min-h-screen bg-[#e5e6e8] font-montserrat">
@@ -130,49 +135,61 @@ function Oportunidade() {
               Nenhum cliente com avaliação positiva encontrado.
             </p>
           ) : (
-            clientes.map((cliente) => (
-              <div
-                key={cliente.cpf}
-                className="bg-white rounded-xl shadow grid grid-cols-2 md:grid-cols-6 items-center px-2 md:px-8 py-4 min-h-[64px] mb-3"
-              >
-                <span className="text-base md:text-lg font-normal break-all">
-                  {cliente.cpf}
-                </span>
-                <span
-                  className="text-base md:text-lg font-normal break-all truncate"
-                  title={cliente.nome}
+            <>
+              {clientes.slice(0, clientesVisiveis).map((cliente) => (
+                <div
+                  key={cliente.cpf}
+                  className="bg-white rounded-xl shadow grid grid-cols-2 md:grid-cols-6 items-center px-2 md:px-8 py-4 min-h-[64px] mb-3"
                 >
-                  {cliente.nome}
-                </span>
-                <span className="text-base md:text-lg font-normal break-all hidden md:block">
-                  {cliente.telefone}
-                </span>
-                <span className="text-base md:text-lg font-normal break-all hidden md:block">
-                  {cliente.endereco}
-                </span>
-                <span className="text-base md:text-lg font-normal break-all hidden md:block">
-                  {cliente.dataCadastro ? (
-                    cliente.dataCadastro
-                  ) : (
-                    <span className="text-gray-400 italic">-</span>
-                  )}
-                </span>
-                <span className="flex justify-center items-center">
-                  <a
-                    href={`https://wa.me/${cliente.telefone?.replace(
-                      /\D/g,
-                      ""
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#0387C4] hover:text-[#9ac3d6] transition"
-                    title="Enviar mensagem no WhatsApp"
+                  <span className="text-base md:text-lg font-normal break-all">
+                    {cliente.cpf}
+                  </span>
+                  <span
+                    className="text-base md:text-lg font-normal break-all truncate"
+                    title={cliente.nome}
                   >
-                    <FaWhatsapp className="text-4xl" />
-                  </a>
-                </span>
-              </div>
-            ))
+                    {cliente.nome}
+                  </span>
+                  <span className="text-base md:text-lg font-normal break-all hidden md:block">
+                    {cliente.telefone}
+                  </span>
+                  <span className="text-base md:text-lg font-normal break-all hidden md:block">
+                    {cliente.endereco}
+                  </span>
+                  <span className="text-base md:text-lg font-normal break-all hidden md:block">
+                    {cliente.dataCadastro ? (
+                      cliente.dataCadastro
+                    ) : (
+                      <span className="text-gray-400 italic">-</span>
+                    )}
+                  </span>
+                  <span className="flex justify-center items-center">
+                    <a
+                      href={`https://wa.me/${cliente.telefone?.replace(
+                        /\D/g,
+                        ""
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#0387C4] hover:text-[#9ac3d6] transition"
+                      title="Enviar mensagem no WhatsApp"
+                    >
+                      <FaWhatsapp className="text-4xl" />
+                    </a>
+                  </span>
+                </div>
+              ))}
+              {clientesVisiveis < clientes.length && (
+                <div className="flex justify-center my-4">
+                  <button
+                    className="bg-transparent text-blue-700 border border-blue-400 rounded-xl px-8 py-3 text-base font-medium shadow-none hover:bg-blue-50 transition cursor-pointer"
+                    onClick={() => setClientesVisiveis((prev) => prev + 5)}
+                  >
+                    Mostrar mais clientes
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -135,7 +135,7 @@ function ListaPedidos() {
             {pedidosVisiveis < pedidos.length && (
               <div className="flex justify-center my-6">
                 <button
-                  className="bg-transparent text-gray-800 border border-gray-600 rounded-xl px-8 py-3 text-base font-medium shadow-none hover:border-blue-300 hover:text-blue-900 transition cursor-pointer"
+                  className="bg-transparent text-blue-700 border border-blue-400 rounded-xl px-8 py-3 text-base font-medium shadow-none hover:bg-blue-50 transition cursor-pointer"
                   onClick={() => setPedidosVisiveis((prev) => prev + 6)}
                 >
                   Carregar Mais
