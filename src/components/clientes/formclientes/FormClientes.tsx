@@ -119,15 +119,13 @@ function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
         {id ? "Editar Cliente" : "Cadastrar Cliente"}
       </h2>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">
-          CPF
-        </label>
+        <label className="block text-sm font-medium mb-2 font-sans">CPF</label>
         <input
           type="text"
           name="cpf"
-          value={cliente.cpf}
+          value={cliente.cpf || ""}
           onChange={atualizarEstado}
-          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
+          className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
           required
           minLength={10}
           maxLength={11}
@@ -135,29 +133,27 @@ function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
         />
       </div>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">
-          Nome
-        </label>
+        <label className="block text-sm font-medium mb-2 font-sans">Nome</label>
         <input
           type="text"
           name="nome"
-          value={cliente.nome}
+          value={cliente.nome || ""}
           onChange={atualizarEstado}
-          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
+          className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
           required
           placeholder="Nome do cliente"
         />
       </div>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">
+        <label className="block text-sm font-medium mb-2 font-sans">
           Telefone
         </label>
         <input
           type="text"
           name="telefone"
-          value={cliente.telefone}
+          value={cliente.telefone || ""}
           onChange={atualizarEstado}
-          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
+          className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
           required
           minLength={11}
           maxLength={14}
@@ -165,22 +161,22 @@ function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
         />
       </div>
       <div className="mb-6">
-        <label className="block text-base font-medium mb-2 font-sans">
+        <label className="block text-sm font-medium mb-2 font-sans">
           Endereço
         </label>
         <input
           type="text"
           name="endereco"
-          value={cliente.endereco}
+          value={cliente.endereco || ""}
           onChange={atualizarEstado}
-          className="w-full border border-black rounded px-3 py-2 bg-white text-lg font-sans"
+          className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
           required
           placeholder="Logradouro e número"
         />
       </div>
       <button
         type="submit"
-        className="w-full bg-[#16213E] text-white text-lg font-bold py-3 rounded hover:bg-[#0f1730] transition font-sans flex justify-center cursor-pointer"
+        className="rounded bg-blue-600 hover:bg-blue-700 text-white font-bold w-full py-2 flex justify-center cursor-pointer"
         disabled={isLoading}
       >
         {isLoading ? (
@@ -189,12 +185,12 @@ function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
             width="24"
             height="24"
             strokeWidth="5"
-            color="#ffffff"
+            color="#1B2F4F"
             secondaryColor="#AFC3E3"
             ariaLabel="oval-loading"
           />
         ) : (
-          <span>PRONTO!</span>
+          <span>Finalizar</span>
         )}
       </button>
     </form>
