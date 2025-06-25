@@ -13,6 +13,7 @@ function ListaClientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
+  const [clientesVisiveis, setClientesVisiveis] = useState(7);
 
   const [modalAberto, setModalAberto] = useState(false);
   const [idSelecionado, setIdSelecionado] = useState<number | undefined>(
@@ -59,6 +60,10 @@ function ListaClientes() {
   useEffect(() => {
     buscarClientes();
   }, []);
+
+  useEffect(() => {
+    setClientesVisiveis(7);
+  }, [clientes.length]);
 
   function atualizarClientes(clienteAtualizado?: Cliente) {
     if (clienteAtualizado) {
@@ -115,14 +120,27 @@ function ListaClientes() {
             />
           </div>
         ) : (
-          clientes.map((cliente) => (
-            <CardClientes
-              key={cliente.id}
-              cliente={cliente}
-              onEditar={() => abrirModalEditar(cliente.id)}
-              onDeletar={() => abrirModalDeletar(cliente.id)}
-            />
-          ))
+          clientes
+            .slice(0, clientesVisiveis)
+            .map((cliente) => (
+              <CardClientes
+                key={cliente.id}
+                cliente={cliente}
+                onEditar={() => abrirModalEditar(cliente.id)}
+                onDeletar={() => abrirModalDeletar(cliente.id)}
+              />
+            ))
+        )}
+
+        {clientesVisiveis < clientes.length && (
+          <div className="flex justify-center">
+            <button
+              className="bg-transparent text-gray-800 border border-gray-600 rounded-xl px-8 py-3 text-base font-medium shadow-none hover:border-blue-300 hover:text-blue-900 transition cursor-pointer"
+              onClick={() => setClientesVisiveis((prev) => prev + 7)}
+            >
+              Carregar Mais
+            </button>
+          </div>
         )}
       </div>
       <ModalCliente

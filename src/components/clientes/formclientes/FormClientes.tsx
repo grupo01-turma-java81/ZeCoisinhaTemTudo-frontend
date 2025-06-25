@@ -128,7 +128,7 @@ function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
           className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
           required
           minLength={10}
-          maxLength={11}
+          maxLength={14}
           placeholder="Insira apenas números"
         />
       </div>
@@ -156,7 +156,7 @@ function FormClientes({ id, onClienteCadastrado }: FormClientesProps) {
           className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
           required
           minLength={11}
-          maxLength={14}
+          maxLength={15}
           placeholder="Insira o DDD"
         />
       </div>
