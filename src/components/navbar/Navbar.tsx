@@ -2,7 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ToastAlerta } from "../../utils/ToastAlerta";
 import { useContext, type ReactNode } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import logo from "../../assets/navbar/logo.webp";
+import logoZe from "../../assets/cadastro/logo_ze.webp";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -20,14 +20,29 @@ function NavBar() {
   if (usuario.token !== "") {
     component = (
       <nav className="flex items-center justify-between bg-[#fafafa] px-10 pl-6 h-16 border-b border-[#e0e0e0] font-inherit">
-        <div className="flex items-center">
+        <Link to="/home" className="flex items-center">
           <img
-            src={logo}
+            src={logoZe}
             alt="Logo do ZéCoisinhaTemTudo"
-            width="48"
-            height="48"
+            width="53"
+            height="53"
+            className="object-contain mb-2"
           />
-        </div>
+          <div className="flex flex-col leading-tight">
+            <span
+              className="text-[1.15rem] font-bold"
+              style={{ color: "#e6b1b1" }}
+            >
+              ZéCoisinha
+            </span>
+            <span
+              className="text-[1.15rem] font-bold text-center"
+              style={{ color: "#7bb3c8", marginTop: "-0.3rem" }}
+            >
+              TemTudo
+            </span>
+          </div>
+        </Link>
         <ul className="flex items-center gap-7 text-[16px]">
           {["home", "pedidos", "clientes", "oportunidades"].map((item) => (
             <li key={item}>
