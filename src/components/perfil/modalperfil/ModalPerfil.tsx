@@ -2,7 +2,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "./ModalPerfil.css";
 import FormPerfil from "../formperfil/FormPerfil";
-import type Usuario from "../../../models/Usuario";
 
 interface ModalPerfilProps {
   open: boolean;

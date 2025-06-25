@@ -51,7 +51,10 @@ function FormPerfil({ onClose }: FormPerfilProps) {
     setIsLoading(true);
 
     const dadosAtualizados = {
-      ...usuarioPerfil,
+      id: usuarioPerfil.id,
+      nome: usuarioPerfil.nome,
+      usuario: usuarioPerfil.usuario,
+      foto: usuarioPerfil.foto,
       ...(novaSenha ? { senha: novaSenha } : {}),
     };
 

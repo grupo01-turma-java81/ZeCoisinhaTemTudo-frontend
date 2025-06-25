@@ -8,6 +8,8 @@ import { buscar } from "../../services/Service";
 import imagem1 from "../../assets/perfil/imagem1.svg";
 import imagem2 from "../../assets/perfil/imagem2.svg";
 import imagem3 from "../../assets/perfil/imagem3.svg";
+import type Pedido from "../../models/Pedido";
+import { FaStar } from "react-icons/fa";
 
 function Perfil() {
   const { usuario, handleLogout } = useContext(AuthContext);
@@ -16,6 +18,8 @@ function Perfil() {
 
   const [modalAberta, setModalAberta] = useState(false);
   const [usuarioAtual, setUsuarioAtual] = useState<Usuario>(usuario);
+  const [mediaNotas, setMediaNotas] = useState<number | null>(null);
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
   const logout = () => {
     handleLogout();
@@ -26,6 +30,12 @@ function Perfil() {
   const abrirModal = () => {
     setModalAberta(true);
   };
+
+  async function buscarPedidos() {
+    await buscar("/pedidos", setPedidos, {
+      headers: { Authorization: token },
+    });
+  }
 
   const atualizarUsuario = (novoUsuario: Usuario) => {
     setUsuarioAtual(novoUsuario);
@@ -55,6 +65,19 @@ function Perfil() {
     }
   }, [modalAberta]);
 
+  useEffect(() => {
+    buscarPedidos();
+  }, [token]);
+
+  useEffect(() => {
+    if (pedidos.length > 0) {
+      const soma = pedidos.reduce((acc, pedido) => acc + (pedido.nota || 0), 0);
+      setMediaNotas(Number((soma / pedidos.length).toFixed(1)));
+    } else {
+      setMediaNotas(null);
+    }
+  }, [pedidos]);
+
   return (
     <>
       <div className="w-full min-h-screen bg-gray-100 px-8 py-6">
@@ -73,19 +96,43 @@ function Perfil() {
             </button>
           </div>
 
-          <div className="flex flex-col w-full md:w-3/4 bg-white rounded-xl shadow-md p-6">
-            <div className="flex justify-between items-start">
+          <div className="flex flex-col w-full md:w-3/4 bg-white rounded-xl shadow-md p-8 min-h-[240px]">
+            <div className="flex flex-row justify-between items-center w-full">
               <div>
-                <p className="text-xs">Empresa/colaborador: </p>
-                <h2 className="text-2xl font-bold text-gray-800 mb-1">
+                <h2 className="text-4xl font-bold text-gray-800 mb-1">
                   {usuarioAtual.nome}
                 </h2>
                 <button
                   onClick={abrirModal}
-                  className="text-blue-600 hover:underline text-sm cursor-pointer"
+                  className="text-blue-600 hover:underline text-sm cursor-pointer mt-3 ml-3"
                 >
                   Editar perfil
                 </button>
+              </div>
+              <div className="flex flex-col items-end">
+                <div className="flex items-center">
+                  <span className="text-5xl font-bold text-gray-800 mr-2 mb-2">
+                    {mediaNotas !== null
+                      ? mediaNotas.toFixed(1).replace(".", ",")
+                      : "--"}
+                  </span>
+                </div>
+                <div>
+                  {mediaNotas !== null && (
+                    <div className="flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <FaStar
+                          key={i}
+                          className={`text-[1.1rem] ${
+                            mediaNotas >= i + 1
+                              ? "text-purple-700"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
