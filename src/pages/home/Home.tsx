@@ -11,6 +11,7 @@ import homeMainImg from "../../assets/home/homeMainImg.webp";
 import mascote from "../../assets/home/mascote.png";
 
 function Home() {
+  const [pedidosVisiveis, setPedidosVisiveis] = useState(5);
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
@@ -48,6 +49,10 @@ function Home() {
     }, 5000);
     return () => clearInterval(intervalo);
   }, []);
+
+  useEffect(() => {
+    setPedidosVisiveis(5);
+  }, [pedidos.length]);
 
   if (!token) return null;
 
@@ -139,7 +144,7 @@ function Home() {
                 </tr>
               </thead>
               <tbody>
-                {pedidos.map((pedido) => (
+                {pedidos.slice(0, pedidosVisiveis).map((pedido) => (
                   <tr key={pedido.id} className="hover:bg-[#e7e7e7] transition">
                     <td className="px-5 py-3">#{pedido.id}</td>
                     <td className="px-5 py-3">
@@ -154,6 +159,19 @@ function Home() {
                   </tr>
                 ))}
               </tbody>
+              {pedidosVisiveis < pedidos.length && (
+                <tr>
+                  <td colSpan={6} className="text-center py-4">
+                    <div className="w-full border-t border-[#bfc8d6] mb-3" />
+                    <span
+                      className="text-blue-500 font-semibold cursor-pointer hover:underline"
+                      onClick={() => setPedidosVisiveis((prev) => prev + 5)}
+                    >
+                      Mostrar mais pedidos
+                    </span>
+                  </td>
+                </tr>
+              )}
             </table>
           )}
         </div>
