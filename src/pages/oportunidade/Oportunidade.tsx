@@ -1,5 +1,5 @@
 import "../oportunidade/Oportunidade.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { buscar } from "../../services/Service";
 import type Pedido from "../../models/Pedido";
 import type Cliente from "../../models/Cliente";
@@ -16,6 +16,31 @@ function Oportunidade() {
   const [clientesVisiveis, setClientesVisiveis] = useState(5);
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = usuario.token || "";
+
+  const imgRef0 = useRef<HTMLDivElement | null>(null);
+  const imgRef1 = useRef<HTMLDivElement | null>(null);
+  const imgRef2 = useRef<HTMLDivElement | null>(null);
+  const imgsRefs = [imgRef0, imgRef1, imgRef2];
+  const [imgsVisiveis, setImgsVisiveis] = useState([false, false, false]);
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        const novosVisiveis = [...imgsVisiveis];
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute("data-idx"));
+            novosVisiveis[idx] = true;
+          }
+        });
+        setImgsVisiveis(novosVisiveis);
+      },
+      { threshold: 0.3 }
+    );
+    imgsRefs.forEach((ref) => ref.current && observer.observe(ref.current));
+    return () => observer.disconnect();
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     buscar(
@@ -49,59 +74,51 @@ function Oportunidade() {
 
   return (
     <div className="min-h-screen bg-[#e5e6e8] font-montserrat">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 px-8 pt-12 pb-8">
-        <img
-          src={oportunidadesMain}
-          alt="Ilustração Oportunidades"
-          className="max-w-[700px] w-full h-auto"
-        />
-        <div className="flex flex-col items-center md:items-start">
-          <h1 className="text-black font-semibold text-8xl leading-none text-center md:text-left">
-            OPORTU
-            <span className="block ml-30">NIDADES</span>
-          </h1>
-          <p className="mt-6 text-[#0387C4] text-xl md:text-4xl text-center md:text-left max-w-xl">
-            Fidelize para crescer:{" "}
-            <span className="text-[#1a7ed7] font-bold">
-              estratégias inteligentes
-            </span>{" "}
-            que fazem seu cliente voltar — e indicar!
-          </p>
+      <div className="w-full min-h-screen flex items-center justify-center px-8 pt-12 pb-8">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full">
+          <img
+            src={oportunidadesMain}
+            alt="Ilustração Oportunidades"
+            className="max-w-[700px] w-full h-auto"
+          />
+          <div className="flex flex-col items-center md:items-start">
+            <h1 className="text-black font-semibold text-8xl leading-none text-center md:text-left">
+              OPORTU
+              <span className="block ml-30">NIDADES</span>
+            </h1>
+            <p className="mt-6 text-[#0387C4] text-xl md:text-4xl text-center md:text-left max-w-xl">
+              Fidelize para crescer:{" "}
+              <span className="text-[#1a7ed7] font-bold">
+                estratégias inteligentes
+              </span>{" "}
+              que fazem seu cliente voltar — e indicar!
+            </p>
+          </div>
         </div>
       </div>
 
       <div className="border-t border-[#bfc8d6] mx-40 my-8" />
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-8 pb-12">
-        <div
-          style={{ backgroundImage: `url(${firstDivImg})` }}
-          className="
-  bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px]"
-        >
-          <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
-            Experiência de compra
-          </span>
-        </div>
-
-        <div
-          style={{ backgroundImage: `url(${secondDivImg})` }}
-          className="
-  bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px]"
-        >
-          <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
-            Benefícios exclusivos
-          </span>
-        </div>
-
-        <div
-          style={{ backgroundImage: `url(${thirdDivImg})` }}
-          className="
-  bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px]"
-        >
-          <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
-            Comunicação pós-venda
-          </span>
-        </div>
+        {[firstDivImg, secondDivImg, thirdDivImg].map((img, idx) => (
+          <div
+            key={idx}
+            ref={imgsRefs[idx]}
+            data-idx={idx}
+            className={`bg-no-repeat bg-cover bg-center rounded-lg shadow-md flex flex-col items-center justify-end w-[470px] h-[240px] transition-all duration-700 ${
+              imgsVisiveis[idx]
+                ? "animate-oport-fadeup opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            }`}
+            style={{ backgroundImage: `url(${img})` }}
+          >
+            <span className="mb-4 text-[#1a3e7a] font-bold text-lg text-center bg-white px-2 py-1 rounded">
+              {idx === 0 && "Experiência de compra"}
+              {idx === 1 && "Benefícios exclusivos"}
+              {idx === 2 && "Comunicação pós-venda"}
+            </span>
+          </div>
+        ))}
       </div>
 
       <div className="px-2 md:px-16 pb-10 mt-20">
