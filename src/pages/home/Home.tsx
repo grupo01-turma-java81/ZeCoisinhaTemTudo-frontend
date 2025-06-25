@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "../home/Home.css";
 import { Oval } from "react-loader-spinner";
 import { motion } from "framer-motion";
-import bell from "../../assets/home/bell.webp";
-import creative from "../../assets/home/creative.webp";
+import profile from "../../assets/home/profile.webp";
+import creative from "../../assets/home/bulb.webp";
 import homeMainImg from "../../assets/home/homeMainImg.webp";
 import mascote from "../../assets/home/mascote.png";
 
@@ -78,7 +78,7 @@ function Home() {
           onClick={() => navigate("/perfil")}
         >
           <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
-            <img src={creative} alt="Dicas" width={40} height={40} />
+            <img src={profile} alt="Dicas" width={40} height={40} />
           </div>
           <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
             Perfil
@@ -89,7 +89,7 @@ function Home() {
           onClick={() => navigate("/oportunidades")}
         >
           <div className="bg-[#6c7a93] shadow-lg rounded-lg w-15 h-15 flex items-center justify-center mx-auto hover:scale-107 transition-transform duration-200">
-            <img src={bell} alt="Alertas" width={40} height={40} />
+            <img src={creative} alt="Alertas" width={40} height={40} />
           </div>
           <p className="mt-2 text-[#223047] font-semibold font-montserrat text-lg">
             Oportunidades
