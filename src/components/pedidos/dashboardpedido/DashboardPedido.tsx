@@ -35,6 +35,10 @@ function DashboardPedidos({ pedidos }: DashboardPedidosProps) {
 
   const clientesNegativos = pedidos.filter((p) => p.positivo === false).length;
 
+  const totalVendidoConcluido = pedidos
+    .filter((p) => p.statusEntrega === "Concluído")
+    .reduce((acc, p) => acc + (p.valorTotal || 0), 0);
+
   const cards = [
     {
       label: "Total de Pedidos",
@@ -42,11 +46,18 @@ function DashboardPedidos({ pedidos }: DashboardPedidosProps) {
       color: "text-[#1a7ed7]",
     },
     {
-      label: "Total Vendido",
+      label: "Total Vendido (Estimado)",
       value: `R$ ${totalVendido.toLocaleString("pt-BR", {
         minimumFractionDigits: 2,
       })}`,
       color: "text-green-600",
+    },
+    {
+      label: "Total Recebido (Concluído)",
+      value: `R$ ${totalVendidoConcluido.toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+      })}`,
+      color: "text-green-700",
     },
     {
       label: "Pedidos da Semana",
