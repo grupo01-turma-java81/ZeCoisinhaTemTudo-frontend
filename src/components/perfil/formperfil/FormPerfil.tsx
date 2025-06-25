@@ -89,47 +89,58 @@ function FormPerfil({ onClose }: FormPerfilProps) {
   return (
     <div className="container flex flex-col mx-auto items-center">
       <h1 className="text-4xl text-center my-8">Editar Perfil</h1>
-      <form className="flex flex-col w-1/2 gap-4" onSubmit={atualizarPerfil}>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="nome">Nome</label>
+      <form
+        className="flex flex-col w-full mx-auto max-w-md gap-6"
+        onSubmit={atualizarPerfil}
+      >
+        <div>
+          <label htmlFor="nome" className="block text-sm font-medium mb-2">
+            Nome
+          </label>
           <input
             type="text"
             name="nome"
             required
-            className="border-2 border-slate-700 rounded p-2"
+            className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
             value={usuarioPerfil.nome || ""}
             onChange={atualizarEstado}
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="usuario">E-mail</label>
+        <div>
+          <label htmlFor="usuario" className="block text-sm font-medium mb-2">
+            E-mail
+          </label>
           <input
             type="email"
             name="usuario"
-            className="border-2 border-slate-700 rounded p-2 bg-gray-100 cursor-not-allowed"
+            className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm bg-gray-100 cursor-not-allowed"
             value={usuarioPerfil.usuario || ""}
             readOnly
             disabled
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="senha">Nova Senha</label>
+        <div>
+          <label htmlFor="senha" className="block text-sm font-medium mb-2">
+            Nova Senha
+          </label>
           <input
             type="password"
             name="senha"
-            className="border-2 border-slate-700 rounded p-2"
+            className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
             value={novaSenha}
             onChange={(e) => setNovaSenha(e.target.value)}
             placeholder="Digite a senha"
             minLength={8}
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="foto">Foto (URL)</label>
+        <div>
+          <label htmlFor="foto" className="block text-sm font-medium mb-2">
+            Foto (URL)
+          </label>
           <input
             type="text"
             name="foto"
-            className="border-2 border-slate-700 rounded p-2"
+            className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
             value={usuarioPerfil.foto || ""}
             onChange={atualizarEstado}
             placeholder="Link da sua foto (opcional)"
@@ -137,8 +148,7 @@ function FormPerfil({ onClose }: FormPerfilProps) {
         </div>
         <button
           type="submit"
-          className="rounded disabled:bg-slate-200 bg-[#1a3052] hover:bg-[#232e3f]
-                               text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
+          className="rounded bg-blue-600 hover:bg-blue-700 text-white font-bold w-full py-2 flex justify-center mt-3 cursor-pointer"
           disabled={isLoading}
         >
           {isLoading ? (
@@ -150,7 +160,7 @@ function FormPerfil({ onClose }: FormPerfilProps) {
               visible={true}
             />
           ) : (
-            <span>ATUALIZAR</span>
+            <span>Atualizar</span>
           )}
         </button>
       </form>

@@ -90,7 +90,7 @@ function Perfil() {
             />
             <button
               onClick={logout}
-              className="text-blue-600 hover:underline text-sm cursor-pointer"
+              className="text-blue-700 hover:underline cursor-pointer"
             >
               Sair
             </button>
@@ -104,7 +104,7 @@ function Perfil() {
                 </h2>
                 <button
                   onClick={abrirModal}
-                  className="text-blue-600 hover:underline text-sm cursor-pointer mt-3 ml-3"
+                  className="text-blue-700 hover:underline text-sm cursor-pointer mt-3 ml-3"
                 >
                   Editar perfil
                 </button>

@@ -1,19 +1,11 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { ToastAlerta } from "../../utils/ToastAlerta";
+import { Link, NavLink } from "react-router-dom";
 import { useContext, type ReactNode } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import logoZe from "../../assets/cadastro/logo_ze.webp";
+import "./Navbar.css";
 
 function NavBar() {
-  const navigate = useNavigate();
-
   const { usuario, handleLogout } = useContext(AuthContext);
-
-  function logout() {
-    handleLogout();
-    ToastAlerta("O Usuário foi desconectado com sucesso!", "sucesso");
-    navigate("/");
-  }
 
   let component: ReactNode;
 
@@ -56,20 +48,15 @@ function NavBar() {
               </NavLink>
             </li>
           ))}
-          <li>
-            <Link to="" onClick={logout}>
-              Sair
-            </Link>
-          </li>
         </ul>
         <div className="w-10 h-10 rounded-full bg-[#ede7f6] flex items-center justify-center">
           <Link to="/perfil">
             <img
               src={usuario.foto}
               alt="Foto de Perfil"
-              className="rounded-4xl"
-              width="30"
-              height="30"
+              className="rounded-4xl animate-pulse7s"
+              width="50"
+              height="50"
             />
           </Link>
         </div>
